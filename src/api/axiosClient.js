@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-  REACTNATIVE_APP_API_URL, SMAI_APP_API_URL
+   SMAI_APP_API_URL
 } from "../constants/api";
 
 import * as SecureStore from "expo-secure-store";

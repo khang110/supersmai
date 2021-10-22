@@ -9,6 +9,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AppNavigator from './src/navigation/AppNavigator';
 
 export default function App() {
+  post.getNewPost().then((res)=>{
+    console.log(res.data);
+  })
+  
   return (
     <NavigationContainer>
       <AppNavigator/>
