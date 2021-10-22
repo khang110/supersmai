@@ -1,33 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button, Image } from "react-native";
 import post from "./src/api/postApi";
 import axios from "axios";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import AppNavigator from './src/navigation/AppNavigator';
 
 export default function App() {
-  const getData = async () => {
-    await axios({
-      method: "get",
-      url: "http://localhost:5000/post/getNewPost",
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log("ERROR", err);
-      });
-  };
-  post.getNewPost().then((res) => {
-    console.log("test 132");
-    console.log(res);
-  });
-  useEffect(() => {});
-
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <AppNavigator/>
+    </NavigationContainer>
   );
 }
 
