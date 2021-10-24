@@ -252,6 +252,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#CAD7FF",
     justifyContent: "center",
     marginRight: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+
+    elevation: 10,
+
+    elevation: 14,
   },
   text_btn: {
     fontSize: config.fontsize_3,
