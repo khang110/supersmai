@@ -7,6 +7,7 @@ function ProfileStack() {
     <Stack.Navigator>
       <Stack.Screen name="Profile" component={ProfileScreen} 
       options={{
+        headerShown:false,
         title: "Tài khoản"
       }} />
     </Stack.Navigator>
