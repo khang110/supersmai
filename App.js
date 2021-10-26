@@ -10,7 +10,9 @@ import AppNavigator from './src/navigation/AppNavigator';
 
 export default function App() {
  
-  
+  post.getNewPost().then((res)=>{
+    console.log(res)
+  })
   return (
     <NavigationContainer>
       <AppNavigator/>

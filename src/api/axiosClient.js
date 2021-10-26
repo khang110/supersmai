@@ -4,8 +4,6 @@ import {
 } from "../constants/api";
 
 import * as SecureStore from "expo-secure-store";
-console.log("test 2")
-console.log(SMAI_APP_API_URL);
 const axiosClient = axios.create({
   baseURL: SMAI_APP_API_URL,
   headers: {

@@ -17,9 +17,10 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 
-function Profile() {
+function Profile(props) {
+   const { navigation } = props;
   const pressRow = async () => {
-    console.log("true");
+    navigation.navigate("PersonalInfo");
   };
   return (
     <>

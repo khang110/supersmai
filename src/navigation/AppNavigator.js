@@ -2,6 +2,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Tabs from '../navigation/Tabs';
+import personalInfo from "../screens/personalInfo";
 import {
   createStackNavigator,
   HeaderBackButton,
@@ -10,8 +11,7 @@ const Stack = createStackNavigator();
 function AppNavigator(props) {
     const { navigation, dispatch } = props;
     return (
-    
-        <Stack.Navigator>
+      <Stack.Navigator>
         <Stack.Screen
           name="Home"
           component={Tabs}
@@ -20,8 +20,16 @@ function AppNavigator(props) {
             title: "Trang chủ",
           }}
         />
-        </Stack.Navigator>
-      
-    )
+
+        <Stack.Screen
+          name="PersonalInfo"
+          component={personalInfo}
+          options={({navigation})=>({
+            headerShown: true,
+            title: "Trang chủ",
+          })}
+        />
+      </Stack.Navigator>
+    );
 }
 export default AppNavigator;
