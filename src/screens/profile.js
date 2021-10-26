@@ -31,16 +31,16 @@ function Profile() {
               source={{
                 uri: "https://www.w3schools.com/howto/img_avatar2.png",
               }}
-              iconStyle={{
-                borderColor: "white",
-                borderStyle: "solid",
-                borderRadius: 10,
-              }}
-              containerStyle={{
-                borderColor: "white",
-                borderStyle: "solid",
-                borderRadius: 10,
-              }}
+              // iconStyle={{
+              //   borderColor: "white",
+              //   borderStyle: "solid",
+              //   borderRadius: 10,
+              // }}
+              // containerStyle={{
+              //   borderColor: "white",
+              //   borderStyle: "solid",
+              //   borderRadius: 10,
+              // }}
               avatarStyle={{
                 borderColor: "white",
                 borderRadius: 20,

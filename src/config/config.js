@@ -24,7 +24,12 @@ const fontsize_6 = normalize(10)
 const screen_height = SCREEN_HEIGHT;
 const screen_width = SCREEN_WIDTH;
 const main_color = '#1BA8FF';
-const active_color = '#CAD7FF'
+const active_color = '#CAD7FF';
+const white = "#FFF";
+const black = "#000";
+const gray = '#BDBDBD'
+const margin_1 = "2%";
+const margin_2 = "4%";
 
 
 
@@ -40,4 +45,9 @@ export default {
   active_color,
   screen_width,
   screen_height,
+  white, 
+  black,
+  gray,
+  margin_1,
+  margin_2,
 };
