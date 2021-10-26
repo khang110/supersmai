@@ -93,6 +93,7 @@ const Tabs = () => {
           ),
         }}
       />
+      
     </Tab.Navigator>
   );
 };
