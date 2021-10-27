@@ -26,6 +26,14 @@ const screen_width = SCREEN_WIDTH;
 const main_color = '#1BA8FF';
 const active_color = '#CAD7FF'
 const border_bottom = "#D1D1D1";
+const white = "#FFF";
+const black = "#000";
+const gray = '#BDBDBD'
+const margin_1 = "2%";
+const margin_2 = "4%";
+const margin_3 = "6%";
+const margin_4 = "8%";
+
 
 
 
@@ -41,4 +49,11 @@ export default {
   screen_width,
   screen_height,
   border_bottom,
+  white, 
+  black,
+  gray,
+  margin_1,
+  margin_2,
+  margin_3,
+  margin_4,
 };
