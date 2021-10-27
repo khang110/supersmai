@@ -3,8 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Image,
+  ScrollView,
   TouchableOpacity,
 } from "react-native";
 import config from "../config/config";
@@ -23,7 +22,7 @@ function Profile(props) {
     navigation.navigate("PersonalInfo");
   };
   return (
-    <>
+    <ScrollView>
       <View style={styles.container}>
         <View style={styles.content_header}>
           <View>
@@ -201,7 +200,7 @@ function Profile(props) {
           </TouchableOpacity>
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
