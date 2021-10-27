@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     height: config.screen_height / 17,
     padding: "2%",
     borderRadius: 10,
-    backgroundColor: "#CAD7FF",
+    backgroundColor: config.active_color,
     justifyContent: "center",
     marginRight: 20,
     shadowColor: "#000",
@@ -262,7 +262,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6.27,
 
     elevation: 10,
-
     elevation: 14,
   },
   text_btn: {
@@ -271,7 +270,7 @@ const styles = StyleSheet.create({
   boder_bottom: {
     marginLeft: "8%",
     width: "85%",
-    borderBottomColor: "#D1D1D1",
+    borderBottomColor: config.border_bottom,
     borderBottomWidth: 1,
   },
 });

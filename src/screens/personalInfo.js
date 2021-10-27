@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Avatar, Input } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
-
+import config from "../config/config";
 function personalInfo() {
   const {
     control,
@@ -50,11 +50,12 @@ function personalInfo() {
             name="name"
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input
+              <TextInput
+                style={styles.TextInput}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
-                label="Số điện thoại"
-                keyboardType="numeric"
+                label="Họ và tên"
+                value="Nguyễn Duy Phú"
                 theme={{
                   colors: {
                     primary: "gray",
@@ -67,11 +68,12 @@ function personalInfo() {
             name="name"
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input
+              <TextInput
+                style={styles.TextInput}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
-                label="Số điện thoại"
-                keyboardType="numeric"
+                label="Họ và tên"
+                value="Nguyễn Duy Phú"
                 theme={{
                   colors: {
                     primary: "gray",
@@ -84,11 +86,12 @@ function personalInfo() {
             name="name"
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input
+              <TextInput
+                style={styles.TextInput}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
-                label="Số điện thoại"
-                keyboardType="numeric"
+                label="Họ và tên"
+                value="Nguyễn Duy Phú"
                 theme={{
                   colors: {
                     primary: "gray",
@@ -101,11 +104,12 @@ function personalInfo() {
             name="name"
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input
+              <TextInput
+                style={styles.TextInput}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
-                label="Số điện thoại"
-                keyboardType="numeric"
+                label="Họ và tên"
+                value="Nguyễn Duy Phú"
                 theme={{
                   colors: {
                     primary: "gray",
@@ -119,5 +123,15 @@ function personalInfo() {
     </ScrollView>
   );
 }
-
+const styles = StyleSheet.create({
+  TextInput: {
+    borderColor: "#000000",
+    borderRadius: 10,
+    borderWidth: 0.5,
+    height: 50,
+    padding: 10,
+    width: "80%",
+    backgroundColor: config.active_color
+  },
+});
 export default personalInfo;

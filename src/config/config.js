@@ -25,7 +25,7 @@ const screen_height = SCREEN_HEIGHT;
 const screen_width = SCREEN_WIDTH;
 const main_color = '#1BA8FF';
 const active_color = '#CAD7FF'
-
+const border_bottom = "#D1D1D1";
 
 
 
@@ -40,4 +40,5 @@ export default {
   active_color,
   screen_width,
   screen_height,
+  border_bottom,
 };
