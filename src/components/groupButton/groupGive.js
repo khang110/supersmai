@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     paddingTop: config.margin_1, 
     paddingBottom: config.margin_1,
     backgroundColor: config.white,
-    borderRadius: 30
+    borderRadius: 20
   },
   wrapButton: { alignItems: "center" },
   wrapIcon: { height: 50, width: 50, marginBottom: config.margin_2 },

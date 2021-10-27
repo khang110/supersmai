@@ -10,22 +10,22 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
-import Furnitures from "../../../assets/furnitures.png";
-function ButtonCategory() {
-  return (
+
+function ButtonCategory(props) {
+  const {icon, text} = props;
+    return (
     <>
       <TouchableOpacity>
         <View style={{ alignItems: "center" }}>
           <Avatar
-            size={70}
-            source={Furnitures}
+            size={60}
+            source={icon}
             avatarStyle={{
               borderColor: "white",
               borderRadius: 20,
-              backgroundColor: "#BDBDBDAA",
             }}
           />
-          <Text>Nội thất</Text>
+          <Text style={{textAlign: 'center'}}>{text}</Text>
         </View>
       </TouchableOpacity>
     </>

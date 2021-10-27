@@ -30,7 +30,8 @@ const black = "#000";
 const gray = '#BDBDBD'
 const margin_1 = "2%";
 const margin_2 = "4%";
-
+const margin_3 = "6%";
+const margin_4 = "8%";
 
 
 
@@ -50,4 +51,6 @@ export default {
   gray,
   margin_1,
   margin_2,
+  margin_3,
+  margin_4,
 };
