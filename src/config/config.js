@@ -29,14 +29,14 @@ const border_bottom = "#D1D1D1";
 const white = "#FFF";
 const black = "#000";
 const gray = '#BDBDBD'
+const red = 'red';
 const margin_1 = "2%";
 const margin_2 = "4%";
 const margin_3 = "6%";
 const margin_4 = "8%";
-
-
-
-
+const btn_height = "30%"
+const btn_width = "80%"
+const btn_border_radius = 50
 export default {
   fontsize_1,
   fontsize_2,
@@ -49,11 +49,15 @@ export default {
   screen_width,
   screen_height,
   border_bottom,
-  white, 
+  white,
   black,
   gray,
   margin_1,
   margin_2,
   margin_3,
   margin_4,
+  btn_height,
+  btn_width,
+  btn_border_radius,
+  red,
 };

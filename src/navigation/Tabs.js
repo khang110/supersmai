@@ -13,7 +13,6 @@ import ConnectStack from '../navigation/Stack/ConnectStack';
 import MyNewsStack from '../navigation/Stack/MynewsStack';
 import ProfileStack from '../navigation/Stack/ProfileStack';
 
-
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
@@ -93,6 +92,7 @@ const Tabs = () => {
           ),
         }}
       />
+      
       
     </Tab.Navigator>
   );

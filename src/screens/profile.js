@@ -17,9 +17,12 @@ import {
 } from "@expo/vector-icons";
 
 function Profile(props) {
-   const { navigation } = props;
+  const { navigation } = props;
   const pressRow = async () => {
     navigation.navigate("PersonalInfo");
+  };
+  const btnSettings = async() =>{
+    navigation.navigate("Settings");
   };
   return (
     <ScrollView>
@@ -31,16 +34,6 @@ function Profile(props) {
               source={{
                 uri: "https://www.w3schools.com/howto/img_avatar2.png",
               }}
-              // iconStyle={{
-              //   borderColor: "white",
-              //   borderStyle: "solid",
-              //   borderRadius: 10,
-              // }}
-              // containerStyle={{
-              //   borderColor: "white",
-              //   borderStyle: "solid",
-              //   borderRadius: 10,
-              // }}
               avatarStyle={{
                 borderColor: "white",
                 borderRadius: 20,
@@ -153,7 +146,7 @@ function Profile(props) {
         <View style={styles.content}>
           <TouchableOpacity
             style={styles.btn_profile}
-            onPress={() => pressRow()}
+            onPress={() => btnSettings()}
           >
             <View style={styles.view_btn}>
               <View style={styles.view_icon}>
