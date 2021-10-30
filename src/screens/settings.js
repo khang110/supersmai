@@ -22,7 +22,7 @@ function settings(props) {
       navigation.navigate("Authentication");
   };
   return (
-    <ScrollView style={styles.layout}>
+    <ScrollView>
       <View style={styles.container}>
         <View style={styles.content}>
           <TouchableOpacity style={styles.btn_profile}>
@@ -61,12 +61,10 @@ function settings(props) {
 }
 const styles = StyleSheet.create({
   container: {
-    height: "100%",
-    width: "100%",
+    flex: 1,
   },
   content: {
-    width: "100%",
-    marginTop:"5%"
+    marginTop: "5%",
   },
   btn_profile: {
     width: "100%",
@@ -84,8 +82,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   icon_btn: {
-    width: config.screen_height / 17,
-    height: config.screen_height / 17,
     padding: "2%",
     borderRadius: 10,
     backgroundColor: config.active_color,
@@ -109,6 +105,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     top: "300%",
+    
   },
   //btn
   btn_logout: {
