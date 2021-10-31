@@ -9,7 +9,7 @@ function MyNewsStack() {
           name="MyNews"
           component={MyNewsScreen}      
           options={{
-            title: "Tin đăng"
+            title: "Tin đăng",
           }}    
         />
       </Stack.Navigator>

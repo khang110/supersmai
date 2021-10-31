@@ -9,7 +9,7 @@ function ConnectStack() {
           name="Connect"
           component={ConnectScreen}   
           options={{
-            title: "Kết nối"
+            title: "Kết nối",
           }}       
         />
       </Stack.Navigator>

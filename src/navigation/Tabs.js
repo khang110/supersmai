@@ -6,12 +6,13 @@ import {
   Feather,
   FontAwesome,
   MaterialCommunityIcons,
+  Foundation,
 } from "@expo/vector-icons";
 import { StyleSheet, Text, View, Button, Image } from "react-native";
-import HomeStack from '../navigation/Stack/HomeStack';
-import ConnectStack from '../navigation/Stack/ConnectStack';
-import MyNewsStack from '../navigation/Stack/MynewsStack';
-import ProfileStack from '../navigation/Stack/ProfileStack';
+import HomeStack from "../navigation/Stack/HomeStack";
+import ConnectStack from "../navigation/Stack/ConnectStack";
+import MyNewsStack from "../navigation/Stack/MynewsStack";
+import ProfileStack from "../navigation/Stack/ProfileStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,8 +28,8 @@ const Tabs = () => {
           borderRadius: 16,
           position: "absolute",
         },
-        tabBarActiveTintColor: '#CAD7FF',
-        tabBarInactiveTintColor: '#FFF',
+        tabBarActiveTintColor: "#CAD7FF",
+        tabBarInactiveTintColor: "#FFF",
       }}
     >
       <Tab.Screen
@@ -38,11 +39,12 @@ const Tabs = () => {
           headerShown: false,
           tabBarShowLabel: false,
           tabBarLabel: "Trang chủ",
-          tabBarIcon: ({ color }) => (
-            <View style={{backgroundColor: color, padding: 10, borderRadius: 12}}>
-              <Feather name="home" size={24} color='#007ACC' />
+          tabBarIcon: ({ focused, color }) => (
+            <View
+              style={{ backgroundColor: color, padding: 10, borderRadius: 12 }}
+            >
+              <Feather name="home" size={24} color="#007ACC" />
             </View>
-            
           ),
         }}
       />
@@ -54,8 +56,10 @@ const Tabs = () => {
           tabBarShowLabel: false,
           tabBarLabel: "Kết nối",
           tabBarIcon: ({ focused, color, size }) => (
-            <View style={{backgroundColor: color, padding: 10, borderRadius: 12}}>
-            <Ionicons name="share-social-outline" size={24} color='#007ACC' />
+            <View
+              style={{ backgroundColor: color, padding: 10, borderRadius: 12 }}
+            >
+              <Ionicons name="share-social-outline" size={24} color="#007ACC" />
             </View>
           ),
         }}
@@ -68,12 +72,14 @@ const Tabs = () => {
           tabBarShowLabel: false,
           tabBarLabel: "Tin đăng",
           tabBarIcon: ({ color }) => (
-            <View style={{backgroundColor: color, padding: 10, borderRadius: 12}}>
-            <MaterialCommunityIcons
-              name="newspaper-variant-multiple"
-              size={24}
-              color='#007ACC'
-            />
+            <View
+              style={{ backgroundColor: color, padding: 10, borderRadius: 12 }}
+            >
+              <MaterialCommunityIcons
+                name="newspaper-variant-multiple"
+                size={24}
+                color="#007ACC"
+              />
             </View>
           ),
         }}
@@ -86,15 +92,16 @@ const Tabs = () => {
           tabBarShowLabel: false,
           tabBarLabel: "Cá nhân",
           tabBarIcon: ({ color }) => (
-            <View style={{backgroundColor: color, padding: 10, borderRadius: 12}}>
-            <FontAwesome name="user-o" size={24} color='#007ACC' />
+            <View
+              style={{ backgroundColor: color, padding: 10, borderRadius: 12 }}
+            >
+              <FontAwesome name="user-o" size={24} color="#007ACC" />
             </View>
           ),
         }}
       />
-      
-      
     </Tab.Navigator>
   );
 };
+const styles = StyleSheet.create({})
 export default Tabs;
