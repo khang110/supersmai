@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Tabs from '../navigation/Tabs';
+import Tabs from "../navigation/Tabs";
 import personalInfo from "../screens/personalInfo";
 import settings from "../screens/settings";
 import {
@@ -13,8 +13,9 @@ import authentication from "../screens/authentication";
 
 const Stack = createStackNavigator();
 function AppNavigator(props) {
-    const { navigation, dispatch } = props;
-    return (
+  const { navigation, dispatch } = props;
+  return (
+    <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
@@ -62,6 +63,7 @@ function AppNavigator(props) {
           })}
         />
       </Stack.Navigator>
-    );
+    </NavigationContainer>
+  );
 }
 export default AppNavigator;

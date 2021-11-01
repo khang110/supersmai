@@ -2,21 +2,20 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View, Button, Image } from "react-native";
 import post from "./src/api/postApi";
-import axios from "axios";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AppNavigator from './src/navigation/AppNavigator';
-
-export default function App() {
- 
-  post.getNewPost().then((res)=>{
-    console.log(res)
-  })
+import { Provider } from "react-redux";
+import AppNavigator from "./src/navigation/AppNavigator";
+import store from './Redux.js';
+export default function App(props) {
+  post.getNewPost().then((res) => {
+    console.log(res);
+  });
   return (
-    <NavigationContainer>
-      <AppNavigator/>
-    </NavigationContainer>
+    <Provider store={store}>
+      <View style={{flex: 1}}>
+      <AppNavigator />
+      </View>
+    
+    </Provider>
   );
 }
 
