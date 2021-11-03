@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-around",
-    margin: config.margin_2,
+    marginLeft: config.margin_2,
+    marginRight: config.margin_2,
     paddingTop: config.margin_1, 
     paddingBottom: config.margin_1,
     backgroundColor: config.white,

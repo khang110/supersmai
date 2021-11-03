@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,11 +6,12 @@ import {
   Button,
   Image,
   TouchableOpacity,
-  SafeAreaView,
   StatusBar,
   FlatList,
   ScrollView,
+  SafeAreaView
 } from "react-native";
+// import { SafeAreaView } from 'react-navigation';
 const uriImage =
   "https://images.pexels.com/photos/9727100/pexels-photo-9727100.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
 const heightStatusBar = StatusBar.currentHeight;
@@ -19,27 +20,66 @@ import SearchButton from "../components/search/buttonSearch";
 import Gift from "../components/groupButton/groupGive";
 import GroupCategory from "../components/groupButton/groupCategory";
 import NewsRow from "../components/groupButton/newsRow";
+import axios from "axios";
 function Home() {
+  const [data, setData] = useState([]);
+  const [refresh, setrefresh] = useState(true);
 
+  useEffect(() => {
+    getData();
+  }, []);
 
+  const getData = async () => {
+    await axios({
+      method: "get",
+      url: "https://api.smai.com.vn/post/getNewPost",
+    })
+      .then((resjson) => {
+        setData(resjson.data);
+        // console.log(resjson.data)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setrefresh(false));
+  };
 
-
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.backgroundTop}>
-        <Text style={styles.textSayHi}>Hi, Nguyễn Duy Phú Lợn</Text>
-        <SearchButton />
-      </View>
-      <Gift />
-      <View style={styles.discoverCategory}>
+  const renderItem = () => {
+    return <NewsRow />;
+  };
+  const ListHeader = () => {
+    return (
+      <>
+        <View style={styles.backgroundTop}>
+          <Text style={styles.textSayHi}>Hi, Nguyễn Duy Phú Lợn</Text>
+          <SearchButton />
+        </View>
+        <Gift />
         <Text style={styles.textDisCate}>Khám phá danh mục</Text>
-        <GroupCategory />
-      </View>
-      <View style={styles.hotNews}>
+        <View style={styles.discoverCategory}>
+          <GroupCategory />
+        </View>
         <Text style={styles.textDisCate}>Tin đăng mới</Text>
-        <NewsRow />
-      </View>
-      
+      </>
+    );
+  };
+  const ItemSeparator = () => {
+    return <View style={{ height: "1%" }} />;
+  };
+  
+  return (
+    <SafeAreaView forceInset={{ bottom: 'never' }} style={styles.container}>
+       <View style={{flex: 1}}>
+       <FlatList
+        data={data}
+        keyExtractor={(item) => item._id}
+        ItemSeparatorComponent={ItemSeparator}
+        ListHeaderComponent={ListHeader}
+        ListFooterComponent={<View />}
+        ListFooterComponentStyle={{height:120}}
+        renderItem={renderItem}
+      />
+       </View>
     </SafeAreaView>
   );
 }
@@ -50,10 +90,11 @@ const styles = StyleSheet.create({
   },
   backgroundTop: {
     backgroundColor: config.main_color,
-    height: "20%",
+    height: config.screen_width*0.3,
     justifyContent: "space-between",
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
+    marginBottom: config.margin_2
   },
   textSayHi: {
     color: config.white,
@@ -71,8 +112,9 @@ const styles = StyleSheet.create({
     marginRight: config.margin_2,
   },
   textDisCate: {
-    marginLeft: config.margin_2,
-    marginBottom: config.margin_2,
+    marginLeft: config.margin_3,
+    marginBottom: config.margin_1,
+    marginTop: config.margin_1,
     fontWeight: "bold",
     color: "#03274D",
     fontSize: config.fontsize_4,

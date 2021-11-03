@@ -28,6 +28,7 @@ const Tabs = () => {
           borderRadius: 16,
           position: "absolute",
         },
+        presentation: 'modal',
         tabBarActiveTintColor: "#CAD7FF",
         tabBarInactiveTintColor: "#FFF",
       }}
