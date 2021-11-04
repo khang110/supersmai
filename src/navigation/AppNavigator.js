@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Tabs from "../navigation/Tabs";
 import personalInfo from "../screens/personalInfo";
 import settings from "../screens/settings";
+import DetailPost from '../screens/detailpost';
 import {
   createStackNavigator,
   HeaderBackButton,
@@ -56,6 +57,18 @@ function AppNavigator(props) {
           options={({ navigation }) => ({
             headerShown: true,
             title: "Tài khoản",
+            headerTintColor: "#FFF",
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+          })}
+        />
+        <Stack.Screen
+          name="DetailPost"
+          component={DetailPost}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Chi tiết tin đăng",
             headerTintColor: "#FFF",
             headerStyle: {
               backgroundColor: config.main_color,

@@ -9,7 +9,7 @@ import {
   StatusBar,
   FlatList,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 // import { SafeAreaView } from 'react-navigation';
 const uriImage =
@@ -21,10 +21,10 @@ import Gift from "../components/groupButton/groupGive";
 import GroupCategory from "../components/groupButton/groupCategory";
 import NewsRow from "../components/groupButton/newsRow";
 import axios from "axios";
-function Home() {
+function Home(props) {
   const [data, setData] = useState([]);
   const [refresh, setrefresh] = useState(true);
-
+  const { navigation } = props;
   useEffect(() => {
     getData();
   }, []);
@@ -43,9 +43,11 @@ function Home() {
       })
       .finally(() => setrefresh(false));
   };
-
-  const renderItem = () => {
-    return <NewsRow />;
+  const pressRow = (dataPost) => {
+    navigation.navigate("DetailPost", { data: dataPost });
+  };
+  const renderItem = ({ item }) => {
+    return <NewsRow data={item} onPress={() => pressRow(item)} />;
   };
   const ListHeader = () => {
     return (
@@ -64,23 +66,22 @@ function Home() {
     );
   };
   const ItemSeparator = () => {
-    return <View style={{ height: "1%" }} />;
+    return <View style={{ height: 10 }} />;
   };
-  
+
   return (
-    <SafeAreaView forceInset={{ bottom: 'never' }} style={styles.container}>
-       <View style={{flex: 1}}>
-       <FlatList
-        data={data}
-        keyExtractor={(item) => item._id}
-        ItemSeparatorComponent={ItemSeparator}
-        ListHeaderComponent={ListHeader}
-        ListFooterComponent={<View />}
-        ListFooterComponentStyle={{height:120}}
-        renderItem={renderItem}
-      />
-       </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item._id}
+          ItemSeparatorComponent={ItemSeparator}
+          ListHeaderComponent={ListHeader}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -90,11 +91,11 @@ const styles = StyleSheet.create({
   },
   backgroundTop: {
     backgroundColor: config.main_color,
-    height: config.screen_width*0.3,
+    height: config.screen_width * 0.3,
     justifyContent: "space-between",
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
-    marginBottom: config.margin_2
+    marginBottom: config.margin_2,
   },
   textSayHi: {
     color: config.white,

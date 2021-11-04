@@ -23,6 +23,7 @@
     "react-native-dotenv": "^3.2.0",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-image-slider-box": "^1.1.9",
     "react-native-pager-view": "^5.4.8",
     "react-native-paper": "^4.9.2",
     "react-native-safe-area-context": "3.2.0",

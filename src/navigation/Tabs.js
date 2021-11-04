@@ -19,19 +19,22 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => {
   return (
     <Tab.Navigator
+    initialRouteName="HomeTab"
       screenOptions={{
         tabBarStyle: {
           height: 60,
-          bottom: 5,
-          right: 5,
-          left: 5,
-          borderRadius: 16,
-          position: "absolute",
+          // bottom: 5,
+          // right: 5,
+          // left: 5,
+          // borderRadius: 16,
+          // position: "absolute",
+          
         },
-        presentation: 'modal',
+        
         tabBarActiveTintColor: "#CAD7FF",
         tabBarInactiveTintColor: "#FFF",
       }}
+     
     >
       <Tab.Screen
         name="HomeTab"
