@@ -19,7 +19,7 @@ import config from "../config/config";
 import SearchButton from "../components/search/buttonSearch";
 import Gift from "../components/groupButton/groupGive";
 import GroupCategory from "../components/groupButton/groupCategory";
-import NewsRow from "../components/groupButton/newsRow";
+import NewsRow from "../components/rows/newsRow";
 import axios from "axios";
 function Home(props) {
   const [data, setData] = useState([]);
