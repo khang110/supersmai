@@ -18,7 +18,7 @@ const uriImage =
   "https://images.pexels.com/photos/9727100/pexels-photo-9727100.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
 const link="https://scontent.fsgn4-1.fna.fbcdn.net/v/t1.15752-9/244559282_3070295989961269_1787605226591581197_n.png?_nc_cat=103&ccb=1-5&_nc_sid=ae9488&_nc_ohc=IDK-yXa7RIIAX-mn0gC&_nc_ht=scontent.fsgn4-1.fna&oh=38230c56ea479dc8db3a96bcd28b7812&oe=61AAA40B";
 const News = (props) => {
-//   const {data, onPress} = props;
+  const {data, onPress} = props;
   useEffect(() => {
     // console.log(data)
   },[])
@@ -33,14 +33,14 @@ const News = (props) => {
  
   return (
     <View>
-      <TouchableOpacity style={{  marginLeft: "4%",
+      <TouchableOpacity onPress={() => onPress()} style={{  marginLeft: "4%",
     marginRight: "4%",}} >
         <View  style={styles.container}>
         <View style={styles.wrapImage}>
-        <Image style={styles.imageStyle} source={{ uri: link }} />
+       {renderImage()}
         </View>
         <View style={styles.wrapTitle}>
-          <Text style={styles.title} numberOfLines={1}>Nhà dư vài chiếc merc</Text>
+          <Text style={styles.title} numberOfLines={1}>{data.title}</Text>
           <View style={styles.wrapCate}>
             <Text style={styles.cate}>Phương tiện</Text>
             <Text style={styles.price}>Miễn phí</Text>

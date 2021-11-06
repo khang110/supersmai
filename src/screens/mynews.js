@@ -7,7 +7,8 @@ import axios from "axios";
 import color from '../config/color';
 const token =
   "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SUQiOiI2MTFjMDY3MGE1MjU4MzAwMjIzM2I1MzUiLCJpYXQiOjE2MzU3NDAwNjB9.sATc8Ly5P7YexK1lLilNNdhehMf44feEclFYDOmiEX4";
-function Mynews() {
+function Mynews(props) {
+  const {navigation} = props;
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -23,13 +24,17 @@ function Mynews() {
     })
       .then((res) => {
         setData(res.data);
+        // console.log(res.data);
       })
       .catch((error) => {
         console.log("Error: ", error);
       });
   };
+  const pressRow = (dataPost) => {
+    navigation.navigate("DetailPost", { data: dataPost });
+  };
   const renderItem = ({ item }) => {
-    return <MyNewsRow />;
+    return <MyNewsRow data={item} onPress={() => pressRow(item)}/>;
   };
   const ItemSeparator = () => {
     return <View style={{ height: 10 }} />;
@@ -57,9 +62,9 @@ function Mynews() {
           color={color.main_color}
         />
         <SpeedDial.Action
-          icon={{ name: "delete", color: "#fff" }}
+          icon={{ name: "add", color: "#fff" }}
           title="Tặng cộng đồng"
-          onPress={() => console.log("Delete Something")}
+          onPress={() =>    navigation.navigate("Category")}
           color={color.main_color}
         />
         <SpeedDial.Action
@@ -69,13 +74,13 @@ function Mynews() {
           color={color.main_color}
         />
         <SpeedDial.Action
-          icon={{ name: "delete", color: "#fff" }}
+          icon={{ name: "add", color: "#fff" }}
           title="Tặng Quỹ/Nhóm từ thiện"
           onPress={() => console.log("Delete Something")}
           color={color.main_color}
         />
         <SpeedDial.Action
-          icon={{ name: "delete", color: "#fff" }}
+          icon={{ name: "add", color: "#fff" }}
           title="Đóng góp công ích "
           onPress={() => console.log("Delete Something")}
           color={color.main_color}

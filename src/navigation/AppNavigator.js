@@ -5,6 +5,8 @@ import Tabs from "../navigation/Tabs";
 import personalInfo from "../screens/personalInfo";
 import settings from "../screens/settings";
 import DetailPost from '../screens/detailpost';
+import Category from '../screens/category';
+import Confirm from '../screens/confirm';
 import {
   createStackNavigator,
   HeaderBackButton,
@@ -69,6 +71,30 @@ function AppNavigator(props) {
           options={({ navigation, route }) => ({
             headerShown: true,
             title: "Chi tiết tin đăng",
+            headerTintColor: "#FFF",
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+          })}
+        />
+        <Stack.Screen
+          name="Category"
+          component={Category}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Danh mục gửi tặng",
+            headerTintColor: "#FFF",
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+          })}
+        />
+        <Stack.Screen
+          name="Confirm"
+          component={Confirm}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Xác nhận gửi tặng",
             headerTintColor: "#FFF",
             headerStyle: {
               backgroundColor: config.main_color,

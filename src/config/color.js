@@ -11,6 +11,8 @@ const gray = '#BDBDBD'
 const gray_1 = '#9E9E9E';
 const gray_2 = '#757575';
 const gray_3 = '#616161';
+const gray_4 = '#E0E0E0';
+const gray_5 = '#EEEEEE';
 const green = '#4CAF50';
 const red = 'red';
 
@@ -24,6 +26,8 @@ export default {
   gray_1,
   gray_2,
   gray_3,
+  gray_4,
+  gray_5,
   green,
   red,
 };
