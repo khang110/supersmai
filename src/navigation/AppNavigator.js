@@ -7,11 +7,14 @@ import settings from "../screens/settings";
 import DetailPost from '../screens/detailpost';
 import Category from '../screens/category';
 import Confirm from '../screens/confirm';
+import PickImage from '../screens/pickimage';
+import ServiceGive from '../screens/servicegive';
 import {
   createStackNavigator,
   HeaderBackButton,
 } from "@react-navigation/stack";
 import config from "../config/config";
+import color from '../config/color';
 import authentication from "../screens/authentication";
 
 const Stack = createStackNavigator();
@@ -35,7 +38,7 @@ function AppNavigator(props) {
           options={({ navigation }) => ({
             headerShown: true,
             title: "Thông tin cá nhân",
-            headerTintColor: "#FFF",
+            headerTintColor: color.white,
             headerStyle: {
               backgroundColor: config.main_color,
             },
@@ -47,7 +50,7 @@ function AppNavigator(props) {
           options={({ navigation }) => ({
             headerShown: true,
             title: "Cài đặt và bảo mật",
-            headerTintColor: "#FFF",
+            headerTintColor: color.white,
             headerStyle: {
               backgroundColor: config.main_color,
             },
@@ -59,7 +62,7 @@ function AppNavigator(props) {
           options={({ navigation }) => ({
             headerShown: true,
             title: "Tài khoản",
-            headerTintColor: "#FFF",
+            headerTintColor: color.white,
             headerStyle: {
               backgroundColor: config.main_color,
             },
@@ -71,7 +74,7 @@ function AppNavigator(props) {
           options={({ navigation, route }) => ({
             headerShown: true,
             title: "Chi tiết tin đăng",
-            headerTintColor: "#FFF",
+            headerTintColor: color.white,
             headerStyle: {
               backgroundColor: config.main_color,
             },
@@ -83,7 +86,7 @@ function AppNavigator(props) {
           options={({ navigation, route }) => ({
             headerShown: true,
             title: "Danh mục gửi tặng",
-            headerTintColor: "#FFF",
+            headerTintColor: color.white,
             headerStyle: {
               backgroundColor: config.main_color,
             },
@@ -95,7 +98,30 @@ function AppNavigator(props) {
           options={({ navigation, route }) => ({
             headerShown: true,
             title: "Xác nhận gửi tặng",
-            headerTintColor: "#FFF",
+            headerTintColor: color.white,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+          })}
+        />
+         <Stack.Screen
+          name="PickImage"
+          component={PickImage}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            headerTintColor: color.white,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+          })}
+        />
+         <Stack.Screen
+          name="ServiceGive"
+          component={ServiceGive}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Chọn đối tượng gửi tặng",
+            headerTintColor: color.white,
             headerStyle: {
               backgroundColor: config.main_color,
             },

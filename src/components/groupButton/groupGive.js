@@ -13,11 +13,17 @@ import HeartRece from "../../../assets/xin.png";
 import HeartGive from "../../../assets/cho.png";
 import Medical from "../../../assets/medical-care.png";
 import config from "../../config/config";
-function Gift() {
+function Gift(props) {
+  const {navigation} =props;
+
+  const pressGive = () => {
+    navigation.navigate("ServiceGive");
+  }
+
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => pressGive()}>
           <View style={styles.wrapButton}>
             <Image source={HeartGive} style={styles.wrapIcon} />
             <Text>Tặng đồ</Text>

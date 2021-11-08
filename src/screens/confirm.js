@@ -11,16 +11,16 @@ import {
   TextInput,
   Alert,
 } from "react-native";
-
-import { Ionicons, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import ButtonCancel from "../components/button/buttonCancel";
+import { Ionicons, Feather, MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 import color from "../config/color";
 import fontSize from "../config/fontsize";
 import config from "../config/config";
 import ButtonConfirm from "../components/button/buttonConfirm";
+import ListImage from '../components/pickImage/ListImage';
+import { connect } from 'react-redux';
 const Title = (props) => {
-  const { navigation } = props;
-
   return (
     <View style={styles.wrapTitle}>
       <Text style={styles.textTitle}>{props.title}</Text>
@@ -31,13 +31,52 @@ const Title = (props) => {
 function Confirm(props) {
   const [textTitle, setTextTitle] = useState("");
   const [textDescrip, setTextDescrip] = useState("");
+  const { navigation, dispatch } = props;
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <ButtonCancel
+          onPress={() => {
+            navigation.navigate("Home");
+          }}
+        />
+      ),
+    });
+  }, [navigation]);
+  const removeImage = (index) => {
+    let listImage = props.infoPost.image;
+    listImage.splice(index, 1);
+    dispatch({ type: "GET_IMG", image: listImage });
+  };
+
+  const renderIMG = () => {
+    if (props.infoPost.image) {
+      return props.infoPost.image.map((img, index) => {
+        return (
+          <View key={index}>
+            <Image source={{ uri: img.uri }} style={styles.imgUpload} />
+            <TouchableOpacity
+              onPress={() => removeImage(index)}
+              style={{ position: "absolute", right: -5, top: -5 }}
+            >
+              <AntDesign
+                name="closecircle"
+                size={config.screen_width * 0.05}
+                color="#BDBDBD"
+              />
+            </TouchableOpacity>
+          </View>
+        );
+      });
+    }
+  };
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View>
         <Title title="Thông tin liên hệ" />
         <View style={styles.wrapInfor}>
-          <Text style={styles.nameAuthor}>Nguyễn Thị Quỳnh Nga</Text>
+          <Text style={styles.nameAuthor}>Nguyễn Anh Khang</Text>
           <View style={styles.wrapAddress}>
             <Text style={styles.titleAddress}>Địa chỉ: </Text>
             <Text style={styles.address} numberOfLines={2}>
@@ -79,6 +118,7 @@ function Confirm(props) {
             style={styles.titleInput}
             onChangeText={(text) => setTextTitle(text)}
             value={textTitle}
+            multiline
             maxLength={50}
             placeholder="Viết tiêu đề hoặc lời nhắn"
           />
@@ -88,21 +128,15 @@ function Confirm(props) {
             onChangeText={(text) => setTextDescrip(text)}
             value={textDescrip}
             multiline
-            numberOfLines={4}
+            maxLength={200}
             placeholder="Viết tình trạng đồ, ghi chú,..."
           />
           <Text style={styles.titleAddress}>Hình ảnh (tối đa 5 hình ảnh)</Text>
-          <TouchableOpacity style={styles.borderUpload}>
-            <MaterialCommunityIcons
-              name="camera-plus-outline"
-              size={config.screen_width * 0.1}
-              color="#B1B1B1"
-            />
-          </TouchableOpacity>
+          <ListImage navigation={navigation} dispatch={dispatch}/>
         </View>
       </View>
       <View style={styles.wrapInfor}>
-        <ButtonConfirm tittle="Đăng tin" />
+        <ButtonConfirm title="Đăng tin" />
       </View>
     </ScrollView>
   );
@@ -160,24 +194,19 @@ const styles = StyleSheet.create({
   },
   titleInput: {
     borderColor: color.gray_1,
-    fontSize: fontSize.fontsize_4,
+    fontSize: fontSize.fontsize_3,
     borderWidth: 1,
-    padding: "2%",
-    borderRadius: 5,
+    paddingTop: '2%',
+    paddingBottom: '2%',
+    paddingLeft: '4%',
+    paddingRight: '4%',
+    borderRadius: 20,
     color: color.black,
     marginTop: "2%",
     marginBottom: "2%",
-  },
-  borderUpload: {
-    width: config.screen_width * 0.2,
-    height: config.screen_width * 0.2,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    borderColor: "#B1B1B1",
-    borderWidth: 2,
-    backgroundColor: "#FFF",
-    marginTop: "1%",
+    backgroundColor: color.white,
   },
 });
-export default Confirm;
+export default connect(function (state) {
+  return { infoPost: state.infoPost };
+})(Confirm);

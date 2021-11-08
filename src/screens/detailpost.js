@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Button, Image } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { SliderBox } from "react-native-image-slider-box";
@@ -8,20 +8,27 @@ import color from "../config/color";
 import { Avatar } from "react-native-elements";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
-const uriAva = "https://www.w3schools.com/howto/img_avatar2.png";
+const uriAva = "https://cdn-icons.flaticon.com/png/512/4194/premium/4194687.png?token=exp=1636281332~hmac=1390cb356a0fb98c5472c6407cfa2d6a";
 const avata = "https://cdn-icons-png.flaticon.com/512/1177/1177568.png";
-const iconLocation = "https://cdn-icons.flaticon.com/png/512/4942/premium/4942069.png?token=exp=1636038179~hmac=7a39dca105074c30d1ddd6dc6889c3d3";
+const arrUri=[uriAva]
+const iconLocation = "https://cdn-icons.flaticon.com/png/512/4942/premium/4942069.png?token=exp=1636257580~hmac=ba5c9594fc4574ec68e534095cb0cfb1";
 function DetailPost(props) {
   let data = props.route.params.data;
+  const [arrImage, setArrImage] = useState([]);
+
   useEffect(() => {
-    // console.log(data)
-  }, []);
+    if (data.urlImage.length == 0) {
+      setArrImage(arrUri);
+    } else {
+      setArrImage(data.urlImage)
+    }
+  },[])
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View>
       <SliderBox
-        images={data.urlImage}
+        images={arrImage}
         resizeMethod={"resize"}
         resizeMode={"cover"}
         autoplay

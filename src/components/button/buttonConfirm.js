@@ -16,7 +16,7 @@ function ButtonConfirm(props) {
     return (
         <TouchableOpacity style={{backgroundColor: color.main_color, padding: '2%', borderRadius: 20,
         alignItems: 'center'}}>
-            <Text style={{color: color.white, fontSize: fontSize.fontsize_3}}>{props.tittle}</Text>
+            <Text style={{color: color.white, fontSize: fontSize.fontsize_3}}>{props.title}</Text>
         </TouchableOpacity>
     )
 }

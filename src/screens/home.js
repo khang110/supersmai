@@ -56,7 +56,7 @@ function Home(props) {
           <Text style={styles.textSayHi}>Hi, Nguyễn Duy Phú Lợn</Text>
           <SearchButton />
         </View>
-        <Gift />
+        <Gift navigation={navigation}/>
         <Text style={styles.textDisCate}>Khám phá danh mục</Text>
         <View style={styles.discoverCategory}>
           <GroupCategory />
