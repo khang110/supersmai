@@ -12,9 +12,11 @@ import {
 import ListCategory from '../config/category';
 import fontSize from '../config/fontsize';
 import { Entypo } from '@expo/vector-icons';
+import { connect } from 'react-redux';
 import config from '../config/config';
 function ExpandableListView(props) {
   const [layoutHeight, setLayoutHeight] = useState(0);
+  const {dispatch} = props;
   useEffect(() => {
     if (props.item.isExpanded) {
       setLayoutHeight(null);
@@ -23,6 +25,7 @@ function ExpandableListView(props) {
     }
   }, [props.item.isExpanded]);
   const showSelectedCategory = (item, category) => {
+    dispatch({ type: "GET_NAME", NameProduct: [{ Category: category, NameProduct: item.name }] });
     props.onPress()
   }
   return (
@@ -76,7 +79,10 @@ function Category(props) {
         {
           accordionData.map((item, key) =>
           (
-            <ExpandableListView key={item.category} onClickFunction={() => updateLayout(key)} item={item} onPress={() => onPress()} />
+            <ExpandableListView key={item.category} 
+            onClickFunction={() => updateLayout(key)} item={item} 
+            onPress={() => onPress()} 
+            dispatch={dispatch}/>           
           ))
         }
       </ScrollView>
@@ -121,4 +127,6 @@ const styles = StyleSheet.create({
   },
 
 });
-export default Category;
+export default connect(function (state) {
+  return { infoPost: state.infoPost }
+})(Category);

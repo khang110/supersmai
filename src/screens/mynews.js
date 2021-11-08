@@ -91,7 +91,7 @@ function Mynews(props) {
       />
       <SpeedDial
         isOpen={open}
-        icon={{ name: "add", color: "#fff" }}
+        icon={{ name: "edit", color: "#fff" }}
         openIcon={{ name: "close", color: "#fff" }}
         onOpen={() => setOpen(!open)}
         onClose={() => setOpen(!open)}

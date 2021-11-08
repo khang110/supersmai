@@ -110,6 +110,7 @@ function AppNavigator(props) {
           options={({ navigation, route }) => ({
             headerShown: true,
             headerTintColor: color.white,
+            title: "Đã chọn 0 hình ảnh",
             headerStyle: {
               backgroundColor: config.main_color,
             },
