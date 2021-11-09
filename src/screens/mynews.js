@@ -100,7 +100,7 @@ function Mynews(props) {
         <SpeedDial.Action
           icon={{ name: "add", color: "#fff" }}
           title="Cần hỗ trợ"
-          onPress={() => console.log("Add Something")}
+          onPress={() => navigation.navigate("WhoYou")}
           color={color.main_color}
         />
         <SpeedDial.Action

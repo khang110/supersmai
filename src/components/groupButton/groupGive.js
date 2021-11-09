@@ -20,6 +20,10 @@ function Gift(props) {
     navigation.navigate("ServiceGive");
   }
 
+  const pressHelp = () => {
+    navigation.navigate("WhoYou");
+  }
+
   return (
     <>
       <View style={styles.container}>
@@ -29,7 +33,7 @@ function Gift(props) {
             <Text>Tặng đồ</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => pressHelp()}>
           <View style={styles.wrapButton}>
             <Image source={HeartRece} style={styles.wrapIcon} />
             <Text>Cần hỗ trợ</Text>

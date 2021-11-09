@@ -9,6 +9,8 @@ import Category from '../screens/category';
 import Confirm from '../screens/confirm';
 import PickImage from '../screens/pickimage';
 import ServiceGive from '../screens/servicegive';
+import WhoYou from '../screens/who';
+import CategoryNeedHelp from '../screens/categoryNeedHelp';
 import {
   createStackNavigator,
   HeaderBackButton,
@@ -75,6 +77,7 @@ function AppNavigator(props) {
             headerShown: true,
             title: "Chi tiết tin đăng",
             headerTintColor: color.white,
+            headerTitleAlign: 'center',
             headerStyle: {
               backgroundColor: config.main_color,
             },
@@ -122,6 +125,31 @@ function AppNavigator(props) {
           options={({ navigation, route }) => ({
             headerShown: true,
             title: "Chọn đối tượng gửi tặng",
+            headerTintColor: color.white,
+            
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+          })}
+        />
+        <Stack.Screen
+          name="WhoYou"
+          component={WhoYou}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Bạn là ai",
+            headerTintColor: color.white,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+          })}
+        />
+        <Stack.Screen
+          name="CategoryNeedHelp"
+          component={CategoryNeedHelp}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Danh mục cần hỗ trợ",
             headerTintColor: color.white,
             headerStyle: {
               backgroundColor: config.main_color,

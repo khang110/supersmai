@@ -20,7 +20,8 @@ import ButtonConfirm from "../button/buttonConfirm";
 import config from "../../config/config";
 import db from "../../utils/db.json";
 import fontSize from "../../config/fontsize";
-import { Input } from "react-native-elements";
+import * as SecureStore from "expo-secure-store";
+import { HelperText } from "react-native-paper";
 function ModalDetailAddress(props) {
   const { modalVisible, closeModal } = props;
   const [isChage, setChange] = useState(false);
@@ -28,16 +29,16 @@ function ModalDetailAddress(props) {
   const [district, setDistrict] = useState("");
   const [commune, setCommune] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
+  const [errProvince, setErrProvince] = useState(false);
+  const [errDistrict, setErrDistrict] = useState(false);
+  const [errCommune, setErrCommune] = useState(false);
+  const [errDetailAddr, setErrDetailAddr] = useState(false);
   const { dispatch } = props;
   //lay ra dia chi
   useEffect(() => {
-    // ẩn warning
     LogBox.ignoreLogs([
       "FloatingLabel: `ref` is not a prop. Trying to access it will result in `undefined` being returned",
     ]);
-    //lay ra dia chi da duoc luu truoc do
-
-    //lay ra dia chi va gan chung vao cac o input
   }, []);
   //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const [data1, setData1] = useState([...db.province]);
@@ -93,54 +94,52 @@ function ModalDetailAddress(props) {
       addressDetail.trim() == ""
     ) {
       if (province == "") {
-        Alert.alert("Thông báo", "Vui lòng chọn tỉnh/thành phố", [
-          { text: "OK" },
-        ]);
+        setErrProvince(true);
       } else {
+        setErrProvince(false);
         if (district == "") {
-          Alert.alert("Thông báo", "Vui lòng chọn quận/huyện", [
-            { text: "OK" },
-          ]);
+          setErrDistrict(true);
         } else {
+          setErrDistrict(false);
           if (commune == "") {
-            Alert.alert("Thông báo", "Vui lòng chọn phường/xã", [
-              { text: "OK" },
-            ]);
+            setErrCommune(true);
           } else {
+            setErrCommune(false);
             if (addressDetail.trim() == "") {
-              Alert.alert("Thông báo", "Vui lòng điền đường/ấp/thôn/số nhà", [
-                { text: "OK" },
-              ]);
+              setErrDetailAddr(true);
             }
           }
         }
       }
     } else {
-      //neu ctrinh chay vao day tuc la khong co thay doi ve dia chi
+      setErrDetailAddr(false);
       async function save(key, value) {
         await SecureStore.setItemAsync(key, value);
       }
-      save("idProvince", province.idProvince).then(() => {
-        save("province", province.name).then((res) => {
-          save("idDistrict", district.idDistrict).then((res) => {
-            save("district", district.name).then((res) => {
-              save("idCommune", commune.idCoummune).then((res) => {
-                save("commune", commune.name).then((res) => {
-                  save("detail", addressDetail).then((res) => {
-                    const { dispatch } = props;
-                    const address = `${addressDetail.trim()}, ${
-                      commune.name
-                    }, ${district.name}, ${province.name}`;
-                    dispatch({ type: "CONFIRM_ADDRESS", address: address });
-                    closeModal();
-                  });
-                });
-              });
-            });
-          });
-        });
+      const address = `${addressDetail.trim()}, ${commune.name}, ${
+        district.name
+      }, ${province.name}`;
+      save("detailAddress", address).then(() => {
+        dispatch({ type: "CONFIRM_ADDRESS", address: address });
+        closeModal();
       });
     }
+  };
+  const hasErrors = () => {
+    if (province != "") {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  const errText = (value, type, show) => {
+    if (show == true) {
+      return (
+        <HelperText type="error" visible={true} style={{ marginLeft: "4%" }}>
+          {type}
+        </HelperText>
+      );
+    } else return;
   };
   return (
     <View>
@@ -185,16 +184,15 @@ function ModalDetailAddress(props) {
                       listTextStyle={styles.listTextStyle}
                       pickerStyle={styles.pickerStyle1}
                       selectedText={province.name}
-                      // placeHolderText={this.state.placeHolderText}
                       searchBarPlaceHolder={"Search....."}
                       searchBarPlaceHolderColor={"#9d9d9d"}
                       selectedTextStyle={styles.selectedTextStyle1}
                       placeHolderTextColor={"black"}
                       dropDownIconStyle={styles.dropDownIconStyle1}
                       searchBarStyle={styles.searchBarStyle}
-                      //dropDownIcon={require('../assets/pin.png')}
                       selectedValue={(index, item) => choseProvince(item)}
                     />
+                    {errText(province, "Chọn tỉnh/thành phố", errProvince)}
 
                     <RNPickerDialog
                       data={data2}
@@ -204,16 +202,15 @@ function ModalDetailAddress(props) {
                       listTextStyle={styles.listTextStyle}
                       pickerStyle={styles.pickerStyle1}
                       selectedText={district.name}
-                      // placeHolderText={this.state.placeHolderText}
                       searchBarPlaceHolder={"Search....."}
                       searchBarPlaceHolderColor={"#9d9d9d"}
                       selectedTextStyle={styles.selectedTextStyle1}
                       placeHolderTextColor={"black"}
                       dropDownIconStyle={styles.dropDownIconStyle1}
                       searchBarStyle={styles.searchBarStyle}
-                      //dropDownIcon={require('../assets/pin.png')}
                       selectedValue={(index, item) => choseDistrict(item)}
                     />
+                    {errText(district, "Chọn Quận/huyện", errDistrict)}
                     <RNPickerDialog
                       data={data3}
                       labelText={"Phường/xã/thị trấn"}
@@ -222,16 +219,15 @@ function ModalDetailAddress(props) {
                       listTextStyle={styles.listTextStyle}
                       pickerStyle={styles.pickerStyle1}
                       selectedText={commune.name}
-                      // placeHolderText={this.state.placeHolderText}
                       searchBarPlaceHolder={"Search....."}
                       searchBarPlaceHolderColor={"#9d9d9d"}
                       selectedTextStyle={styles.selectedTextStyle1}
                       placeHolderTextColor={"black"}
                       dropDownIconStyle={styles.dropDownIconStyle1}
                       searchBarStyle={styles.searchBarStyle}
-                      //dropDownIcon={require('../assets/pin.png')}
                       selectedValue={(index, item) => choseCommune(item)}
                     />
+                    {errText(commune, "Chọn phường/xã/thị trấn", errCommune)}
                   </View>
                   <View style={styles.inputAddress}>
                     <TextInput
@@ -252,6 +248,11 @@ function ModalDetailAddress(props) {
                         },
                       }}
                     />
+                    {errText(
+                      addressDetail,
+                      "Nhập đường/ấp/thôn/số nhà,...",
+                      errDetailAddr
+                    )}
                   </View>
                   <View style={styles.wrapButton}>
                     <ButtonConfirm
@@ -300,17 +301,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
 
-  selectedTextStyle: {
-    height: 50,
-    borderColor: "gray",
-    backgroundColor: "transparent",
-    justifyContent: "center",
-    width: "100%",
-    color: "black",
-    fontSize: fontSize.fontsize_2,
-    paddingLeft: 10,
-    marginTop: -2,
-  },
   selectedTextStyle1: {
     height: 50,
     borderColor: "gray",
@@ -324,14 +314,10 @@ const styles = StyleSheet.create({
   },
   listTextStyle: {
     color: "#000",
-    marginVertical: 10,
-    flex: 0.9,
     marginLeft: 20,
-    marginHorizontal: 10,
     textAlign: "left",
   },
   searchBarStyle: {
-    marginBottom: 10,
     flexDirection: "row",
     height: 40,
     shadowRadius: 1,
@@ -347,40 +333,13 @@ const styles = StyleSheet.create({
     elevation: 1,
     marginHorizontal: 10,
   },
-  placeHolderTextStyle: {
-    color: "red",
-    padding: 10,
-    textAlign: "left",
-    width: "99%",
-    flexDirection: "row",
-  },
-  dropDownIconStyle: {
-    width: 10,
-    height: 10,
-    left: -40,
-  },
   dropDownIconStyle1: {
     width: 10,
-    height: 10,
-    left: -40,
-    marginTop: 15,
-  },
-  pickerStyle: {
-    shadowRadius: 0.5,
-    shadowOpacity: 0.5,
-    borderWidth: 0.5,
-    shadowOffset: {
-      width: 0.5,
-      height: 0.5,
-    },
-    height: 60,
-    borderColor: "#303030",
-    shadowColor: "#303030",
-    borderRadius: 2,
-    elevation: 0.5,
+    // height: 10,
+    left: -20,
   },
   pickerStyle1: {
-    height: 60,
+    height: 50,
     borderBottomColor: "gray",
     borderBottomWidth: 1,
   },
@@ -406,6 +365,7 @@ const styles = StyleSheet.create({
     paddingLeft: "4%",
     paddingRight: "4%",
     marginBottom: "4%",
+    marginTop: "2%",
   },
   styleLabel: {
     fontSize: fontSize.fontsize_4,
@@ -414,8 +374,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderBottomWidth: 0.5,
     paddingHorizontal: 5,
-    height: 60,
-    
+    height: 50,
+    justifyContent: 'center',
   },
 });
 

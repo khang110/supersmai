@@ -11,19 +11,38 @@ import {
   TextInput,
   Alert,
 } from "react-native";
-import fontSize from '../../config/fontsize';
-import color from '../../config/color';
-
+import { connect } from "react-redux";
+import fontSize from "../../config/fontsize";
+import color from "../../config/color";
+import * as SecureStore from "expo-secure-store";
 function InforGive(props) {
-    const {category, onPress} = props;
+  const { category, onPress } = props;
+  const [address, setAddress] = useState("");
+
+  useEffect(() => {
+    const getAddress = async () => {
+      let addressDetail = await SecureStore.getItemAsync("detailAddress");
+      return {
+        addressDetail: addressDetail,
+      };
+    };
+
+    getAddress().then((result) => {
+      if (result) {
+        setAddress(result.addressDetail);     
+      }
+    });
+    console.log(address)
+  }, [props.infoPost.address]);
+
+
+
   return (
     <View>
       <Text style={styles.nameAuthor}>Nguyễn Anh Khang</Text>
       <View style={styles.wrapAddress}>
         <Text style={styles.titleAddress}>Địa chỉ: </Text>
-        <Text style={styles.address} numberOfLines={2}>
-          210/2 Hoàng Diệu 2, Linh Chiểu, Thủ Đức, Hồ Chí Minh
-        </Text>
+        <Text style={styles.address} numberOfLines={2}>{address==null ? "Nhập địa chỉ" : address}</Text>
       </View>
       <View style={{ alignItems: "flex-end" }}>
         <TouchableOpacity onPress={() => onPress()}>
@@ -68,4 +87,8 @@ const styles = StyleSheet.create({
   lineBetween: { flex: 1, height: 0.5, backgroundColor: "#BDBDBD" },
 });
 
-export default InforGive;
+export default connect(function (state) {
+  return {
+    infoPost: state.infoPost,
+  };
+})(InforGive);
