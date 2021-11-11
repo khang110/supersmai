@@ -4,7 +4,7 @@ const {
   width: SCREEN_WIDTH,
   height: SCREEN_HEIGHT,
 } = Dimensions.get("window");
-const scale= SCREEN_WIDTH / 375;
+const scale = SCREEN_WIDTH / 375;
 function normalize(size) {
   const newSize = size * scale;
   if (Platform.OS == 'ios') {
@@ -13,7 +13,6 @@ function normalize(size) {
     return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
   }
 }
-
 
 const fontsize_1 = normalize(25)
 const fontsize_2 = normalize(20)
