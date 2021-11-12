@@ -11,7 +11,6 @@ import {
   ScrollView,
   SafeAreaView,
 } from "react-native";
-// import { SafeAreaView } from 'react-navigation';
 const uriImage =
   "https://images.pexels.com/photos/9727100/pexels-photo-9727100.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
 const heightStatusBar = StatusBar.currentHeight;
@@ -57,9 +56,9 @@ function Home(props) {
           <SearchButton />
         </View>
         <Gift navigation={navigation}/>
-        <Text style={styles.textDisCate}>Khám phá danh mục</Text>
+        <Text style={styles.textDisCate}>Khám phá danh mục tặng cộng đồng</Text>
         <View style={styles.discoverCategory}>
-          <GroupCategory />
+          <GroupCategory navigation={navigation}/>
         </View>
         <Text style={styles.textDisCate}>Tin đăng mới</Text>
       </>

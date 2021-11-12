@@ -21,11 +21,16 @@ import Electric from "../../../assets/electric.png";
 import Exterior from "../../../assets/exterior.png";
 import Vehicle from "../../../assets/vehicle.png";
 import config from "../../config/config";
-function GroupCategory() {
+function GroupCategory(props) {
+  const {navigation} = props;
+  const handlePress = (value) => {
+    navigation.navigate("DiscoverCategory");
+  }
+
   return (
     <View>
       <View style={styles.wrapRow}>
-        <ButtonCategory icon={Food} text={"Nhu yếu\nphẩm"} />
+        <ButtonCategory icon={Food} text={"Nhu yếu\nphẩm"} onPress={() => handlePress("Nhu yếu phẩm")}/>
         <ButtonCategory icon={Clothes} text={"Đồ người\nlớn"} />
         <ButtonCategory icon={ChildClothes} text={"Đồ trẻ\nem"} />
         <ButtonCategory icon={Study} text={"Đồ học\ntập"} />

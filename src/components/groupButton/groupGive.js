@@ -21,7 +21,7 @@ function Gift(props) {
   }
 
   const pressHelp = () => {
-    navigation.navigate("WhoYou");
+    navigation.navigate("CategoryNeedHelp");
   }
 
   return (

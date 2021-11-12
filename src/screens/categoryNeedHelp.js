@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,22 +8,43 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
-  TextInput,
+  TextInput, Alert
 } from "react-native";
 import color from "../config/color";
 import fontSize from "../config/fontsize";
 import { AntDesign } from "@expo/vector-icons";
 import { connect } from "react-redux";
 
+import CategoryCheckBox from '../components/category/categoryCheckBox';
+import ButtonCancel from '../components/button/buttonCancel';
 function CategoryNeedHelp(props) {
-
+  const {navigation, dispatch} = props;
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <ButtonCancel
+          onPress={() => {
+            dispatch({ type: "RESET" });
+            navigation.navigate("Home");
+          }}
+        />
+      ),
+    });
+  }, [navigation]);
+  const handlePress = () => {
+      navigation.navigate("Confirm")    
+  }
     return(
-        <View>
-            <Text>Danh mục cần hỗ trợ</Text>
+        <View style={styles.container}>
+            <CategoryCheckBox onPress={() => handlePress()}/>
         </View>
     )
 }
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+})
 export default connect(function (state) {
     return {
       infoPost: state.infoPost,

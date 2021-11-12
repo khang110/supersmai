@@ -11,6 +11,8 @@ import PickImage from '../screens/pickimage';
 import ServiceGive from '../screens/servicegive';
 import WhoYou from '../screens/who';
 import CategoryNeedHelp from '../screens/categoryNeedHelp';
+import DiscoverCategory from '../screens/discoverCategory';
+import GiveGroups from '../screens/giveGroup';
 import {
   createStackNavigator,
   HeaderBackButton,
@@ -18,6 +20,14 @@ import {
 import config from "../config/config";
 import color from '../config/color';
 import authentication from "../screens/authentication";
+import { Ionicons,Entypo } from '@expo/vector-icons';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert
+} from "react-native";
 
 const Stack = createStackNavigator();
 function AppNavigator(props) {
@@ -44,6 +54,9 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
           })}
         />
         <Stack.Screen
@@ -56,6 +69,9 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
           })}
         />
         <Stack.Screen
@@ -68,6 +84,9 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
           })}
         />
         <Stack.Screen
@@ -81,6 +100,7 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
           })}
         />
         <Stack.Screen
@@ -93,6 +113,9 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
           })}
         />
         <Stack.Screen
@@ -105,6 +128,9 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
           })}
         />
          <Stack.Screen
@@ -117,6 +143,9 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
           })}
         />
          <Stack.Screen
@@ -130,6 +159,9 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
           })}
         />
         <Stack.Screen
@@ -154,6 +186,41 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+          })}
+        />
+        <Stack.Screen
+          name="DiscoverCategory"
+          component={DiscoverCategory}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Tin tặng cộng đồng",
+            headerTintColor: color.white,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            
+          })}
+        />
+        <Stack.Screen
+          name="GiveGroups"
+          component={GiveGroups}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Danh sách cần hỗ trợ",
+            headerTintColor: color.white,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            
           })}
         />
       </Stack.Navigator>
