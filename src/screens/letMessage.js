@@ -17,7 +17,7 @@ import {
   Feather,
   MaterialCommunityIcons,
   AntDesign,
-  Entypo
+  Entypo,
 } from "@expo/vector-icons";
 import axios from "axios";
 import color from "../config/color";
@@ -25,19 +25,11 @@ import fontSize from "../config/fontsize";
 import config from "../config/config";
 import ButtonConfirm from "../components/button/buttonConfirm";
 import ListImage from "../components/pickImage/ListImage";
-import InforGive from "../components/confirm/inforGive";
 import { connect } from "react-redux";
-import DetailAddress from '../components/Modal/DetailAddress';
+import DetailAddress from "../components/Modal/DetailAddress";
+import * as SecureStore from "expo-secure-store";
 
-const Title = (props) => {
-  return (
-    <View style={styles.wrapTitle}>
-      <Text style={styles.textTitle}>{props.title}</Text>
-    </View>
-  );
-};
-
-function Confirm(props) {
+function LetMessage(props) {
   const [textTitle, setTextTitle] = useState("");
   const [textDescrip, setTextDescrip] = useState("");
   const [showModalAddress, setShowModalAddress] = useState(false);
@@ -48,7 +40,25 @@ function Confirm(props) {
       headerRight: () => (
         <ButtonCancel
           onPress={() => {
-            dispatch({ type: "RESET" });  const [address, setAddress] = useState("");
+            dispatch({ type: "RESET" });
+            navigation.navigate("Home");
+          }}
+        />
+      ),
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => {
+            dispatch({ type: "RESET" });
+            navigation.goBack();
+          }}
+          style={{ marginLeft: "10%" }}
+        >
+          <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
     const getAddress = async () => {
@@ -63,77 +73,50 @@ function Confirm(props) {
       }
     });
   }, [props.infoPost.address]);
-            navigation.navigate("Home");
-          }}
-        />
-      ),
-      headerLeft: () => (
-        <TouchableOpacity
-          onPress={() => {
-            dispatch({ type: "RESET" });
-            navigation.goBack();
-          }}
-          style={{marginLeft: '10%'}}
-        >
-          <Entypo name="chevron-thin-left" size={25} color="#FFF" />
-        </TouchableOpacity>
-      ),
-
-
-      
-    });
-  }, [navigation]);
-
-
+  const changeAddr = () => {
+    setShowModalAddress(true);
+  };
+  const closeAddr = () => {
+    setShowModalAddress(false);
+  };
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View>
-        <Title title="Thông tin liên hệ" />
         <View style={styles.wrapInfor}>
-          <InforGive category={props.infoPost.NameProduct[0].NameProduct} 
-          dispatch={dispatch}
-          onPress={() => setShowModalAddress(true)}/>
-          <Text style={styles.textCongDong}>Cộng đồng</Text>
-          <View style={styles.wrapWarning}>
-            <Feather
-              name="info"
-              size={config.screen_width * 0.04}
-              color="#4CAF50"
-            />
-            <Text style={styles.textNote}>
-              {" "}
-              Cộng đồng ai cần sẽ liên hệ với bạn
+          <Text style={{ fontSize: fontSize.fontsize_3, fontWeight: "bold" }}>
+            Nguyễn Anh Khang - 0971037601
+          </Text>
+          <View style={styles.wrapAddress}>
+            <Text style={styles.titleAddress}>Địa chỉ: </Text>
+            <Text style={styles.address} numberOfLines={2}>
+              {address == null ? "Nhập địa chỉ" : address}
             </Text>
           </View>
+          <View style={{ alignItems: "flex-end" }}>
+            <TouchableOpacity onPress={changeAddr}>
+              <Text style={styles.changeAdd}>Thay đổi</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <Title title="Thông tin mô tả" />
+        <View style={{ backgroundColor: "#FFF", height: "2%" }} />
         <View style={styles.wrapInfor}>
-          <Text style={styles.titleAddress}>Tiêu đề*</Text>
-          <TextInput
-            style={styles.titleInput}
-            onChangeText={(text) => setTextTitle(text)}
-            value={textTitle}
-            multiline
-            maxLength={50}
-            placeholder="Viết tiêu đề hoặc lời nhắn"
-          />
-          <Text style={styles.titleAddress}>Lời nhắn hoặc mô tả</Text>
+          <Text style={styles.titleAddress}>Lời nhắn hoặc mô tả*</Text>
           <TextInput
             style={styles.titleInput}
             onChangeText={(text) => setTextDescrip(text)}
             value={textDescrip}
             multiline
             maxLength={200}
-            placeholder="Viết tình trạng đồ, ghi chú,..."
+            placeholder="Viết lời nhắn"
           />
           <Text style={styles.titleAddress}>Hình ảnh (tối đa 5 hình ảnh)</Text>
           <ListImage navigation={navigation} dispatch={dispatch} />
         </View>
+        <DetailAddress modalVisible={showModalAddress} closeModal={closeAddr} />
       </View>
       <View style={styles.wrapInfor}>
-        <ButtonConfirm title="Đăng tin"/>
+        <ButtonConfirm title="Gửi" />
       </View>
-      <DetailAddress modalVisible={showModalAddress} closeModal={() => setShowModalAddress(false)}/>
     </ScrollView>
   );
 }
@@ -163,7 +146,13 @@ const styles = StyleSheet.create({
   },
 
   titleAddress: { fontSize: fontSize.fontsize_4, color: color.gray_2 },
-
+  wrapAddress: { flexDirection: "row", marginTop: "1%" },
+  titleAddress: { fontSize: fontSize.fontsize_4, color: color.gray_2 },
+  address: { fontSize: fontSize.fontsize_4, maxWidth: "90%" },
+  changeAdd: {
+    color: "#26c6da",
+    fontSize: fontSize.fontsize_4,
+  },
   textCongDong: { fontSize: fontSize.fontsize_4, fontWeight: "bold" },
   wrapWarning: {
     flexDirection: "row",
@@ -187,4 +176,4 @@ const styles = StyleSheet.create({
 });
 export default connect(function (state) {
   return { infoPost: state.infoPost };
-})(Confirm);
+})(LetMessage);

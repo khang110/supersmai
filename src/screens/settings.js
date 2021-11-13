@@ -19,10 +19,10 @@ import config from "../config/config";
 function settings(props) {
   const { navigation } = props;
   const logout = async () => {
-      navigation.navigate("Authentication");
+    navigation.navigate("Authentication");
   };
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>
         <View style={styles.content}>
           <TouchableOpacity style={styles.btn_profile}>
@@ -50,11 +50,11 @@ function settings(props) {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={styles.layout_logout}>
-          <TouchableOpacity style={styles.btn_logout} onPress={() => logout()}>
-            <Text style={styles.text_logout}>Đăng xuất</Text>
-          </TouchableOpacity>
-        </View>
+      </View>
+      <View>
+        <TouchableOpacity style={styles.btn_logout} onPress={() => logout()}>
+          <Text style={styles.text_logout}>Đăng xuất</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -62,6 +62,11 @@ function settings(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  contentContainer: {
+    flexGrow: 1,
+    justifyContent: "space-between",
+    flexDirection: "column",
   },
   content: {
     marginTop: "5%",
@@ -105,16 +110,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     top: "300%",
-    
   },
   //btn
   btn_logout: {
-    height: config.btn_height,
-    width: config.btn_width,
-    justifyContent: "center",
-    alignSelf: "center",
     backgroundColor: config.red,
     borderRadius: config.btn_border_radius,
+    margin: '4%', 
+    padding: '2%'
   },
   text_logout: {
     fontSize: 20,

@@ -29,16 +29,16 @@ function ServiceGive(props) {
     const pressTCD = () => {
         navigation.navigate("Category");
     }
-    const pressGroup = () => {
-      navigation.navigate("GiveGroups");
+    const pressGroup = (type) => {
+      navigation.navigate("GiveGroups", {typeAuthor: type});
     }
 
   return (
     <View style={styles.container}>
       <Row title="Tặng cộng đồng" onPress={() => pressTCD()}/>
-      <Row title="Tặng hoàn cảnh khó khăn"  onPress={() => pressGroup()}/>
-      <Row title="Tặng Quỹ/Nhóm từ thiện" onPress={() => pressGroup()}/>
-      <Row title="Đóng góp công ích" onPress={() => pressGroup()}/>
+      <Row title="Tặng hoàn cảnh khó khăn"  onPress={() => pressGroup("canhan")}/>
+      <Row title="Tặng Quỹ/Nhóm từ thiện" onPress={() => pressGroup("quy")}/>
+      <Row title="Đóng góp công ích" onPress={() => pressGroup("tochuc")}/>
     </View>
   );
 }

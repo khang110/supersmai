@@ -51,7 +51,7 @@ const News = (props) => {
           </View>
         </View>
         <Text style={{color: color.black, fontSize: fontSize.fontsize_5}} numberOfLines={2}>{data.title}</Text>
-        <View style={{marginTop: '1%', marginBottom: '1%'}}>
+        <View style={{marginTop: '1%', marginBottom: '1%',}}>
           <Image
             style={styles.imageStyle}
             source={{ uri: link }}

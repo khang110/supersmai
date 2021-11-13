@@ -56,7 +56,7 @@ function Home(props) {
           <SearchButton />
         </View>
         <Gift navigation={navigation}/>
-        <Text style={styles.textDisCate}>Khám phá danh mục tặng cộng đồng</Text>
+        <Text style={styles.textDisCate}>Khám phá tin đăng tặng</Text>
         <View style={styles.discoverCategory}>
           <GroupCategory navigation={navigation}/>
         </View>

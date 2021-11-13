@@ -13,14 +13,16 @@ import WhoYou from '../screens/who';
 import CategoryNeedHelp from '../screens/categoryNeedHelp';
 import DiscoverCategory from '../screens/discoverCategory';
 import GiveGroups from '../screens/giveGroup';
+import LetMessage from '../screens/letMessage';
 import {
   createStackNavigator,
-  HeaderBackButton,
+  HeaderBackButton
 } from "@react-navigation/stack";
 import config from "../config/config";
 import color from '../config/color';
 import authentication from "../screens/authentication";
 import { Ionicons,Entypo } from '@expo/vector-icons';
+import { connect } from "react-redux";
 import {
   StyleSheet,
   Text,
@@ -130,7 +132,8 @@ function AppNavigator(props) {
             },
             headerTitleAlign: 'center',
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />),
+            
           })}
         />
          <Stack.Screen
@@ -219,12 +222,28 @@ function AppNavigator(props) {
             },
             headerTitleAlign: 'center',
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
-            
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)            
+          })}
+        />
+        <Stack.Screen
+          name="LetMessage"
+          component={LetMessage}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Để lại lời nhắn",
+            headerTintColor: color.white,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)            
           })}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-export default AppNavigator;
+export default connect(function (state) {
+  return { infoPost: state.infoPost };
+})(AppNavigator);

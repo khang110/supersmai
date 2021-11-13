@@ -27,7 +27,7 @@ function GiveGroups(props) {
   const [datafilter, setDataFilter] = useState([]);
   const [query, setQuery] = useState("");
   const [showModalAddress, setShowModalAddress] = useState(false);
-  const [typeAuthor, settypeAuthor] = useState("canhan");
+  const [typeAuthor, settypeAuthor] = useState(props.route.params.typeAuthor);
   const addr = props.dataFilter.addressFilter;
 
   useEffect(() => {

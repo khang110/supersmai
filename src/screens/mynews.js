@@ -86,7 +86,7 @@ function Mynews(props) {
         isOpen={open}
         icon={{ name: "edit", color: "#fff" }}
         openIcon={{ name: "close", color: "#fff" }}
-        onOpen={() => setOpen(!open)}
+        onOpen={() => {setOpen(!open);setOpenFilter(false)}}
         onClose={() => setOpen(!open)}
         color={color.main_color}
       >

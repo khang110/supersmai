@@ -6,9 +6,9 @@ import { Provider } from "react-redux";
 import AppNavigator from "./src/navigation/AppNavigator";
 import store from './Redux.js';
 export default function App(props) {
-  post.getNewPost().then((res) => {
-    console.log(res);
-  });
+  // post.getNewPost().then((res) => {
+  //   console.log(res);
+  // });
   return (
     <Provider store={store}>
       <View style={{flex: 1}}>
