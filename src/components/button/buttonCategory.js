@@ -10,22 +10,23 @@ import {
   SafeAreaView,
   StatusBar,
 } from "react-native";
-
+import fontSize from '../../config/fontsize';
+import config from '../../config/config';
 function ButtonCategory(props) {
-  const {icon, text} = props;
+  const {icon, text, onPress} = props;
     return (
     <>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => onPress()}>
         <View style={{ alignItems: "center" }}>
           <Avatar
-            size={60}
+            size={config.screen_width*0.15}
             source={icon}
             avatarStyle={{
               borderColor: "white",
               borderRadius: 20,
             }}
           />
-          <Text style={{textAlign: 'center'}}>{text}</Text>
+          <Text style={{textAlign: 'center', fontSize: fontSize.fontsize_4}}>{text}</Text>
         </View>
       </TouchableOpacity>
     </>

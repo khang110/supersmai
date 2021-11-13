@@ -30,7 +30,7 @@ function ServiceGive(props) {
         navigation.navigate("Category");
     }
     const pressGroup = () => {
-        console.log("Tặng nhóm")
+      navigation.navigate("GiveGroups");
     }
 
   return (

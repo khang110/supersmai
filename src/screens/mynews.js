@@ -15,14 +15,7 @@ import axios from "axios";
 import color from "../config/color";
 import DropDown from "react-native-paper-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
-import {
-  Appbar,
-  DarkTheme,
-  DefaultTheme,
-  Provider,
-  Surface,
-  ThemeProvider,
-} from "react-native-paper";
+
 const token =
   "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SUQiOiI2MTFjMDY3MGE1MjU4MzAwMjIzM2I1MzUiLCJpYXQiOjE2MzU3NDAwNjB9.sATc8Ly5P7YexK1lLilNNdhehMf44feEclFYDOmiEX4";
 function Mynews(props) {
@@ -100,7 +93,7 @@ function Mynews(props) {
         <SpeedDial.Action
           icon={{ name: "add", color: "#fff" }}
           title="Cần hỗ trợ"
-          onPress={() => navigation.navigate("WhoYou")}
+          onPress={() => navigation.navigate("CategoryNeedHelp")}
           color={color.main_color}
         />
         <SpeedDial.Action

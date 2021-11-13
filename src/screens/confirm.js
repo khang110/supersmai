@@ -60,7 +60,9 @@ function Confirm(props) {
       <View>
         <Title title="Thông tin liên hệ" />
         <View style={styles.wrapInfor}>
-          <InforGive category={props.infoPost.NameProduct[0].NameProduct} onPress={() => setShowModalAddress(true)}/>
+          <InforGive category={props.infoPost.NameProduct[0].NameProduct} 
+          dispatch={dispatch}
+          onPress={() => setShowModalAddress(true)}/>
           <Text style={styles.textCongDong}>Cộng đồng</Text>
           <View style={styles.wrapWarning}>
             <Feather
@@ -99,7 +101,7 @@ function Confirm(props) {
         </View>
       </View>
       <View style={styles.wrapInfor}>
-        <ButtonConfirm title="Đăng tin" />
+        <ButtonConfirm title="Đăng tin"/>
       </View>
       <DetailAddress modalVisible={showModalAddress} closeModal={() => setShowModalAddress(false)}/>
     </ScrollView>

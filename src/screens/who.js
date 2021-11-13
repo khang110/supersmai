@@ -35,7 +35,7 @@ function WhoScreen(props) {
     <View style={styles.container}>
       <Row title="Hoàn cảnh khó khăn" onPress={() => handlePress("Cá nhân")} />
       <Row
-        title="Quỹ/Nhóm từ thiện"
+        title="Nhóm từ thiện"
         onPress={() => handlePress("Quỹ/Nhóm từ thiện")}
       />
       <Row

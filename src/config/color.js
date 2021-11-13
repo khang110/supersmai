@@ -1,7 +1,5 @@
 import { Dimensions, Platform, PixelRatio } from "react-native";
 
-
-
 const main_color = '#1BA8FF';
 const active_color = '#CAD7FF'
 const border_bottom = "#D1D1D1";

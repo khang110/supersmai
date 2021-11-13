@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState, useLayoutEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -14,8 +14,31 @@ import {
 import { connect } from "react-redux";
 import fontSize from "../../config/fontsize";
 import color from "../../config/color";
+import { Ionicons, AntDesign, Entypo } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
+import RadioButtonRN from "radio-buttons-react-native";
+import { Tooltip } from "react-native-elements";
+
+import config from "../../config/config";
 function InforGive(props) {
+  const data = [
+    {
+      label: "Hoàn cảnh khó khăn",
+      value: "Cá nhân",
+      id: 1,
+    },
+    {
+      label: "Quỹ/nhóm từ thiện",
+      value: "Quỹ/Nhóm từ thiện",
+      id: 2,
+    },
+    {
+      label: "Tổ chức công ích",
+      value: "Tổ chức công ích",
+      id: 3,
+    },
+  ];
+  const {dispatch} = props
   const { category, onPress } = props;
   const [address, setAddress] = useState("");
 
@@ -26,32 +49,43 @@ function InforGive(props) {
         addressDetail: addressDetail,
       };
     };
-
     getAddress().then((result) => {
       if (result) {
-        setAddress(result.addressDetail);     
+        setAddress(result.addressDetail);
       }
     });
-    console.log(address)
   }, [props.infoPost.address]);
 
-
-
+  const pressRadio = (item) => {
+    dispatch({ type: 'SET_TYPE_AUTHOR', TypeAuthor: item.value })
+  }
   return (
     <View>
       <Text style={styles.nameAuthor}>Nguyễn Anh Khang</Text>
       <View style={styles.wrapAddress}>
         <Text style={styles.titleAddress}>Địa chỉ: </Text>
-        <Text style={styles.address} numberOfLines={2}>{address==null ? "Nhập địa chỉ" : address}</Text>
+        <Text style={styles.address} numberOfLines={2}>
+          {address == null ? "Nhập địa chỉ" : address}
+        </Text>
       </View>
       <View style={{ alignItems: "flex-end" }}>
         <TouchableOpacity onPress={() => onPress()}>
           <Text style={styles.changeAdd}>Thay đổi</Text>
         </TouchableOpacity>
       </View>
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", }}>
         <Text style={styles.titleAddress}>Đồ tặng: </Text>
         <Text style={styles.textCategory}>{category}</Text>
+      
+      </View>
+      <View>
+        <RadioButtonRN
+          data={data}
+          boxStyle={{ borderRadius: 20 }}
+          textStyle={{ fontSize: fontSize.fontsize_4 }}
+          animationTypes={["rotate"]}
+          selectedBtn={(item) => pressRadio(item)}
+        />
       </View>
       <View style={styles.wrapTypeWho}>
         <View>
