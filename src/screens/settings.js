@@ -52,8 +52,8 @@ function settings(props) {
         </View>
       </View>
       <View>
-        <TouchableOpacity style={styles.btn_logout} onPress={() => logout()}>
-          <Text style={styles.text_logout}>Đăng xuất</Text>
+        <TouchableOpacity style={styles.btn_layout} onPress={() => logout()}>
+          <Text style={styles.text_btn_layout}>Đăng xuất</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -86,39 +86,34 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  icon_btn: {
-    padding: "2%",
-    borderRadius: 10,
-    backgroundColor: config.active_color,
-    justifyContent: "center",
-    marginRight: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-    elevation: 10,
-    elevation: 14,
-  },
+  // icon_btn: {
+  //   padding: "2%",
+  //   borderRadius: 10,
+  //   backgroundColor: config.active_color,
+  //   justifyContent: "center",
+  //   marginRight: 20,
+  //   shadowColor: "#000",
+  //   shadowOffset: {
+  //     width: 0,
+  //     height: 5,
+  //   },
+  //   shadowOpacity: 0.34,
+  //   shadowRadius: 6.27,
+  //   elevation: 10,
+  //   elevation: 14,
+  // },
   text_btn: {
     fontSize: config.fontsize_3,
   },
 
-  layout_logout: {
-    width: "100%",
-    height: "100%",
-    top: "300%",
-  },
   //btn
-  btn_logout: {
+  btn_layout: {
     backgroundColor: config.red,
     borderRadius: config.btn_border_radius,
-    margin: '4%', 
-    padding: '2%'
+    margin: "4%",
+    padding: "2%",
   },
-  text_logout: {
+  text_btn_layout: {
     fontSize: 20,
     color: "white",
     justifyContent: "center",

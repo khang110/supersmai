@@ -13,9 +13,9 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   async (config) => {
-    const accessToken = SecureStore.getItemAsync("token");
+    const accessToken =await SecureStore.getItemAsync("token");
     if (accessToken) {
-      config.headers.Authorization = "bearer" + accessToken;
+      config.headers.Authorization = "bearer " + accessToken;
     }
     return config;
   },
@@ -24,12 +24,13 @@ axiosClient.interceptors.request.use(
   }
 );
 axiosClient.interceptors.response.use(
-    console.log("test"),
     (response) => {
         if(response){
-            console.log(response);
             return response
         }
+    },
+    (error) => {
+        return error
     }
 );
 
