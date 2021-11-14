@@ -14,6 +14,8 @@ import CategoryNeedHelp from '../screens/categoryNeedHelp';
 import DiscoverCategory from '../screens/discoverCategory';
 import GiveGroups from '../screens/giveGroup';
 import LetMessage from '../screens/letMessage';
+import ListGive from '../screens/listGive';
+import ConfirmGive from '../screens/confirmGive';
 import {
   createStackNavigator,
   HeaderBackButton
@@ -231,6 +233,36 @@ function AppNavigator(props) {
           options={({ navigation, route }) => ({
             headerShown: true,
             title: "Để lại lời nhắn",
+            headerTintColor: color.white,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)            
+          })}
+        />
+          <Stack.Screen
+          name="ListGive"
+          component={ListGive}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: route.params.name,
+            headerTintColor: color.white,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerTitleAlign: 'center',
+            headerShadowVisible: false,
+            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)            
+          })}
+        />
+         <Stack.Screen
+          name="ConfirmGive"
+          component={ConfirmGive}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Xác nhận gửi tặng",
             headerTintColor: color.white,
             headerStyle: {
               backgroundColor: config.main_color,

@@ -11,6 +11,7 @@ import {
   TextInput,
   Alert,
 } from "react-native";
+import { connect } from "react-redux";
 import fontSize from "../config/fontsize";
 import color from "../config/color";
 const Row = ({ onPress, title }) => {
@@ -24,9 +25,10 @@ const Row = ({ onPress, title }) => {
 };
 
 function ServiceGive(props) {
-    const {navigation} = props;
+    const {navigation, dispatch} = props;
 
     const pressTCD = () => {
+        dispatch({ type: "SET_TYPE_AUTHOR", TypeAuthor: "tangcongdong" });
         navigation.navigate("Category");
     }
     const pressGroup = (type) => {
@@ -48,4 +50,8 @@ const styles = StyleSheet.create({
   },
   wrapRow: { backgroundColor: '#FFF', padding: '4%', marginBottom: '1%'}
 });
-export default ServiceGive;
+export default connect(function (state) {
+  return {
+    infoPost: state.infoPost,
+  };
+})(ServiceGive);

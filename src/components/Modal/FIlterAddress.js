@@ -133,12 +133,13 @@ function ModalDetailAddress(props) {
           onPressOut={() => {
             closeModal();
           }}
+         
         >
-          <ScrollView
+          {/* <ScrollView
             directionalLockEnabled={true}
             contentContainerStyle={styles.scrollModal}
-          >
-            <TouchableWithoutFeedback>
+          > */}
+            <TouchableWithoutFeedback style={{justifyContent: 'center', flex: 1}}>
               <View style={styles.border}>
                 <View style={styles.containermain}>
                   <View style={styles.top}>
@@ -150,6 +151,22 @@ function ModalDetailAddress(props) {
                       />
                     </TouchableOpacity>
                     <Text style={styles.tittleText}>Địa chỉ của bạn</Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        dispatch({ type: "RESET_FILTER_ADDRESS" });
+                        setProvince("");
+                        setDistrict("");
+                        setCommune("");
+                 
+                      }}
+                      style={{ justifyContent: "center" }}
+                    >
+                      <Text
+                        style={{ color: "red", fontSize: fontSize.fontsize_4 }}
+                      >
+                        Bỏ lọc
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                   <View>
                     <RNPickerDialog
@@ -214,7 +231,7 @@ function ModalDetailAddress(props) {
                 </View>
               </View>
             </TouchableWithoutFeedback>
-          </ScrollView>
+          {/* </ScrollView> */}
         </TouchableOpacity>
       </Modal>
     </View>
@@ -225,13 +242,14 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000000aa",
     flex: 1,
+    paddingLeft: "10%",
+    paddingRight: "10%",
+    justifyContent: 'center'
   },
   wrapButton: {
     padding: "4%",
   },
   scrollModal: {
-    justifyContent: "center",
-    alignItems: "center",
     flex: 1,
     paddingLeft: "8%",
     paddingRight: "8%",
@@ -304,6 +322,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingLeft: "2%",
     paddingRight: "2%",
+    justifyContent: 'space-between'
   },
   tittleText: {
     fontSize: fontSize.fontsize_2,

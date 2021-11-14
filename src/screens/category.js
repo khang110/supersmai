@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect,useLayoutEffect } from 'react';
 import {
   LayoutAnimation,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   Platform,
   Image, Dimensions
 } from 'react-native';
+import ButtonCancel from '../components/button/buttonCancel';
 import ListCategory from '../config/category';
 import fontSize from '../config/fontsize';
 import { Entypo } from '@expo/vector-icons';
@@ -56,6 +57,30 @@ function ExpandableListView(props) {
 
 
 function Category(props) {
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <ButtonCancel
+          onPress={() => {
+            dispatch({ type: "RESET" });
+            navigation.navigate("Home");
+          }}
+        />
+      ),
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => {
+            dispatch({ type: "RESET" });
+            navigation.goBack();
+          }}
+          style={{ marginLeft: "10%" }}
+        >
+          <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+        </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
 
   // create array to contain Expandable ListView items & create a State named as accordionData and store the array in this State
   const {dispatch, navigation} = props;

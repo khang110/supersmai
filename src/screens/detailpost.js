@@ -20,6 +20,7 @@ function DetailPost(props) {
   const [arrImage, setArrImage] = useState([]);
 
   useEffect(() => {
+    // console.log(data)
     if (data.urlImage.length == 0) {
       setArrImage(arrUri);
     } else {
@@ -27,7 +28,19 @@ function DetailPost(props) {
     }
   }, []);
   const pressGive = () => {
-    navigation.navigate("LetMessage");
+    if (data.TypeAuthor == "tangcongdong") {
+      navigation.navigate("LetMessage", {data: data});
+    } else {
+      navigation.navigate("ListGive", {data: data, name: "Xác nhận đồ bạn tặng"});
+    }
+    
+  }
+  const renderTextButton = () => {
+    if (data.TypeAuthor == "tangcongdong") {
+      return " Lời nhắn"
+    } else {
+      return " Gửi tặng"
+    }
   }
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -82,7 +95,7 @@ function DetailPost(props) {
             size={config.screen_width * 0.06}
             color="#FFF"
           />
-          <Text style={styles.textGive}> Lời nhắn</Text>
+          <Text style={styles.textGive}>{renderTextButton()}</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

@@ -80,12 +80,14 @@ const styles = StyleSheet.create({
     paddingRight: width * 0.02,
   },
   textChipActive: {
-    fontSize: fontSize.fontsize_5,
+    fontSize: fontSize.fontsize_4,
     color: "#000",
+    fontWeight: '900'
   },
   textChipNoActive: {
-    fontSize: fontSize.fontsize_5,
+    fontSize: fontSize.fontsize_4,
     color: "#BDBDBD",
+    fontWeight: '900'
   },
 });
 export default MyComponent;

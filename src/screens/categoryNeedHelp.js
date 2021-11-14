@@ -19,18 +19,7 @@ import CategoryCheckBox from '../components/category/categoryCheckBox';
 import ButtonCancel from '../components/button/buttonCancel';
 function CategoryNeedHelp(props) {
   const {navigation, dispatch} = props;
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <ButtonCancel
-          onPress={() => {
-            dispatch({ type: "RESET" });
-            navigation.navigate("Home");
-          }}
-        />
-      ),
-    });
-  }, [navigation]);
+ 
   const handlePress = () => {
       navigation.navigate("Confirm")    
   }
