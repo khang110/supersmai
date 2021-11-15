@@ -13,6 +13,7 @@ const gray_4 = '#E0E0E0';
 const gray_5 = '#EEEEEE';
 const green = '#4CAF50';
 const red = 'red';
+const red_1 = '#E53935'
 
 export default {
   main_color,
@@ -28,4 +29,5 @@ export default {
   gray_5,
   green,
   red,
+  red_1,
 };

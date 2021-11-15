@@ -1,5 +1,5 @@
 var infoPost = (state = {
-    TypeAuthor: "tangcongdong", address: "", title: "", note: "", NameProduct: "", image: [], 
+    TypeAuthor: "", address: "", title: "", note: "", NameProduct: "", image: [], 
     noteTransac: "",
 }, action) => {
     switch (action.type) {

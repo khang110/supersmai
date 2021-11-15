@@ -60,68 +60,68 @@ function Mynews(props) {
   return (
     <TouchableWithoutFeedback onPress={() => setOpenFilter(false)}>
       <View style={styles.containerStyle}>
-      <View style={{paddingLeft: '4%', paddingRight: '4%', paddingTop: '2%', paddingBottom: '2%'}}>
-        <DropDownPicker
-          placeholder="Tất cả"
-          open={openFilter}
-          value={value}
-          items={items}
-          setOpen={setOpenFilter}
-          setValue={setValue}
-          setItems={setItems}
-          onChangeValue={(value) => {
-            console.log(value);
-          }}
-          containerStyle={{width: '60%', }}
-        />
-      </View>
+        <View style={{ paddingLeft: '4%', paddingRight: '4%', paddingTop: '2%', paddingBottom: '2%' }}>
+          <DropDownPicker
+            placeholder="Tất cả"
+            open={openFilter}
+            value={value}
+            items={items}
+            setOpen={setOpenFilter}
+            setValue={setValue}
+            setItems={setItems}
+            onChangeValue={(value) => {
+              console.log(value);
+            }}
+            containerStyle={{ width: '60%', }}
+          />
+        </View>
 
-      <FlatList
-        data={data}
-        keyExtractor={(item) => item._id}
-        ItemSeparatorComponent={ItemSeparator}
-        renderItem={renderItem}
-      />
-      <SpeedDial
-        isOpen={open}
-        icon={{ name: "edit", color: "#fff" }}
-        openIcon={{ name: "close", color: "#fff" }}
-        onOpen={() => {setOpen(!open);setOpenFilter(false)}}
-        onClose={() => setOpen(!open)}
-        color={color.main_color}
-      >
-        <SpeedDial.Action
-          icon={{ name: "add", color: "#fff" }}
-          title="Cần hỗ trợ"
-          onPress={() => navigation.navigate("CategoryNeedHelp")}
-          color={color.main_color}
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item._id}
+          ItemSeparatorComponent={ItemSeparator}
+          renderItem={renderItem}
         />
-        <SpeedDial.Action
-          icon={{ name: "add", color: "#fff" }}
-          title="Tặng cộng đồng"
-          onPress={() => navigation.navigate("Category")}
+        <SpeedDial
+          isOpen={open}
+          icon={{ name: "edit", color: "#fff" }}
+          openIcon={{ name: "close", color: "#fff" }}
+          onOpen={() => { setOpen(!open); setOpenFilter(false) }}
+          onClose={() => setOpen(!open)}
           color={color.main_color}
-        />
-        <SpeedDial.Action
-          icon={{ name: "add", color: "#fff" }}
-          title="Tặng hoàn cảnh khó khăn"
-          onPress={() => console.log("Add Something")}
-          color={color.main_color}
-        />
-        <SpeedDial.Action
-          icon={{ name: "add", color: "#fff" }}
-          title="Tặng Quỹ/Nhóm từ thiện"
-          onPress={() => console.log("Delete Something")}
-          color={color.main_color}
-        />
-        <SpeedDial.Action
-          icon={{ name: "add", color: "#fff" }}
-          title="Đóng góp công ích "
-          onPress={() => console.log("Delete Something")}
-          color={color.main_color}
-        />
-      </SpeedDial>
-    </View>
+        >
+          <SpeedDial.Action
+            icon={{ name: "add", color: "#fff" }}
+            title="Cần hỗ trợ"
+            onPress={() => navigation.navigate("CategoryNeedHelp")}
+            color={color.main_color}
+          />
+          <SpeedDial.Action
+            icon={{ name: "add", color: "#fff" }}
+            title="Tặng cộng đồng"
+            onPress={() => navigation.navigate("Category")}
+            color={color.main_color}
+          />
+          <SpeedDial.Action
+            icon={{ name: "add", color: "#fff" }}
+            title="Tặng hoàn cảnh khó khăn"
+            onPress={() => console.log("Add Something")}
+            color={color.main_color}
+          />
+          <SpeedDial.Action
+            icon={{ name: "add", color: "#fff" }}
+            title="Tặng Quỹ/Nhóm từ thiện"
+            onPress={() => console.log("Delete Something")}
+            color={color.main_color}
+          />
+          <SpeedDial.Action
+            icon={{ name: "add", color: "#fff" }}
+            title="Đóng góp công ích "
+            onPress={() => console.log("Delete Something")}
+            color={color.main_color}
+          />
+        </SpeedDial>
+      </View>
     </TouchableWithoutFeedback>
   );
 }

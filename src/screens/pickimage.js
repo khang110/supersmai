@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
   }
 });
 
-
 export default connect(function (state) {
   return { infoPost: state.infoPost }
 })(PickerImage);

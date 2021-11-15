@@ -13,6 +13,7 @@ import HeartRece from "../../../assets/xin.png";
 import HeartGive from "../../../assets/cho.png";
 import Medical from "../../../assets/medical-care.png";
 import config from "../../config/config";
+import { connect } from "react-redux";
 function Gift(props) {
   const {navigation} =props;
 
@@ -63,4 +64,8 @@ const styles = StyleSheet.create({
   wrapButton: { alignItems: "center" },
   wrapIcon: { height: 50, width: 50, marginBottom: config.margin_2 },
 });
-export default Gift;
+export default connect(function (state) {
+  return {
+    infoPost: state.infoPost,
+  };
+})(Gift);

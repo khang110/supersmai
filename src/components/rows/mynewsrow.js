@@ -14,6 +14,7 @@ import {
 import config from "../../config/config";
 import fontSize from "../../config/fontsize";
 import color from "../../config/color";
+import calRealTime from '../../Helper/calRealTime';
 import {Menu, MenuItem, MenuDivider } from "react-native-material-menu";
 import {
   Feather,
@@ -72,7 +73,7 @@ const News = (props) => {
               <Text style={styles.price}>Miễn phí</Text>
             </View>
             <View style={styles.wrapAddr}>
-              <Text style={styles.time}>🕑 10h</Text>
+              <Text style={styles.time}>🕑 {calRealTime.CalRealTime(data.createdAt)}</Text>
               <Text style={styles.time}>Thủ Đức, Hồ Chí Minh</Text>
             </View>
           </View>

@@ -15,11 +15,12 @@ const arrUri = [uriAva];
 const iconLocation =
   "https://cdn-icons.flaticon.com/png/512/4942/premium/4942069.png?token=exp=1636257580~hmac=ba5c9594fc4574ec68e534095cb0cfb1";
 function DetailPost(props) {
-  const {navigation} = props;
+  const { navigation } = props;
   let data = props.route.params.data;
   const [arrImage, setArrImage] = useState([]);
 
   useEffect(() => {
+    // console.log(data);
     if (data.urlImage.length == 0) {
       setArrImage(arrUri);
     } else {
@@ -27,7 +28,19 @@ function DetailPost(props) {
     }
   }, []);
   const pressGive = () => {
-    navigation.navigate("LetMessage");
+    if (data.TypeAuthor == "tangcongdong") {
+      navigation.navigate("LetMessage", { data: data });
+    } else {
+      navigation.navigate("ListGive", { data: data, name: "Xác nhận đồ bạn tặng" });
+    }
+
+  }
+  const renderTextButton = () => {
+    if (data.TypeAuthor == "tangcongdong") {
+      return " Lời nhắn"
+    } else {
+      return " Gửi tặng"
+    }
   }
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -82,7 +95,7 @@ function DetailPost(props) {
             size={config.screen_width * 0.06}
             color="#FFF"
           />
-          <Text style={styles.textGive}> Lời nhắn</Text>
+          <Text style={styles.textGive}>{renderTextButton()}</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -126,7 +139,7 @@ const styles = StyleSheet.create({
     padding: "2%",
   },
   textBad: { fontSize: fontSize.fontsize_3, color: color.red },
-  textGive: {color: '#FFF', fontSize: fontSize.fontsize_2},
+  textGive: { color: '#FFF', fontSize: fontSize.fontsize_2 },
   wrapButtonMessage: {
     flexDirection: "row",
     padding: "4%",

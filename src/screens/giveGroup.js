@@ -19,17 +19,108 @@ import axios from "axios";
 import { Searchbar } from "react-native-paper";
 import { MaterialCommunityIcons, Entypo, AntDesign } from "@expo/vector-icons";
 import FilterAddress from "../components/Modal/FIlterAddress";
+import FilterCategory from '../components/Modal/FilterCategory';
 import GiveRows from '../components/rows/giveRows';
-
+import ButtonCancel from '../components/button/buttonCancel';
 function GiveGroups(props) {
-  const { navigation } = props;
+  const { navigation, dispatch } = props;
   const [data, setData] = useState([]);
-  const [datafilter, setDataFilter] = useState([]);
+  const [dataFilter, setDataFilter] = useState([]);
+  const [listAfterFilter, setlistAfterFilter] = useState([]);
   const [query, setQuery] = useState("");
   const [showModalAddress, setShowModalAddress] = useState(false);
   const [typeAuthor, settypeAuthor] = useState(props.route.params.typeAuthor);
+  const [modalVisible, setModalVisible]= useState(false);
   const addr = props.dataFilter.addressFilter;
+  let categoryFilter = props.dataFilter.categoryFilter;
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => {
+            dispatch({ type: "RESET_FILTER_ADDRESS" });
+            dispatch({ type: "RESET_FILTER_CATEGORY" });
+            navigation.goBack();
+          }}
+          style={{ marginLeft: "10%" }}
+        >
+          <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+        </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <ButtonCancel
+          onPress={() => {
+            dispatch({ type: "RESET_FILTER_ADDRESS" });
+            dispatch({ type: "RESET_FILTER_CATEGORY" });
+            navigation.navigate("Home");
+          }}
+        />
+      ),
+    });
+  }, [navigation]);
+  const filterAddressFunc = (address, list) => {
+    const listTemp = list.filter((pr) => {
+      if (pr.address.indexOf(address) != -1) {
+        return true;
+      } else return false;
+    });
+    setData(listTemp);
+  };
+  const filterCategory = (arrayProduct, listTemp) => {
+    if (categoryFilter.length != 0) {
+      const list = [];
+      for (let i = 0; i < listTemp.length; i++) {
+        for (let j = 0; j < arrayProduct.length; j++) {
+          if (
+            listTemp[i].NameProduct[0].Category == arrayProduct[j].Category &&
+            listTemp[i].NameProduct[0].NameProduct ==
+              arrayProduct[j].NameProduct
+          ) {
+            list.push(listTemp[i]);
+          }
+        }
+      }
 
+      setData(list);
+    }
+  };
+  const filterTwoOption = () => {
+    if (addr.length != 0 && categoryFilter.length != 0) {
+      const list = [];
+      const listTemp = [...listAfterFilter];
+      for (let i = 0; i < listTemp.length; i++) {
+        for (let j = 0; j < categoryFilter.length; j++) {
+          if (
+            listTemp[i].NameProduct[0].Category == categoryFilter[j].Category &&
+            listTemp[i].NameProduct[0].NameProduct ==
+              categoryFilter[j].NameProduct
+          ) {
+            list.push(listTemp[i]);
+          }
+        }
+      }
+      const listAddr = list.filter((pr) => {
+        if (pr.address.indexOf(addr) != -1) {
+          return true;
+        } else return false;
+      });
+      setData(listAddr);
+    }
+  };
+  useEffect(() => {
+    if (categoryFilter.length == 0 && addr.length == 0) {
+      setData(listAfterFilter);
+    }
+    if (addr.length != 0 && categoryFilter.length == 0) {
+      filterAddressFunc(addr, listAfterFilter);
+    }
+    if (addr.length != 0 && categoryFilter.length != 0) {
+      filterTwoOption();
+    }
+    if (addr.length == 0 && categoryFilter.length != 0) {
+      filterCategory(categoryFilter, listAfterFilter);
+    }
+  }, [categoryFilter, addr]);
   useEffect(() => {
     getData();
   }, []);
@@ -40,6 +131,7 @@ function GiveGroups(props) {
       .then((resjson) => {
         setData(resjson.data);
         setDataFilter(resjson.data);
+        setlistAfterFilter(resjson.data);
       })
       .catch((error) => {
         console.log("Error: ", error);
@@ -48,9 +140,9 @@ function GiveGroups(props) {
 
   const handleSearch = (text) => {
     setQuery(text);
-    if (text == "") setData(datafilter);
+    if (text == "") setData(dataFilter);
     else {
-      const data = datafilter.filter((pr) => {
+      const data = dataFilter.filter((pr) => {
         if (
           pr.NameAuthor.toLowerCase().indexOf(text.toLowerCase()) != -1 ||
           pr.title.toLowerCase().indexOf(text.toLowerCase()) != -1
@@ -83,7 +175,7 @@ function GiveGroups(props) {
         <TouchableOpacity
           style={styles.wrapFilterButton}
           activeOpacity={0.5}
-          onPress={() => pressFilter()}
+          onPress={() => setModalVisible(true)}
         >
           <Text style={styles.wrapFilterCate}>Danh mục</Text>
           <AntDesign
@@ -114,6 +206,7 @@ function GiveGroups(props) {
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
       />
+      <FilterCategory modalVisible={modalVisible} closeModal={() => setModalVisible(false)}/>
     </View>
   );
 }

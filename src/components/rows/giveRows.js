@@ -16,6 +16,8 @@ import fontSize from "../../config/fontsize";
 import color from "../../config/color";
 import { Avatar } from "react-native-elements";
 import { MaterialIcons } from '@expo/vector-icons';
+import calRealTime from '../../Helper/calRealTime';
+import formatAddress from '../../Helper/formatAddress';
 const uriImage =
   "https://vsbg.info/wp-content/uploads/2020/12/z2205843150842_c7be3f943eab3edc6f7907a16fcee852.jpg";
 const link =
@@ -47,7 +49,7 @@ const News = (props) => {
           />
           <View style={styles.wrapName}>
             <Text style={styles.name}>{data.NameAuthor}</Text>
-            <Text style={styles.cate}>🕑 10h</Text>
+            <Text style={styles.cate}>🕑 {calRealTime.CalRealTime(data.createdAt)}</Text>
           </View>
         </View>
         <Text style={{color: color.black, fontSize: fontSize.fontsize_5}} numberOfLines={2}>{data.title}</Text>
@@ -60,7 +62,7 @@ const News = (props) => {
         </View>
         <View style={{ flexDirection: "row", alignItems: 'center', }}>
           <MaterialIcons name="location-city" size={config.screen_width*0.06} color={color.gray} />
-          <Text style={styles.time}>{"  "}Thủ Đức, Hồ Chí Minh</Text>
+          <Text style={styles.time}>{"  "}{formatAddress.formatAddress(data.address)}</Text>
         </View>
       </TouchableOpacity>
     </View>

@@ -1,4 +1,4 @@
-var dataFilter = (state = { addressFilter: "",}, action) => {
+var dataFilter = (state = { addressFilter: "", categoryFilter: []}, action) => {
     switch (action.type) {
         case 'FILTER_ADDRESS':
             return {
@@ -6,10 +6,21 @@ var dataFilter = (state = { addressFilter: "",}, action) => {
                 addressFilter: action.addressFilter
             }
         
-        case 'RESET_FILTER':
+        case 'RESET_FILTER_ADDRESS':
             return {
                 ...state,
                 addressFilter: "",
+            }
+        case 'FILTER_CATEGORY':
+            return {
+                ...state,
+                categoryFilter: action.categoryFilter
+            }
+        
+        case 'RESET_FILTER_CATEGORY':
+            return {
+                ...state,
+                categoryFilter: [],
             }
         default:
             return state

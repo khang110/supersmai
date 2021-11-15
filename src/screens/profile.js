@@ -21,7 +21,7 @@ function Profile(props) {
   const pressRow = async () => {
     navigation.navigate("PersonalInfo");
   };
-  const btnSettings = async() =>{
+  const btnSettings = async () => {
     navigation.navigate("Settings");
   };
   return (

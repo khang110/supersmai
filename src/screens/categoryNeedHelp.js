@@ -18,27 +18,16 @@ import { connect } from "react-redux";
 import CategoryCheckBox from '../components/category/categoryCheckBox';
 import ButtonCancel from '../components/button/buttonCancel';
 function CategoryNeedHelp(props) {
-  const {navigation, dispatch} = props;
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <ButtonCancel
-          onPress={() => {
-            dispatch({ type: "RESET" });
-            navigation.navigate("Home");
-          }}
-        />
-      ),
-    });
-  }, [navigation]);
+  const { navigation, dispatch } = props;
+
   const handlePress = () => {
-      navigation.navigate("Confirm")    
+    navigation.navigate("Confirm")
   }
-    return(
-        <View style={styles.container}>
-            <CategoryCheckBox onPress={() => handlePress()}/>
-        </View>
-    )
+  return (
+    <View style={styles.container}>
+      <CategoryCheckBox onPress={() => handlePress()} />
+    </View>
+  )
 }
 const styles = StyleSheet.create({
   container: {
@@ -46,7 +35,7 @@ const styles = StyleSheet.create({
   }
 })
 export default connect(function (state) {
-    return {
-      infoPost: state.infoPost,
-    };
-  })(CategoryNeedHelp);
+  return {
+    infoPost: state.infoPost,
+  };
+})(CategoryNeedHelp);
