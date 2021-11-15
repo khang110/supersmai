@@ -15,12 +15,12 @@ const arrUri = [uriAva];
 const iconLocation =
   "https://cdn-icons.flaticon.com/png/512/4942/premium/4942069.png?token=exp=1636257580~hmac=ba5c9594fc4574ec68e534095cb0cfb1";
 function DetailPost(props) {
-  const {navigation} = props;
+  const { navigation } = props;
   let data = props.route.params.data;
   const [arrImage, setArrImage] = useState([]);
 
   useEffect(() => {
-    // console.log(data)
+    // console.log(data);
     if (data.urlImage.length == 0) {
       setArrImage(arrUri);
     } else {
@@ -29,11 +29,11 @@ function DetailPost(props) {
   }, []);
   const pressGive = () => {
     if (data.TypeAuthor == "tangcongdong") {
-      navigation.navigate("LetMessage", {data: data});
+      navigation.navigate("LetMessage", { data: data });
     } else {
-      navigation.navigate("ListGive", {data: data, name: "Xác nhận đồ bạn tặng"});
+      navigation.navigate("ListGive", { data: data, name: "Xác nhận đồ bạn tặng" });
     }
-    
+
   }
   const renderTextButton = () => {
     if (data.TypeAuthor == "tangcongdong") {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     padding: "2%",
   },
   textBad: { fontSize: fontSize.fontsize_3, color: color.red },
-  textGive: {color: '#FFF', fontSize: fontSize.fontsize_2},
+  textGive: { color: '#FFF', fontSize: fontSize.fontsize_2 },
   wrapButtonMessage: {
     flexDirection: "row",
     padding: "4%",

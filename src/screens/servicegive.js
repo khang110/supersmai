@@ -25,22 +25,22 @@ const Row = ({ onPress, title }) => {
 };
 
 function ServiceGive(props) {
-    const {navigation, dispatch} = props;
+  const { navigation, dispatch } = props;
 
-    const pressTCD = () => {
-        dispatch({ type: "SET_TYPE_AUTHOR", TypeAuthor: "tangcongdong" });
-        navigation.navigate("Category");
-    }
-    const pressGroup = (type) => {
-      navigation.navigate("GiveGroups", {typeAuthor: type});
-    }
+  const pressTCD = () => {
+    dispatch({ type: "SET_TYPE_AUTHOR", TypeAuthor: "tangcongdong" });
+    navigation.navigate("Category");
+  }
+  const pressGroup = (type) => {
+    navigation.navigate("GiveGroups", { typeAuthor: type });
+  }
 
   return (
     <View style={styles.container}>
-      <Row title="Tặng cộng đồng" onPress={() => pressTCD()}/>
-      <Row title="Tặng hoàn cảnh khó khăn"  onPress={() => pressGroup("canhan")}/>
-      <Row title="Tặng Quỹ/Nhóm từ thiện" onPress={() => pressGroup("quy")}/>
-      <Row title="Đóng góp công ích" onPress={() => pressGroup("tochuc")}/>
+      <Row title="Tặng cộng đồng" onPress={() => pressTCD()} />
+      <Row title="Tặng hoàn cảnh khó khăn" onPress={() => pressGroup("canhan")} />
+      <Row title="Tặng Quỹ/Nhóm từ thiện" onPress={() => pressGroup("quy")} />
+      <Row title="Đóng góp công ích" onPress={() => pressGroup("tochuc")} />
     </View>
   );
 }
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  wrapRow: { backgroundColor: '#FFF', padding: '4%', marginBottom: '1%'}
+  wrapRow: { backgroundColor: '#FFF', padding: '4%', marginBottom: '1%' }
 });
 export default connect(function (state) {
   return {

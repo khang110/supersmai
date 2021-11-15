@@ -175,6 +175,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: config.active_color,
   },
- 
+
 });
 export default personalInfo;

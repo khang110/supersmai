@@ -158,7 +158,7 @@ function Confirm(props) {
             maxLength={50}
             placeholder="Viết tiêu đề hoặc lời nhắn"
           />
-          {errTitle ? ( <HelperText type="error" visible={errTitle}>
+          {errTitle ? (<HelperText type="error" visible={errTitle}>
             Nhập tiêu đề
           </HelperText>) : (<></>)}
           <Text style={styles.titleAddress}>Lời nhắn hoặc mô tả</Text>

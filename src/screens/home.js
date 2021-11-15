@@ -35,7 +35,7 @@ function Home(props) {
     })
       .then((resjson) => {
         setData(resjson.data);
-        // console.log(resjson.data)
+        // console.log(resjson.data);
       })
       .catch((err) => {
         console.log(err);
@@ -55,10 +55,10 @@ function Home(props) {
           <Text style={styles.textSayHi}>Hi, Nguyễn Duy Phú Lợn</Text>
           <SearchButton />
         </View>
-        <Gift navigation={navigation}/>
+        <Gift navigation={navigation} />
         <Text style={styles.textDisCate}>Khám phá tin đăng tặng</Text>
         <View style={styles.discoverCategory}>
-          <GroupCategory navigation={navigation}/>
+          <GroupCategory navigation={navigation} />
         </View>
         <Text style={styles.textDisCate}>Tin đăng mới</Text>
       </>

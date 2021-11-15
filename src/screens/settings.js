@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   btn_logout: {
     backgroundColor: config.red,
     borderRadius: config.btn_border_radius,
-    margin: '4%', 
+    margin: '4%',
     padding: '2%'
   },
   text_logout: {

@@ -15,7 +15,7 @@ import * as SecureStore from "expo-secure-store";
 import { connect } from "react-redux";
 import config from "../config/config";
 import fontSize from '../config/fontsize';
-import { Entypo,AntDesign } from "@expo/vector-icons";
+import { Entypo, AntDesign } from "@expo/vector-icons";
 import color from '../config/color';
 
 var { width } = Dimensions.get("window");
@@ -122,7 +122,7 @@ function ListGive(props) {
   return (
     <View style={styles.container}>
       <View style={styles.wrapNameTop}>
-        <AntDesign name="infocirlce" size={width*0.05} color={color.green} />
+        <AntDesign name="infocirlce" size={width * 0.05} color={color.green} />
         <Text style={{ fontSize: config.fontsize_3, marginLeft: '2%' }}>
           Danh sách{" "}
           <Text style={{ fontWeight: "bold", fontStyle: "italic" }}>

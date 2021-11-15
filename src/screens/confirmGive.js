@@ -19,7 +19,6 @@ import {
   AntDesign,
   Entypo,
 } from "@expo/vector-icons";
-import axios from "axios";
 import color from "../config/color";
 import fontSize from "../config/fontsize";
 import config from "../config/config";
@@ -158,7 +157,7 @@ function LetMessage(props) {
         <DetailAddress modalVisible={showModalAddress} closeModal={closeAddr} />
       </View>
       <View style={styles.wrapInfor} >
-        <ButtonConfirm title="Gửi tặng" onPress={pressGive}/>
+        <ButtonConfirm title="Gửi tặng" onPress={pressGive} />
       </View>
     </ScrollView>
   );
