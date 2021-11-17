@@ -15,15 +15,20 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import * as SecureStore from "expo-secure-store";
+import { connect } from "react-redux";
 
 function Profile(props) {
   const { navigation } = props;
   const pressRow = async () => {
+    
     navigation.navigate("PersonalInfo");
   };
   const btnSettings = async () => {
     navigation.navigate("Settings");
   };
+  
+ 
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -266,4 +271,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
 });
-export default Profile;
+export default connect(function (state) {
+  return { auth: state.auth };
+})(Profile);

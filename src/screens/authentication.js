@@ -11,7 +11,7 @@ export default function authentication(props) {
   const FirstRoute = () => (
     <View style={styles.scene}>
       <Login
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("HomeTab")}
         navigation={navigation}
       />
     </View>
@@ -20,7 +20,7 @@ export default function authentication(props) {
   const SecondRoute = () => (
     <View style={styles.scene}>
       <SignUp
-        onPress_={() => navigation.navigate("Home")}
+        onPress_={() => navigation.navigate("HomeTab")}
         navigation={navigation}
       />
     </View>

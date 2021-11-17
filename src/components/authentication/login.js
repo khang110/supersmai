@@ -1,6 +1,6 @@
 // // import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-
+import { connect } from "react-redux";
 import * as SecureStore from "expo-secure-store";
 import {
   StyleSheet,
@@ -20,7 +20,8 @@ import userApi from "../../api/userApi";
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
 }
-function login() {
+function login(props) {
+  const { dispatch } = props;
   const [showPass, showPassWord] = useState(true);
   const {
     control,
@@ -40,6 +41,13 @@ function login() {
           save("avatar", data.data.urlIamge);
           save("FullName", data.data.FullName);
         });
+        console.log("Oke")
+        dispatch({
+          type: "SIGN_IN",
+          token: response.data.accessToken,
+          PhoneNumber: data.PhoneNumber,
+        });
+        props.onPress();
       }
     });
   };
@@ -179,5 +187,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
 });
+export default connect(function (state) {
+  return { auth: state.auth };
+})(login);
 
-export default login;
