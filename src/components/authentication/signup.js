@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState, useRef } from "react";
+import { connect } from "react-redux";
 import * as SecureStore from "expo-secure-store";
 import {
   StyleSheet,
@@ -7,15 +7,50 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import axios from "axios";
 import Logo from "../../../assets/logo.png";
 import config from "../../config/config";
 import { Checkbox, TextInput } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
-function signup() {
+import userApi from "../../api/userApi";
+import * as firebase from "firebase";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+
+
+try {
+  firebase.initializeApp({
+    apiKey: "AIzaSyDu729pOxwXw-CUhfKL5qCiEzpEQbA3n3M",
+    authDomain: "supersmai.firebaseapp.com",
+    projectId: "supersmai",
+    storageBucket: "supersmai.appspot.com",
+    messagingSenderId: "302647414855",
+    appId: "1:302647414855:web:f2530ca4c0c04509f26162",
+    measurementId: "G-LBV53XNJ95",
+  });
+} catch (err) {
+  // ignore app already initialized error in snack
+}
+
+function signup(props) {
   const [showPass, showPassWord] = useState(true);
   const [showPass2, showPassWord2] = useState(true);
+  const [verificationId, setVerificationId] = useState(null);
+  const recaptchaVerifier = useRef(null);
+  // const app = getApp();
+  // const firebaseConfig = app ? app.options : undefined;
+  const firebaseConfig = firebase.apps.length
+    ? firebase.app().options
+    : undefined;
+  const [message, showMessage] = React.useState(
+    !firebaseConfig || Platform.OS === "web"
+      ? {
+          text: "To get started, provide a valid firebase config in App.js and open this snack on an iOS or Android device.",
+        }
+      : undefined
+  );
+  const { dispatch, navigation, onPress } = props;
   const {
     control,
     handleSubmit,
@@ -23,9 +58,45 @@ function signup() {
     getValues,
   } = useForm();
 
-const onSubmit = async (data) => {
-  console.log(data)
-}
+  const onSubmit = async (data) => {
+    if (data.phonenumber) {
+      let PhoneNumber = {
+        PhoneNumber: data.phonenumber,
+      };
+      await userApi
+        .checkphone(PhoneNumber)
+        .then(async (response) => {
+          console.log(response.data);
+          if (response.data === "Oke") {
+            let strphone = "+84" + data.phonenumber.substring(1);
+            console.log(recaptchaVerifier.current);
+            const phoneProvider = await new firebase.auth.PhoneAuthProvider();
+
+            const verificationId = await phoneProvider.verifyPhoneNumber(
+              strphone,
+              recaptchaVerifier.current
+            );
+            if (verificationId != null) {
+              await dispatch({
+                type: "REGISTER_OTP",
+                username: data.username,
+                phonenumber: data.phonenumber,
+                password: data.password,
+                verificationId: verificationId,
+              });
+            }
+            await props.navigation.navigate("verifyOTPs"); //chuyển trang
+          } else {
+            Alert.alert("Thông báo", "Số điện thoại đã tồn tại", [
+              { text: "OK" },
+            ]);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -171,6 +242,11 @@ const onSubmit = async (data) => {
           )}
         </View>
       </View>
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={firebaseConfig}
+        //attemptInvisibleVerification={true}
+      />
       <View>
         <TouchableOpacity
           style={styles.btn_layout}
@@ -238,8 +314,9 @@ const styles = StyleSheet.create({
   error: {
     color: "#bf1650",
     alignSelf: "flex-start",
-    
   },
 });
 
-export default signup;
+export default connect(function (state) {
+  return { auth: state.auth, register: state.register };
+})(signup);

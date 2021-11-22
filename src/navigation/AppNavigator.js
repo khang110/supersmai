@@ -25,6 +25,7 @@ import color from '../config/color';
 import authentication from "../screens/authentication";
 import { Ionicons,Entypo } from '@expo/vector-icons';
 import { connect } from "react-redux";
+import verifyOTPs from "../screens/verifyOtps";
 import {
   StyleSheet,
   Text,
@@ -58,9 +59,11 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
         <Stack.Screen
@@ -73,9 +76,11 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
         <Stack.Screen
@@ -88,9 +93,11 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
         <Stack.Screen
@@ -100,11 +107,13 @@ function AppNavigator(props) {
             headerShown: true,
             title: "Chi tiết tin đăng",
             headerTintColor: color.white,
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
         <Stack.Screen
@@ -117,9 +126,11 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
         <Stack.Screen
@@ -132,13 +143,14 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />),
-            
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="PickImage"
           component={PickImage}
           options={({ navigation, route }) => ({
@@ -148,25 +160,29 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="ServiceGive"
           component={ServiceGive}
           options={({ navigation, route }) => ({
             headerShown: true,
             title: "Chọn đối tượng gửi tặng",
             headerTintColor: color.white,
-            
+
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
         <Stack.Screen
@@ -191,9 +207,11 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
         <Stack.Screen
@@ -206,10 +224,11 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)
-            
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
         <Stack.Screen
@@ -222,9 +241,11 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)            
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
         <Stack.Screen
@@ -237,12 +258,14 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)            
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="ListGive"
           component={ListGive}
           options={({ navigation, route }) => ({
@@ -252,12 +275,14 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)            
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="ConfirmGive"
           component={ConfirmGive}
           options={({ navigation, route }) => ({
@@ -267,9 +292,26 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerShadowVisible: false,
-            headerBackImage: () => (<Entypo name="chevron-thin-left" size={25} color="#FFF" />)            
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="verifyOTPs"
+          component={verifyOTPs}
+          options={({ navigation }) => ({
+            title: "Xác nhận OTP",
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            // headerTintColor: config.headerTintColor,
+            // headerTitleStyle: {
+            //   // fontWeight: "bold",
+            // },
           })}
         />
       </Stack.Navigator>
