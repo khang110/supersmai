@@ -66,12 +66,9 @@ function signup(props) {
       await userApi
         .checkphone(PhoneNumber)
         .then(async (response) => {
-          console.log(response.data);
           if (response.data === "Oke") {
             let strphone = "+84" + data.phonenumber.substring(1);
-            console.log(recaptchaVerifier.current);
             const phoneProvider = await new firebase.auth.PhoneAuthProvider();
-
             const verificationId = await phoneProvider.verifyPhoneNumber(
               strphone,
               recaptchaVerifier.current
@@ -85,7 +82,7 @@ function signup(props) {
                 verificationId: verificationId,
               });
             }
-            await props.navigation.navigate("verifyOTPs"); //chuyển trang
+            props.navigation.navigate("verifyOTPs"); //chuyển trang
           } else {
             Alert.alert("Thông báo", "Số điện thoại đã tồn tại", [
               { text: "OK" },

@@ -4,6 +4,6 @@ const userApi = {
   getInforuserByToken: () => axiosClient.get("user/getInForUserByTokenId"),
   checkphone: (PhoneNumber) =>
     axiosClient.post("account/getPhone", PhoneNumber),
-  register: (data) => axiosClient.post("account/register"),
+  register: (data) => axiosClient.post("account/register",data),
 };
 export default userApi;
