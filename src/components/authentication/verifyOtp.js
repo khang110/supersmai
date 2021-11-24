@@ -5,6 +5,8 @@ import OTPTextView from "react-native-otp-textinput";
 import * as firebase from "firebase";
 import userApi from "../../api/userApi";
 import * as SecureStore from "expo-secure-store";
+import config from "../../config/config";
+import Logo from "../../../assets/logo.png";
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
 }
@@ -57,90 +59,78 @@ function VerifyOtp(props) {
     }
   };
   return (
-    <View style={styles.wrapContent}>
-      {/* <Spinner
-        visible={isDisplay}
-        textContent={"Đang đăng ký..."}
-        textStyle={styles.spinnerTextStyle}
-      />
-      <Image source={logoSmai} style={styles.styleImg} /> */}
-      <Text style={styles.styleText}>Nhập mã OTP</Text>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.logo_app}>
+        <Image source={Logo} style={styles.image_logo} />
+      </View>
+      <View style={styles.content}>
+        <Text style={styles.styleText}>Nhập mã OTP</Text>
         <OTPTextView
           handleTextChange={(e) => setotpInput(e)}
           containerStyle={styles.textInputContainer}
           textInputStyle={styles.roundedTextInput}
           inputCount={6}
+          tintColor={config.main_color}
         />
       </View>
-      <TouchableOpacity
-        activeOpacity={0.6}
-        style={styles.button}
-        onPress={confirmCode}
-      >
-        <Text style={styles.buttonText}>Gửi</Text>
+      <TouchableOpacity style={styles.btn_layout} onPress={confirmCode}>
+        <Text style={styles.text_btn_layout}>Xác nhận</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapContent: {
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  styleImg: {
-    height: 180,
-    width: 80,
-    marginBottom: 60,
-  },
-  styleText: {
-    marginBottom: 30,
-    fontSize: 16,
-  },
-  button: {
-    marginTop: 40,
-    paddingVertical: 5,
-    paddingHorizontal: "30%",
-    backgroundColor: "#E53935",
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#FFF",
-    textAlign: "center",
-    fontSize: 20,
-  },
-  optStyle: {
-    flexDirection: "row",
-    marginBottom: 60,
-  },
-  optInput: {
-    borderWidth: 0.5,
-    borderRadius: 5,
-    marginHorizontal: 5,
-    paddingHorizontal: 4,
-    paddingVertical: 6,
-    fontSize: 16,
-    textAlign: "center",
-  },
   container: {
+    flex: 1,
+    justifyContent: "space-between",
+    flexDirection: "column",
+    paddingTop: "2%",
+  },
+  content: {
+    fontSize: 18,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    padding: 5,
   },
+
   textInputContainer: {
     marginBottom: 20,
   },
   roundedTextInput: {
     borderRadius: 5,
     borderWidth: 1,
-    width: "10%",
+    width: "12%",
     height: "100%",
     fontSize: 18,
+    
   },
-  spinnerTextStyle: {
-    color: "#FFF",
+  logo_app: {
+    alignItems: "center",
+    height: "25%",
+  },
+  image_logo: {
+    height: "100%",
+    width: "100%",
+    resizeMode: "contain",
+  },
+  styleText: {
+    marginBottom: "1%",
+    fontSize: 16,
+  },
+  //btn
+  btn_layout: {
+    backgroundColor: config.main_color,
+    borderRadius: config.btn_border_radius,
+    margin: "4%",
+    padding: "2%",
+  },
+  text_btn_layout: {
+    fontSize: 20,
+    color: "white",
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
   },
 });
 export default connect(function (state) {

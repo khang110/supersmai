@@ -308,10 +308,12 @@ function AppNavigator(props) {
             headerStyle: {
               backgroundColor: config.main_color,
             },
-            // headerTintColor: config.headerTintColor,
-            // headerTitleStyle: {
-            //   // fontWeight: "bold",
-            // },
+            headerTintColor: color.white,
+            headerTitleAlign: "center",
+            headerShadowVisible: false,
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
           })}
         />
       </Stack.Navigator>
