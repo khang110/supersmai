@@ -38,10 +38,13 @@ function login(props) {
         save("token", response.data.accessToken);
         save("PhoneNumber", data.PhoneNumber);
         userApi.getInforuserByToken().then((data) => {
-          save("avatar", data.data.urlIamge);
+          let urlIamge = "null";
+          if (data.data.urlIamge != undefined) {
+            urlIamge = data.data.urlIamge;
+          }
+          save("avatar", urlIamge);
           save("FullName", data.data.FullName);
         });
-        console.log("Oke")
         dispatch({
           type: "SIGN_IN",
           token: response.data.accessToken,
@@ -190,4 +193,3 @@ const styles = StyleSheet.create({
 export default connect(function (state) {
   return { auth: state.auth };
 })(login);
-

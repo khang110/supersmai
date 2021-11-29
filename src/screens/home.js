@@ -20,13 +20,32 @@ import Gift from "../components/groupButton/groupGive";
 import GroupCategory from "../components/groupButton/groupCategory";
 import NewsRow from "../components/rows/newsRow";
 import axios from "axios";
+import { connect } from "react-redux";
+import * as SecureStore from "expo-secure-store";
+
 function Home(props) {
   const [data, setData] = useState([]);
   const [refresh, setrefresh] = useState(true);
-  const { navigation } = props;
+  const { navigation, dispatch } = props;
   useEffect(() => {
     getData();
+    checkTokenLocal();
   }, []);
+
+  // check Token local
+  const checkTokenLocal = async () => {
+     let result = await SecureStore.getItemAsync("token");
+     let avatar = await SecureStore.getItemAsync("avatar");
+     let PhoneNumber = await SecureStore.getItemAsync("PhoneNumber");
+     if (result) {
+       console.log(result)
+       dispatch({ type: "SIGN_IN", token: result, PhoneNumber: PhoneNumber });
+       dispatch({ type: "GET_AVATAR", avatar: avatar });
+     } else {
+       console.log(null)
+       return await null;
+     }
+  };
 
   const getData = async () => {
     await axios({
@@ -130,4 +149,9 @@ const styles = StyleSheet.create({
     marginTop: "4%",
   },
 });
-export default Home;
+export default connect(function (state) {
+  return {
+    auth: state.auth,
+    profile: state.profile,
+  };
+})(Home);

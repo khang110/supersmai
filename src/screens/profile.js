@@ -18,17 +18,18 @@ import {
 import * as SecureStore from "expo-secure-store";
 import { connect } from "react-redux";
 
+
+
 function Profile(props) {
   const { navigation } = props;
   const pressRow = async () => {
-    
     navigation.navigate("PersonalInfo");
   };
   const btnSettings = async () => {
     navigation.navigate("Settings");
   };
   
- 
+  
   return (
     <ScrollView>
       <View style={styles.container}>

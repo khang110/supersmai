@@ -14,12 +14,21 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import * as SecureStore from "expo-secure-store";
 import config from "../config/config";
+import { connect } from "react-redux";
 
 function settings(props) {
-  const { navigation } = props;
+  const { dispatch, navigation } = props;
+  
   const logout = async () => {
+   
+    await SecureStore.deleteItemAsync("token");
+    await SecureStore.deleteItemAsync("avatar");
+    await SecureStore.deleteItemAsync("FullName");
     navigation.navigate("Authentication");
+    dispatch({ type: "SIGN_OUT" });
+    
   };
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -121,4 +130,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 });
-export default settings;
+export default connect(function (state) {
+  return { auth: state.auth };
+})(settings);
