@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,24 +15,86 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
+import { Button } from "react-native-elements";
 import * as SecureStore from "expo-secure-store";
 import { connect } from "react-redux";
 
-
-
 function Profile(props) {
+  const [FullName, getFullName] = useState("");
+  const [avatar, getAvatar] = useState("");
+  const [phonenumber, getPhoneNumber] = useState("");
+  const [isDisplay, setDisplay] = useState(false);
   const { navigation } = props;
-  const pressRow = async () => {
-    navigation.navigate("PersonalInfo");
+  // get Infor User
+  const getInforUser = async () => {
+    if (props.auth.isLogin == true) {
+      let fullName = await SecureStore.getItemAsync("FullName");
+      let avatar = await SecureStore.getItemAsync("avatar");
+      let phonenumber = await SecureStore.getItemAsync("PhoneNumber");
+      getFullName(fullName);
+      getPhoneNumber(phonenumber);
+      getAvatar(avatar);
+    }
   };
+  useEffect(() => {
+    getInforUser();
+  }, [props.auth]);
+
+  //personalInfor
+  const btn_personalInfor = async () => {
+    if (props.auth.isLogin == true) {
+      navigation.navigate("PersonalInfo", {
+        name: FullName,
+        avatar: avatar,
+        phonenumber: phonenumber,
+      });
+    }else{
+      navigation.navigate("Authentication");
+    }
+  };
+  //btn Settings
   const btnSettings = async () => {
-    navigation.navigate("Settings");
+      if (props.auth.isLogin == true) {
+        navigation.navigate("Settings", {
+          name: FullName,
+          avatar: avatar,
+          phonenumber: phonenumber,
+        });
+      } else {
+        navigation.navigate("Authentication");
+      }
   };
-  
-  
-  return (
-    <ScrollView>
-      <View style={styles.container}>
+  // btn Login
+  const btnLogin = async () => {
+    navigation.navigate("Authentication");
+  };
+  const check_isLogin = () => {
+    if (props.auth.isLogin == false) {
+      return (
+        <View style={styles.content_header}>
+          <Avatar
+            size={70}
+            source={{
+              uri: "https://www.w3schools.com/howto/img_avatar2.png",
+            }}
+            avatarStyle={{
+              borderColor: "white",
+              borderRadius: 20,
+            }}
+          ></Avatar>
+          <View style={styles.text_header}>
+            <Button
+              onPress={() => btnLogin()}
+              title="Đăng nhập/Đăng ký"
+              buttonStyle={styles.buttonLogIn}
+              titleStyle={styles.titleStyle}
+              type="outline"
+            />
+          </View>
+        </View>
+      );
+    } else {
+      return (
         <View style={styles.content_header}>
           <View>
             <Avatar
@@ -47,16 +109,24 @@ function Profile(props) {
             ></Avatar>
           </View>
           <View style={styles.text_header}>
-            <Text style={styles.name_user}>Nguyễn Duy Phú</Text>
+            <Text style={styles.name_user}>{FullName}</Text>
             <Text style={styles.type_user}>Cá nhân</Text>
           </View>
         </View>
+      );
+    }
+  };
+
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        {check_isLogin()}
         <View style={styles.boder_bottom}></View>
 
         <View style={styles.content}>
           <TouchableOpacity
             style={styles.btn_profile}
-            onPress={() => pressRow()}
+            onPress={() => btn_personalInfor()}
           >
             <View style={styles.view_btn}>
               <View style={styles.view_icon}>
@@ -80,7 +150,7 @@ function Profile(props) {
 
           <TouchableOpacity
             style={styles.btn_profile}
-            onPress={() => pressRow()}
+            onPress={() => btn_personalInfor()}
           >
             <View style={styles.view_btn}>
               <View style={styles.view_icon}>
@@ -103,7 +173,7 @@ function Profile(props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btn_profile}
-            onPress={() => pressRow()}
+            onPress={() => btn_personalInfor()}
           >
             <View style={styles.view_btn}>
               <View style={styles.view_icon}>
@@ -126,7 +196,7 @@ function Profile(props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btn_profile}
-            onPress={() => pressRow()}
+            onPress={() => btn_personalInfor()}
           >
             <View style={styles.view_btn}>
               <View style={styles.view_icon}>
@@ -176,7 +246,7 @@ function Profile(props) {
 
           <TouchableOpacity
             style={styles.btn_profile}
-            onPress={() => pressRow()}
+            onPress={() => btn_personalInfor()}
           >
             <View style={styles.view_btn}>
               <View style={styles.view_icon}>
@@ -258,7 +328,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
-
     elevation: 10,
     elevation: 14,
   },

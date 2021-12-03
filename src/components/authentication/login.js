@@ -33,11 +33,11 @@ function login(props) {
   // đăng nhập
   const onSubmit = async (data) => {
     //  console.log(data)
-    userApi.login(data).then((response) => {
+    userApi.login(data).then(async(response) => {
       if (response.status == 201) {
         save("token", response.data.accessToken);
         save("PhoneNumber", data.PhoneNumber);
-        userApi.getInforuserByToken().then((data) => {
+        await userApi.getInforuserByToken().then((data) => {
           let urlIamge = "null";
           if (data.data.urlIamge != undefined) {
             urlIamge = data.data.urlIamge;
@@ -45,7 +45,7 @@ function login(props) {
           save("avatar", urlIamge);
           save("FullName", data.data.FullName);
         });
-        dispatch({
+        await dispatch({
           type: "SIGN_IN",
           token: response.data.accessToken,
           PhoneNumber: data.PhoneNumber,

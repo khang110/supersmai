@@ -1,5 +1,5 @@
 import { StackRouter } from "@react-navigation/routers";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -19,22 +19,35 @@ import config from "../config/config";
 import { connect } from "react-redux";
 
 function settings(props) {
-  const { dispatch, navigation } = props;
-  
+  const { dispatch, navigation,route } = props;
+  // btn logout
   const logout = async () => {
-   
     await SecureStore.deleteItemAsync("token");
     await SecureStore.deleteItemAsync("avatar");
     await SecureStore.deleteItemAsync("FullName");
-    navigation.navigate("Authentication");
     dispatch({ type: "SIGN_OUT" });
-    
+    navigation.navigate("HomeTab");
   };
+  
+   const btn_personalInfor = async () => {
+     if (props.auth.isLogin == true) {
+       navigation.navigate("PersonalInfo", {
+         name: route.params.name,
+         avatar: route.params.avatar,
+         phonenumber: route.params.phonenumber,
+       });
+     } else {
+       navigation.navigate("Authentication");
+     }
+   };
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View style={styles.container}>
         <View style={styles.content}>
-          <TouchableOpacity style={styles.btn_profile}>
+          <TouchableOpacity
+            style={styles.btn_profile}
+            onPress={() => btn_personalInfor()}
+          >
             <View style={styles.view_btn}>
               <View style={styles.view_icon}>
                 <Text style={styles.text_btn}>Thông tin tài khoản</Text>

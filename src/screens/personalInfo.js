@@ -12,15 +12,16 @@ import {
 import { Avatar, Input, CheckBox } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
 import config from "../config/config";
+import { NavigationContainer } from "@react-navigation/native";
 
-function personalInfo() {
+function personalInfo(props) {
   const {
     control,
     handleSubmit,
     formState: { errors },
     getValues,
   } = useForm();
-
+ const { navigation,route } = props;
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -56,7 +57,7 @@ function personalInfo() {
                 style={styles.text_input}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
-                value={value}
+                value={route.params.name}
                 label="Họ và tên"
                 theme={{
                   colors: {
@@ -68,14 +69,14 @@ function personalInfo() {
           />
           <Text style={styles.label}>Ngày sinh</Text>
           <Controller
-            name="name"
+            name="birthday"
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 style={styles.text_input}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
-                value={value}
+                value={"09/03/2000"}
                 label="Họ và tên"
                 theme={{
                   colors: {
@@ -87,14 +88,14 @@ function personalInfo() {
           />
           <Text style={styles.label}>Số điện thoại</Text>
           <Controller
-            name="name"
+            name="phonenumber"
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 style={styles.text_input}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
-                value={value}
+                value={route.params.phonenumber}
                 label="Họ và tên"
                 theme={{
                   colors: {
