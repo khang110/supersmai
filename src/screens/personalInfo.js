@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,11 +8,16 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { Avatar, Input, CheckBox } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
 import config from "../config/config";
 import { NavigationContainer } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
+import userApi from "../api/userApi";
+import axios from "axios";
+import * as SecureStore from "expo-secure-store";
 
 function personalInfo(props) {
   const {
@@ -21,10 +26,84 @@ function personalInfo(props) {
     formState: { errors },
     getValues,
   } = useForm();
- const { navigation,route } = props;
-  return (
-    <ScrollView>
-      <View style={styles.container}>
+  const { navigation, route } = props;
+  const [avatar, getAvatar] = useState(route.params.avatar);
+  const [isDisplay, setDisplay] = useState(false);
+  let openImagePickerAsync = async () => {
+    let permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    if (pickerResult.cancelled == true) setDisplay(false);
+    else {
+      setDisplay(true);
+      let formData = new FormData();
+      let uri = pickerResult.uri;
+      let uriArray = uri.split(".");
+      let fileType = uriArray[uriArray.length - 1];
+      formData.append("imageUser", {
+        uri: uri,
+        name: `photo.${fileType}`,
+        type: `image/${fileType}`,
+      });
+      userApi.updateProfileUser(formData).then(async (res) => {
+        await userApi.getInforuserByToken().then(async(data) => {
+          getAvatar(data.data.urlIamge);
+          setDisplay(false);
+          await SecureStore.setItemAsync("avatar", data.data.urlIamge);
+          console.log("Oke")
+        });
+      });
+    }
+  };
+  //loading
+  const renderOnloading = () => {
+    if (isDisplay == true) {
+      return (
+        <View style={styles.overlay_}>
+          <ActivityIndicator size="small" color="white" />
+        </View>
+      );
+    }
+  };
+
+  const renderAvatar = () => {
+    if (avatar) {
+      return (
+        <View style={styles.personal_avatar}>
+          <Avatar
+            size={100}
+            source={{ uri: avatar }}
+            iconStyle={{
+              borderColor: "white",
+              borderStyle: "solid",
+              borderRadius: 10,
+            }}
+            containerStyle={{
+              borderColor: "white",
+              borderStyle: "solid",
+              borderRadius: 10,
+            }}
+            avatarStyle={{
+              borderColor: "white",
+              borderRadius: 20,
+            }}
+          ></Avatar>
+          {renderOnloading()}
+          <Avatar.Accessory
+            size={25}
+            position="relative"
+            onPress={() => {
+              openImagePickerAsync();
+            }}
+          />
+        </View>
+      );
+    } else {
+      return (
         <View style={styles.personal_avatar}>
           <Avatar
             size={100}
@@ -46,7 +125,22 @@ function personalInfo(props) {
               borderRadius: 20,
             }}
           ></Avatar>
+          {renderOnloading()}
+          <Avatar.Accessory
+            size={25}
+            position="relative"
+            onPress={() => {
+              openImagePickerAsync();
+            }}
+          />
         </View>
+      );
+    }
+  };
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        {renderAvatar()}
         <View style={styles.content}>
           <Text style={styles.label}>Họ và tên</Text>
           <Controller
@@ -176,6 +270,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: config.active_color,
   },
-
+  overlay_: {
+    position: "absolute",
+    justifyContent: "center",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "black",
+    opacity: 0.3,
+    borderRadius: 47,
+  },
 });
 export default personalInfo;

@@ -16,6 +16,7 @@
     "expo": "~42.0.1",
     "expo-firebase-recaptcha": "^1.4.2",
     "expo-image-manipulator": "~9.2.2",
+    "expo-image-picker": "^11.0.3",
     "expo-image-picker-multiple": "^1.4.1",
     "expo-media-library": "~12.1.2",
     "expo-modules-core": "^0.4.8",

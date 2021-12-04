@@ -30,6 +30,7 @@ function Profile(props) {
     if (props.auth.isLogin == true) {
       let fullName = await SecureStore.getItemAsync("FullName");
       let avatar = await SecureStore.getItemAsync("avatar");
+      console.log(avatar);
       let phonenumber = await SecureStore.getItemAsync("PhoneNumber");
       getFullName(fullName);
       getPhoneNumber(phonenumber);
