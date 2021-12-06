@@ -24,23 +24,21 @@ function Profile(props) {
   const [avatar, getAvatar] = useState("");
   const [phonenumber, getPhoneNumber] = useState("");
   const [isDisplay, setDisplay] = useState(false);
-  const { navigation } = props;
+  const { navigation, dispatch } = props;
   // get Infor User
   const getInforUser = async () => {
     if (props.auth.isLogin == true) {
-      let fullName = await SecureStore.getItemAsync("FullName");
-      let avatar = await SecureStore.getItemAsync("avatar");
-      console.log(avatar);
-      let phonenumber = await SecureStore.getItemAsync("PhoneNumber");
+      let fullName = props.auth.FullName
+      let avatar_profile = props.profile.avatar;
+      let phonenumber = props.auth.PhoneNumber;
       getFullName(fullName);
       getPhoneNumber(phonenumber);
-      getAvatar(avatar);
+      getAvatar(avatar_profile);
     }
   };
   useEffect(() => {
     getInforUser();
   }, [props.auth]);
-
   //personalInfor
   const btn_personalInfor = async () => {
     if (props.auth.isLogin == true) {
@@ -72,17 +70,6 @@ function Profile(props) {
   const check_isLogin = () => {
     if (props.auth.isLogin == false) {
       return (
-        <View style={styles.content_header}>
-          <Avatar
-            size={70}
-            source={{
-              uri: "https://www.w3schools.com/howto/img_avatar2.png",
-            }}
-            avatarStyle={{
-              borderColor: "white",
-              borderRadius: 20,
-            }}
-          ></Avatar>
           <View style={styles.text_header}>
             <Button
               onPress={() => btnLogin()}
@@ -92,36 +79,42 @@ function Profile(props) {
               type="outline"
             />
           </View>
-        </View>
+       
       );
     } else {
       return (
-        <View style={styles.content_header}>
-          <View>
-            <Avatar
-              size={70}
-              source={{
-                uri: "https://www.w3schools.com/howto/img_avatar2.png",
-              }}
-              avatarStyle={{
-                borderColor: "white",
-                borderRadius: 20,
-              }}
-            ></Avatar>
-          </View>
           <View style={styles.text_header}>
             <Text style={styles.name_user}>{FullName}</Text>
             <Text style={styles.type_user}>Cá nhân</Text>
           </View>
-        </View>
+      
       );
     }
   };
-
+  const getViewAvatar =  () =>{
+     return (
+       <View>
+         <Avatar
+           size={70}
+           source={{
+             uri: props.profile.avatar,
+           }}
+           avatarStyle={{
+             borderColor: "white",
+             borderRadius: 20,
+           }}
+         ></Avatar>
+       </View>
+     );
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
-        {check_isLogin()}
+        <View style={styles.content_header}>
+          {getViewAvatar()}
+          {check_isLogin()}
+        </View>
+
         <View style={styles.boder_bottom}></View>
 
         <View style={styles.content}>
@@ -343,5 +336,5 @@ const styles = StyleSheet.create({
   },
 });
 export default connect(function (state) {
-  return { auth: state.auth };
+  return { auth: state.auth, profile: state.profile };
 })(Profile);

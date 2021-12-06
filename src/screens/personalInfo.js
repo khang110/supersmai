@@ -10,6 +10,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
+import { connect } from "react-redux";
 import { Avatar, Input, CheckBox } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
 import config from "../config/config";
@@ -26,8 +27,7 @@ function personalInfo(props) {
     formState: { errors },
     getValues,
   } = useForm();
-  const { navigation, route } = props;
-  const [avatar, getAvatar] = useState(route.params.avatar);
+  const { navigation, route, dispatch } = props;
   const [isDisplay, setDisplay] = useState(false);
   let openImagePickerAsync = async () => {
     let permissionResult =
@@ -51,10 +51,9 @@ function personalInfo(props) {
       });
       userApi.updateProfileUser(formData).then(async (res) => {
         await userApi.getInforuserByToken().then(async(data) => {
-          getAvatar(data.data.urlIamge);
           setDisplay(false);
           await SecureStore.setItemAsync("avatar", data.data.urlIamge);
-          console.log("Oke")
+          dispatch({ type: "GET_AVATAR", avatar: data.data.urlIamge });
         });
       });
     }
@@ -71,44 +70,13 @@ function personalInfo(props) {
   };
 
   const renderAvatar = () => {
-    if (avatar) {
-      return (
-        <View style={styles.personal_avatar}>
-          <Avatar
-            size={100}
-            source={{ uri: avatar }}
-            iconStyle={{
-              borderColor: "white",
-              borderStyle: "solid",
-              borderRadius: 10,
-            }}
-            containerStyle={{
-              borderColor: "white",
-              borderStyle: "solid",
-              borderRadius: 10,
-            }}
-            avatarStyle={{
-              borderColor: "white",
-              borderRadius: 20,
-            }}
-          ></Avatar>
-          {renderOnloading()}
-          <Avatar.Accessory
-            size={25}
-            position="relative"
-            onPress={() => {
-              openImagePickerAsync();
-            }}
-          />
-        </View>
-      );
-    } else {
+   
       return (
         <View style={styles.personal_avatar}>
           <Avatar
             size={100}
             source={{
-              uri: "https://www.w3schools.com/howto/img_avatar2.png",
+              uri: props.profile.avatar,
             }}
             iconStyle={{
               borderColor: "white",
@@ -135,7 +103,7 @@ function personalInfo(props) {
           />
         </View>
       );
-    }
+    
   };
   return (
     <ScrollView>
@@ -282,4 +250,8 @@ const styles = StyleSheet.create({
     borderRadius: 47,
   },
 });
-export default personalInfo;
+export default connect(function (state) {
+  return {
+    profile: state.profile,
+  };
+})(personalInfo)

@@ -37,8 +37,14 @@ function Home(props) {
      let result = await SecureStore.getItemAsync("token");
      let avatar = await SecureStore.getItemAsync("avatar");
      let PhoneNumber = await SecureStore.getItemAsync("PhoneNumber");
+     let FullName = await SecureStore.getItemAsync("FullName");
      if (result) {
-       dispatch({ type: "SIGN_IN", token: result, PhoneNumber: PhoneNumber });
+       dispatch({
+         type: "SIGN_IN",
+         token: result,
+         PhoneNumber: PhoneNumber,
+         FullName: FullName,
+       });
        dispatch({ type: "GET_AVATAR", avatar: avatar });
      } else {
        return await null;

@@ -144,5 +144,5 @@ const styles = StyleSheet.create({
   },
 });
 export default connect(function (state) {
-  return { auth: state.auth };
+  return { auth: state.auth, profile: state.profile };
 })(settings);

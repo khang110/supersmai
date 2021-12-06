@@ -5,6 +5,11 @@ var profile = (state = { avatar: "" }, action) => {
         ...state,
         avatar: action.avatar,
       };
+    case "SIGN_OUT": //dang xuat
+      return {
+        ...state,
+        avatar: "https://www.w3schools.com/howto/img_avatar2.png",
+      };
     default:
       return state;
   }

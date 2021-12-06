@@ -6,7 +6,7 @@ import dataFilter from '../Reducer/dataFilter';
 import typeUpPost from './typeUpPost';
 import register from "./register";
 import auth from "./authentication";
-import profile from "../screens/profile";
+import profile from "./profile";
 const reducer = combineReducers({
   test,
   infoPost,

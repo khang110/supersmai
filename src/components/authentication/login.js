@@ -37,19 +37,24 @@ function login(props) {
       if (response.status == 201) {
         save("token", response.data.accessToken);
         save("PhoneNumber", data.PhoneNumber);
-        await userApi.getInforuserByToken().then((data) => {
-          let urlIamge = "null";
-          if (data.data.urlIamge != undefined) {
-            urlIamge = data.data.urlIamge;
+        await userApi.getInforuserByToken().then((res) => {
+          let urlIamge ;
+          if (res.data.urlIamge != undefined) {
+            urlIamge = res.data.urlIamge;
+          } else {
+            urlIamge = "https://www.w3schools.com/howto/img_avatar2.png";
           }
           save("avatar", urlIamge);
-          save("FullName", data.data.FullName);
+          save("FullName", res.data.FullName);
+          dispatch({
+             type: "SIGN_IN",
+             token: response.data.accessToken,
+             PhoneNumber: data.PhoneNumber,
+             FullName: res.data.FullName,
+           });
+          dispatch({ type: "GET_AVATAR", avatar: urlIamge });
         });
-        await dispatch({
-          type: "SIGN_IN",
-          token: response.data.accessToken,
-          PhoneNumber: data.PhoneNumber,
-        });
+       
         props.onPress();
       }
     });
@@ -191,5 +196,5 @@ const styles = StyleSheet.create({
   },
 });
 export default connect(function (state) {
-  return { auth: state.auth };
+  return { auth: state.auth, profile: state.profile };
 })(login);

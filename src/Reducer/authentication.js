@@ -1,4 +1,7 @@
-var auth = (state = { token: "", PhoneNumber: "", isLogin: false }, action) => {
+var auth = (
+  state = { token: "", PhoneNumber: "", FullName: "", isLogin: false },
+  action
+) => {
   switch (action.type) {
     case "SIGN_IN": //luu thong tin dang nhap
       return {
@@ -6,6 +9,7 @@ var auth = (state = { token: "", PhoneNumber: "", isLogin: false }, action) => {
         isLogin: true,
         token: action.token,
         PhoneNumber: action.PhoneNumber,
+        FullName: action.FullName,
       };
     case "SIGN_OUT": //dang xuat
       return {
@@ -13,6 +17,7 @@ var auth = (state = { token: "", PhoneNumber: "", isLogin: false }, action) => {
         token: null,
         isLogin: false,
         PhoneNumber: "",
+        FullName:""
       };
     default:
       return state;
