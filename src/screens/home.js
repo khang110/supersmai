@@ -9,7 +9,7 @@ import {
   StatusBar,
   FlatList,
   ScrollView,
-  SafeAreaView,
+  SafeAreaView, RefreshControl
 } from "react-native";
 const uriImage =
   "https://images.pexels.com/photos/9727100/pexels-photo-9727100.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940";
@@ -65,6 +65,10 @@ function Home(props) {
       })
       .finally(() => setrefresh(false));
   };
+  const onRefresh = () => {
+    setData([]);
+    getData();
+  }
   const pressRow = (dataPost) => {
     navigation.navigate("DetailPost", { data: dataPost });
   };
@@ -101,6 +105,13 @@ function Home(props) {
           ListHeaderComponent={ListHeader}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refresh}
+              onRefresh={onRefresh}
+              colors={[config.main_color]}
+            />
+          }
         />
       </View>
     </View>

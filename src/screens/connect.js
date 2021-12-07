@@ -9,7 +9,7 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
   SectionList,
-  Keyboard,
+  Keyboard, RefreshControl
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
@@ -66,7 +66,7 @@ function Connect(props) {
   const [dataAll, setDataAll] = useState([]);
   const { navigation } = props;
   const [search, setSearch] = useState("");
-
+  const [refresh, setrefresh] = useState(true);
   useEffect(() => {
     navigation.setOptions({
       headerSearchBar: {
@@ -77,6 +77,10 @@ function Connect(props) {
   useEffect(() => {
     getConnectPostDS();
   }, []);
+  const onRefresh = () => {
+    setData([]);
+    getConnectPostDS();
+  }
   const getConnectPostDS = async () => {
     const array = [...listitem];
     array.map((value, index) => {
@@ -102,7 +106,7 @@ function Connect(props) {
       })
       .catch((error) => {
         console.log("Error: ", error);
-      });
+      }).finally(() => setrefresh(false))
   };
 
   const handleSearch = (text) => {
@@ -267,6 +271,13 @@ function Connect(props) {
           renderSectionHeader={renderSectionHeader}
           renderItem={renderItemSection}
           ListHeaderComponent={renderListHeader}
+          refreshControl={
+            <RefreshControl
+              refreshing={refresh}
+              onRefresh={onRefresh}
+              colors={[color.main_color]}
+            />
+          }
         />
       </View>
     </TouchableWithoutFeedback>
@@ -281,6 +292,8 @@ const styles = StyleSheet.create({
     paddingBottom: "1%",
     paddingLeft: "2%",
     paddingRight: "2%",
+    marginBottom: '2%',
+    marginTop: '2%'
   },
   titleSection: {
     fontSize: fontSize.fontsize_3,

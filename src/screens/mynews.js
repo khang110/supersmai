@@ -6,7 +6,7 @@ import {
   Button,
   Image,
   FlatList,
-  SafeAreaView, TouchableWithoutFeedback
+  SafeAreaView, TouchableWithoutFeedback, RefreshControl
 } from "react-native";
 import MyNewsRow from "../components/rows/mynewsrow";
 import { SpeedDial } from "react-native-elements";
@@ -20,7 +20,9 @@ const token =
   "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SUQiOiI2MTFjMDY3MGE1MjU4MzAwMjIzM2I1MzUiLCJpYXQiOjE2MzU3NDAwNjB9.sATc8Ly5P7YexK1lLilNNdhehMf44feEclFYDOmiEX4";
 function Mynews(props) {
   const { navigation } = props;
+  const [refresh, setrefresh] = useState(true);
   const [data, setData] = useState([]);
+  const [dataAll, setDataAll] = useState([]);
   const [open, setOpen] = useState(false);
   const [openFilter, setOpenFilter] = useState(false);
   const [value, setValue] = useState(null);
@@ -42,11 +44,39 @@ function Mynews(props) {
     })
       .then((res) => {
         setData(res.data);
+        setDataAll(res.data);
         // console.log(res.data);
       })
       .catch((error) => {
         console.log("Error: ", error);
-      });
+      }).finally(() => setrefresh(false));
+  };
+  const onRefresh = () => {
+    setData([]);
+    getMyPost();
+  }
+  const filter = (itemvalue) => {
+    let tempData = dataAll;
+      if (itemvalue == 1) {
+        setData(tempData);
+      }
+      if (itemvalue == 2) {
+        const listTemp1 = tempData.filter((pr) => {
+          if (pr.TypeAuthor == "tangcongdong") {
+            return true;
+          } else return false;
+        });
+        setData(listTemp1);
+      }
+      if (itemvalue == 3) {
+        const listTemp1 = tempData.filter((pr) => {
+          if (pr.TypeAuthor != "tangcongdong") {
+            return true;
+          } else return false;
+        });
+        setData(listTemp1);
+      }
+    
   };
   const pressRow = (dataPost) => {
     navigation.navigate("DetailPost", { data: dataPost });
@@ -70,7 +100,7 @@ function Mynews(props) {
             setValue={setValue}
             setItems={setItems}
             onChangeValue={(value) => {
-              console.log(value);
+              filter(value);
             }}
             containerStyle={{ width: '60%', }}
           />
@@ -81,6 +111,13 @@ function Mynews(props) {
           keyExtractor={(item) => item._id}
           ItemSeparatorComponent={ItemSeparator}
           renderItem={renderItem}
+          refreshControl={
+            <RefreshControl
+              refreshing={refresh}
+              onRefresh={onRefresh}
+              colors={[color.main_color]}
+            />
+          }
         />
         <SpeedDial
           isOpen={open}

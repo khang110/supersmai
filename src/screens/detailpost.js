@@ -8,10 +8,11 @@ import color from "../config/color";
 import { Avatar } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import transaction from '../../assets/Transaction.png';
 const uriAva =
   "https://cdn-icons.flaticon.com/png/512/4194/premium/4194687.png?token=exp=1636281332~hmac=1390cb356a0fb98c5472c6407cfa2d6a";
 const avata = "https://cdn-icons-png.flaticon.com/512/1177/1177568.png";
-const arrUri = [uriAva];
+const arrUri = [transaction];
 const iconLocation =
   "https://cdn-icons.flaticon.com/png/512/4942/premium/4942069.png?token=exp=1636257580~hmac=ba5c9594fc4574ec68e534095cb0cfb1";
 function DetailPost(props) {

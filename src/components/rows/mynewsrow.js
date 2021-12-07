@@ -22,10 +22,10 @@ import {
   MaterialIcons,
   Ionicons,Entypo
 } from "@expo/vector-icons";
+import donate from '../../../assets/donate.png';
 const uriImage =
   "https://cdn-icons.flaticon.com/png/512/4194/premium/4194687.png?token=exp=1636281332~hmac=1390cb356a0fb98c5472c6407cfa2d6a";
-const link =
-  "https://scontent.fsgn4-1.fna.fbcdn.net/v/t1.15752-9/244559282_3070295989961269_1787605226591581197_n.png?_nc_cat=103&ccb=1-5&_nc_sid=ae9488&_nc_ohc=IDK-yXa7RIIAX-mn0gC&_nc_ht=scontent.fsgn4-1.fna&oh=38230c56ea479dc8db3a96bcd28b7812&oe=61AAA40B";
+
 const News = (props) => {
   const { data, onPress } = props;
   const [visible, setVisible] = useState(false);
@@ -40,7 +40,7 @@ const News = (props) => {
         <Image style={styles.imageStyle} source={{ uri: data.urlImage[0] }} />
       );
     } else {
-      return <Image style={styles.imageStyle} source={{ uri: uriImage }} />;
+      return <Image style={styles.imageStyle} source={donate} />;
     }
   };
 
