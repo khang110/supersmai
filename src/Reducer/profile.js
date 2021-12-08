@@ -1,4 +1,7 @@
-var profile = (state = { avatar: "" }, action) => {
+var profile = (
+  state = { avatar: "https://www.w3schools.com/howto/img_avatar2.png" },
+  action
+) => {
   switch (action.type) {
     case "GET_AVATAR":
       return {

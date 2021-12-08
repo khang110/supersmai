@@ -124,6 +124,14 @@ function login(props) {
             defaultValue=""
           />
         </View>
+        <Text
+          style={styles.forgotPassword}
+          onPress={() => {
+            props.navigation.navigate("forgotPassword");
+          }}
+        >
+          Quên mật khẩu
+        </Text>
       </View>
       <View>
         <TouchableOpacity
@@ -193,6 +201,13 @@ const styles = StyleSheet.create({
   error: {
     color: "#bf1650",
     alignSelf: "flex-start",
+  },
+
+  forgotPassword: {
+    alignSelf: "center",
+    fontSize: config.fontsize_5,
+    marginTop: "5%",
+    color: "blue",
   },
 });
 export default connect(function (state) {

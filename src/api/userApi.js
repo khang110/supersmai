@@ -6,6 +6,7 @@ const userApi = {
     axiosClient.post("account/getPhone", PhoneNumber),
   register: (data) => axiosClient.post("account/register", data),
   updateProfileUser: (body) => axiosClient.post("user/profileUser",body),
+  newPassword: (body) => axiosClient.post("account/Forgot",body)
 
 };
 export default userApi;
