@@ -174,13 +174,14 @@ function Confirm(props) {
           <ListImage navigation={navigation} dispatch={dispatch} />
         </View>
       </View>
-      <View style={styles.wrapInfor}>
-        <ButtonConfirm title="Đăng tin" onPress={dangtin} />
-      </View>
       <DetailAddress
         modalVisible={showModalAddress}
         closeModal={() => setShowModalAddress(false)}
       />
+      <View style={styles.wrapInfor}>
+        <ButtonConfirm title="Đăng tin" onPress={dangtin} />
+      </View>
+      
     </ScrollView>
   );
 }

@@ -16,6 +16,7 @@ import GiveGroups from '../screens/giveGroup';
 import LetMessage from '../screens/letMessage';
 import ListGive from '../screens/listGive';
 import ConfirmGive from '../screens/confirmGive';
+import DetailConnect from '../screens/detailConnect';
 import {
   createStackNavigator,
   HeaderBackButton
@@ -108,6 +109,24 @@ function AppNavigator(props) {
             title: "Chi tiết tin đăng",
             headerTintColor: color.white,
             headerTitleAlign: "center",
+     
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="DetailConnect"
+          component={DetailConnect}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Chi tiết kết nối",
+            headerTintColor: color.white,
+            headerTitleAlign: "center",
+     
             headerStyle: {
               backgroundColor: config.main_color,
             },

@@ -213,6 +213,9 @@ function Connect(props) {
     }
     return a1;
   };
+  const pressRow = () => {
+    navigation.navigate("DetailConnect");
+  }
   const renderItemChip = ({ item, index }) => {
     return (
       <Chip
@@ -232,8 +235,9 @@ function Connect(props) {
       </View>
     );
   };
+
   const renderItemSection = ({ item }) => {
-    return <ConnectRows data={item} />;
+    return <ConnectRows data={item} onPress={() => pressRow()}/>;
   };
   const renderListHeader = () => {
     return (

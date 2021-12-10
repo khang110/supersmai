@@ -9,12 +9,10 @@ import { Avatar } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import transaction from '../../assets/Transaction.png';
-const uriAva =
-  "https://cdn-icons.flaticon.com/png/512/4194/premium/4194687.png?token=exp=1636281332~hmac=1390cb356a0fb98c5472c6407cfa2d6a";
+import address from '../../assets/address.png';
 const avata = "https://cdn-icons-png.flaticon.com/512/1177/1177568.png";
 const arrUri = [transaction];
-const iconLocation =
-  "https://cdn-icons.flaticon.com/png/512/4942/premium/4942069.png?token=exp=1636257580~hmac=ba5c9594fc4574ec68e534095cb0cfb1";
+
 function DetailPost(props) {
   const { navigation } = props;
   let data = props.route.params.data;
@@ -51,7 +49,7 @@ function DetailPost(props) {
           resizeMethod={"resize"}
           resizeMode={"cover"}
           autoplay
-          ImageComponentStyle={{ borderRadius: 15, width: "97%", marginTop: 5 }}
+          ImageComponentStyle={{width: "100%"}}
           circleLoop
           sliderBoxHeight={config.screen_width * 0.8}
           imageLoadingColor="#FFF"
@@ -62,13 +60,9 @@ function DetailPost(props) {
             <Text style={styles.cate}>Quần áo bé nam</Text>
             <Text style={styles.price}>Miễn phí</Text>
           </View>
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              source={{ uri: iconLocation }}
-              style={styles.iconAddress}
-            />
-            <Text style={[styles.cate, { marginTop: "2%" }]} numberOfLines={2}>
-              {" "}
+          <View style={styles.wrapAddress}>
+            <Image source={address} style={styles.iconAddress}/>
+            <Text style={[styles.cate, { marginTop: "2%", marginLeft: '2%' }]} numberOfLines={2}>
               {data.address}
             </Text>
           </View>
@@ -107,33 +101,46 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "space-between",
     flexDirection: "column",
+    backgroundColor: '#FFF'
   },
   containter: { flex: 1, justifyContent: "center", alignItems: "center" },
-  wrapMidle: { marginLeft: "2%", marginRight: "2%", marginTop: "2%" },
-  title: { fontSize: fontSize.fontsize_2 },
+  wrapMidle: { marginTop: "2%" },
+  title: { fontSize: fontSize.fontsize_2 ,  marginLeft: "4%", marginRight: "4%",},
   wrapCate: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: "1%",
     marginBottom: "1%",
+    marginLeft: "4%", marginRight: "4%",
+
   },
   cate: { fontSize: fontSize.fontsize_4, color: color.gray_3, maxWidth: "90%" },
   price: { color: color.green, fontSize: fontSize.fontsize_4 },
+  wrapAddress:{ flexDirection: "row",  paddingLeft: "4%", paddingRight: "4%",
+  borderColor: '#EEEEEE',
+  alignItems: 'center',
+  borderTopWidth: 4, },
   iconAddress: {
-    width: config.screen_width * 0.08,
-    height: config.screen_width * 0.08,
+    width: config.screen_width * 0.06,
+    height: config.screen_width * 0.06,
   },
-  wrapInfor: { flexDirection: "row", marginTop: "1%", marginBottom: "1%" },
+  wrapInfor: { flexDirection: "row", marginTop: "1%", marginBottom: "1%" ,
+  borderColor: '#EEEEEE',
+  borderBottomWidth: 4,
+  borderTopWidth: 4,
+  paddingTop: '1%',
+  paddingBottom: '1%',
+  alignItems: 'center',
+  paddingLeft: '4%',
+  paddingRight: '4%'
+},
   wrapName: {
     marginLeft: "4%",
     marginBottom: "2%",
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    borderColor: "#CCC",
     width: "80%",
   },
   name: { fontSize: fontSize.fontsize_4, fontWeight: "bold" },
-  descript: { fontSize: fontSize.fontsize_3 },
+  descript: { fontSize: fontSize.fontsize_3 ,  marginLeft: "4%", marginRight: "4%",},
   wrapButtonBottom: {
     flexDirection: "row",
     justifyContent: "space-between",
