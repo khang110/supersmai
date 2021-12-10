@@ -27,6 +27,8 @@ import authentication from "../screens/authentication";
 import { Ionicons,Entypo } from '@expo/vector-icons';
 import { connect } from "react-redux";
 import verifyOTPs from "../screens/verifyOtps";
+import forgotPassword from "../screens/forgotPassword";
+import newPassword from "../screens/newPassword";
 import {
   StyleSheet,
   Text,
@@ -333,6 +335,30 @@ function AppNavigator(props) {
             headerBackImage: () => (
               <Entypo name="chevron-thin-left" size={25} color="#FFF" />
             ),
+          })}
+        />
+        <Stack.Screen
+          name="forgotPassword"
+          component={forgotPassword}
+          options={({ navigation }) => ({
+            title: "Quên mật khẩu",
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerTintColor: config.white,
+          })}
+        />
+        <Stack.Screen
+          name="newPassword"
+          component={newPassword}
+          options={({ navigation }) => ({
+            title: "Mật khẩu mới",
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerTintColor: config.white,
           })}
         />
       </Stack.Navigator>
