@@ -11,6 +11,7 @@ import { TextInput } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import config from "../config/config";
+import userApi from "../api/userApi";
 
 function newPassword(props) {
   const { navigation } = props;
@@ -23,14 +24,21 @@ function newPassword(props) {
     getValues,
   } = useForm();
   const onSubmit = async (data) => {
-    await axios
-      .post("https://api.smai.com.vn/account/Forgot", {
-        PhoneNumber: props.register.phonenumber,
-        Password: data.password,
-      })
-      .then((res) => {
-        navigation.replace("Authentication");
-      });
+    newPassword = {
+      PhoneNumber: props.register.phonenumber,
+      Password: data.password,
+    };
+    userApi.newPassword(newPassword).then((res)=>{
+      navigation.replace("Authentication");
+    });
+    // await axios
+    //   .post("https://api.smai.com.vn/account/Forgot", {
+    //     PhoneNumber: props.register.phonenumber,
+    //     Password: data.password,
+    //   })
+    //   .then((res) => {
+    //     navigation.replace("Authentication");
+    //   });
   };
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -40,7 +48,7 @@ function newPassword(props) {
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                style={styles.textInput}
+                style={styles.text_input}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
                 label="Mật khẩu"
@@ -80,7 +88,7 @@ function newPassword(props) {
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                style={styles.textInput}
+                style={styles.text_input}
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
                 label="Nhập lại mật khẩu"
@@ -121,8 +129,7 @@ function newPassword(props) {
       <View style={styles.layoutBtnLogin}>
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
-          color={config.color_btn_1}
-          size="large"
+          style={styles.button}
         >
           <Text style={styles.btnLogin}>Xác nhận</Text>
         </TouchableOpacity>
@@ -135,12 +142,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: "5%",
     alignItems: "center",
-    backgroundColor: "#FFF",
     justifyContent: "space-between",
   },
   child_container: {
     alignItems: "center",
-    backgroundColor: "#FFF",
     justifyContent: "space-around",
   },
 
@@ -164,25 +169,23 @@ const styles = StyleSheet.create({
   },
   password: {
     height: "14%",
-    maxWidth: "90%",
-    minWidth: "80%",
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
     marginBottom: "4%",
+    marginTop: "5%",
   },
-  textInput: {
+  text_input: {
     fontSize: 18,
-    width: "95%",
-    backgroundColor: "#FFF",
+    backgroundColor: config.active_color,
+    // backgroundColor: config.active_color,
+    fontSize: config.fontsize_3,
+    marginTop: config.margin_4,
+    width: "90%",
   },
 
   //btn
   layoutBtnLogin: {
-    maxHeight: "10%",
-    minHeight: "8%",
-    maxWidth: "80%",
-    minWidth: "70%",
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
@@ -191,6 +194,13 @@ const styles = StyleSheet.create({
   btnLogin: {
     color: "white",
     fontSize: 20,
+  },
+  button: {
+    marginTop: 35,
+    paddingVertical: 10,
+    paddingHorizontal: "36%",
+    backgroundColor: "#E53935",
+    borderRadius: config.btn_border_radius,
   },
   error: {
     color: "red",

@@ -54,8 +54,9 @@ function login(props) {
            });
           dispatch({ type: "GET_AVATAR", avatar: urlIamge });
         });
-       
         props.onPress();
+      }else{
+         alert("Số điện thoại hoặc mật khẩu không chính xác");
       }
     });
   };
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
   },
   text_input: {
     fontSize: 18,
-
     backgroundColor: config.active_color,
     // backgroundColor: config.active_color,
     fontSize: config.fontsize_3,
