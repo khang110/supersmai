@@ -29,6 +29,7 @@ import ListImage from "../components/pickImage/ListImage";
 import InforGive from "../components/confirm/inforGive";
 import { connect } from "react-redux";
 import DetailAddress from "../components/Modal/DetailAddress";
+import { ALERT_TYPE, Dialog, Root, Toast } from 'react-native-alert-notification';
 import { HelperText } from "react-native-paper";
 const Title = (props) => {
   return (
@@ -37,7 +38,8 @@ const Title = (props) => {
     </View>
   );
 };
-
+const token =
+  "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SUQiOiI2MTFjMDY3MGE1MjU4MzAwMjIzM2I1MzUiLCJpYXQiOjE2MzU3NDAwNjB9.sATc8Ly5P7YexK1lLilNNdhehMf44feEclFYDOmiEX4";
 function Confirm(props) {
   const [textTitle, setTextTitle] = useState("");
   const [textDescrip, setTextDescrip] = useState("");
@@ -116,6 +118,73 @@ function Confirm(props) {
       );
     }
   };
+  const submitInfoPost = async () => {
+    //api upload infor json
+  
+    const data = props.infoPost;
+    axios({
+      url: "https://api.smai.com.vn/post/CreatePost",
+      method: "post",
+      data: {
+        title: textTitle,
+        note: textDescrip,
+        address: address,
+        TypeAuthor: data.TypeAuthor,
+        NameProduct: data.NameProduct,
+      },
+      headers: {
+        Accept: "application/json",
+        Authorization: token,
+      },
+    })
+      .then((res) => {
+        //sau khi upload json xong thi tien hanh upload hinh anh su dung idpost duoc tra ve
+        if (props.infoPost.image[0]) {
+          let apiUrl = "https://api.smai.com.vn/post/UpdatePost";
+          let formData = new FormData();
+          for (let i = 0; i < image.length; i++) {
+            let uri = image[i].uri;
+            let uriArray = uri.split(".");
+            let fileType = uriArray[uriArray.length - 1];
+            formData.append("productImage", {
+              uri: uri,
+              name: `photo.${fileType}`,
+              type: `image/${fileType}`,
+            });
+          }
+          let options = {
+            method: "POST",
+            body: formData,
+            mode: "cors",
+            headers: {
+              idpost: res.data.idpost,
+              Accept: "application/json",
+              "Content-Type": "multipart/form-data",
+              Authorization: token,
+            },
+          };
+          fetch(apiUrl, options).then((res) => {
+            Dialog.show({
+              type: ALERT_TYPE.SUCCESS,
+              // closeOnOverlayTap: false,
+              title: 'Đăng tin thành công',
+              textBody:'Cảm ơn lòng hảo tâm của bạn',
+              button:'Xong'
+            })
+          });
+        } else {
+          Dialog.show({
+            type: ALERT_TYPE.SUCCESS,
+            // closeOnOverlayTap: false,
+            title: 'Đăng tin thành công',
+            textBody:'Cảm ơn lòng hảo tâm của bạn',
+            button:'Xong',
+            onPressButton: () => navigation.navigate("Home")
+          })
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const dangtin = () => {
     if (textTitle == "") {
@@ -124,18 +193,30 @@ function Confirm(props) {
       setErrTitle(false);
     }
     if (props.infoPost.TypeAuthor == "") {
+      console.log("tpeaa")
       setErrWho(true)
     } else {
       setErrWho(false);
     }
-    if (address == "") {
+    if (address == null) {
       setErrAddress(true)
     } else {
       setErrAddress(false);
     }
+    if (textTitle != "" && address != null && props.infoPost.TypeAuthor != "") {
+      submitInfoPost()
+      // Dialog.show({
+      //   type: ALERT_TYPE.SUCCESS,
+      //   // closeOnOverlayTap: false,
+      //   title: 'Đăng tin thành công',
+      //   textBody:'Cảm ơn lòng hảo tâm của bạn',
+      //   button:'Xong'
+      // })
+    }
   };
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
+      <Root>
       <View>
         <Title title="Thông tin liên hệ" />
         <View style={styles.wrapInfor}>
@@ -174,6 +255,7 @@ function Confirm(props) {
           <ListImage navigation={navigation} dispatch={dispatch} />
         </View>
       </View>
+      </Root>
       <DetailAddress
         modalVisible={showModalAddress}
         closeModal={() => setShowModalAddress(false)}

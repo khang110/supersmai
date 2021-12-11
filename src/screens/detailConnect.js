@@ -9,12 +9,19 @@ import { Avatar } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import address from "../../assets/address.png";
-import Chip from '../components/Chips/chipStatus';
+import Chip from "../components/Chips/chipStatus";
+import RowDetailConnect from "../components/rows/rowDetailConnect";
 const avata = "https://cdn-icons-png.flaticon.com/512/1177/1177568.png";
 function DetailConnect(props) {
+  let data = props.route.params.data;
+  // console.log(data);
+
   return (
-    <ScrollView>
-      <Text>Người nhận</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+     <View>
+     <View style={{ marginLeft: "4%" }}>
+        <Text style={styles.title}>Người nhận</Text>
+      </View>
       <View style={styles.wrapInfor}>
         <Avatar
           size={config.screen_width * 0.1}
@@ -35,15 +42,46 @@ function DetailConnect(props) {
           Bà Rịa Vũng Tàu
         </Text>
       </View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text>Thông tin tặng</Text>
-          <Chip/>
+      <View style={styles.wrapInforTrans}>
+        <Text style={styles.title}>Thông tin tặng</Text>
+        <Chip status={data.isStatus} typetransaction={data.typetransaction} />
+      </View>
+      <View>
+        <RowDetailConnect data={data.PostData} />
+      </View>
+      <View style={styles.wrapNote}>
+        <Text style={styles.title}>Ghi chú</Text>
+        <Text style={styles.textNote}>No message</Text>
+      </View>
+      <View style={styles.wrapNote}>
+        <Text style={styles.title}>Theo dõi</Text>
+      </View>
+     </View>
+
+      <View style={styles.wrapButtonBottom}>
+        <TouchableOpacity style={{ padding: "4%" }}>
+          <Text style={styles.textBad}>Hủy</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.wrapButtonMessage}>
+          <Text style={styles.textGive}>Xác nhận xong</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    justifyContent: "space-between",
+    flexDirection: "column",
+    backgroundColor: '#FFF'
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: fontSize.fontsize_2,
+    color: color.gray_2,
+  },
   wrapInfor: {
     flexDirection: "row",
     marginTop: "1%",
@@ -68,13 +106,49 @@ const styles = StyleSheet.create({
     paddingRight: "4%",
     borderColor: "#EEEEEE",
     alignItems: "center",
-    paddingTop: '2%',
-    paddingBottom: '2%',
+    paddingTop: "2%",
+    paddingBottom: "2%",
     borderBottomWidth: 2,
   },
   iconAddress: {
     width: config.screen_width * 0.06,
     height: config.screen_width * 0.06,
+  },
+  wrapInforTrans: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginLeft: "4%",
+    marginRight: "4%",
+    paddingTop: "1%",
+    paddingBottom: "1%",
+  },
+  wrapNote: {
+    paddingLeft: "4%",
+    paddingBottom: "2%",
+    borderColor: "#EEEEEE",
+    paddingTop: "2%",
+    borderBottomWidth: 2,
+  },
+  textNote: {
+    fontSize: fontSize.fontsize_4,
+
+    marginRight: "2%",
+  },
+  wrapButtonBottom: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: "2%",
+  },
+  textBad: { fontSize: fontSize.fontsize_3, color: color.red },
+  textGive: { color: '#FFF', fontSize: fontSize.fontsize_2 },
+  wrapButtonMessage: {
+    flexDirection: "row",
+    padding: "4%",
+    justifyContent: "center",
+    backgroundColor: color.main_color,
+    borderRadius: 30,
+    alignItems: "center",
   },
 });
 
