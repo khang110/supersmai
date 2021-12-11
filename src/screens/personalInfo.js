@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 import { Avatar, Input, CheckBox } from "react-native-elements";
 import { useForm, Controller } from "react-hook-form";
 import config from "../config/config";
-import { NavigationContainer } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import userApi from "../api/userApi";
 import axios from "axios";
@@ -92,15 +91,16 @@ function personalInfo(props) {
               borderColor: "white",
               borderRadius: 20,
             }}
-          ></Avatar>
-          {renderOnloading()}
-          <Avatar.Accessory
-            size={25}
-            position="relative"
-            onPress={() => {
-              openImagePickerAsync();
-            }}
-          />
+          >
+            {renderOnloading()}
+            <Avatar.Accessory
+              size={25}
+              position="relative"
+              onPress={() => {
+                openImagePickerAsync();
+              }}
+            />
+          </Avatar>
         </View>
       );
     
@@ -129,7 +129,7 @@ function personalInfo(props) {
               />
             )}
           />
-          <Text style={styles.label}>Ngày sinh</Text>
+          {/* <Text style={styles.label}>Ngày sinh</Text>
           <Controller
             name="birthday"
             control={control}
@@ -147,7 +147,7 @@ function personalInfo(props) {
                 }}
               />
             )}
-          />
+          /> */}
           <Text style={styles.label}>Số điện thoại</Text>
           <Controller
             name="phonenumber"
@@ -168,7 +168,7 @@ function personalInfo(props) {
             )}
           />
         </View>
-        <Text style={styles.label_checkbox}>Giới tính</Text>
+        {/* <Text style={styles.label_checkbox}>Giới tính</Text>
         <View style={styles.checkbox}>
           <CheckBox
             containerStyle={styles.checkbox_icon}
@@ -195,7 +195,7 @@ function personalInfo(props) {
             uncheckedIcon="circle-o"
             uncheckedColor={config.white}
           />
-        </View>
+        </View> */}
       </View>
     </ScrollView>
   );

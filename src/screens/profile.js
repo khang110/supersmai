@@ -5,6 +5,7 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Linking,
 } from "react-native";
 import config from "../config/config";
 import { Avatar } from "react-native-elements";
@@ -190,7 +191,9 @@ function Profile(props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.btn_profile}
-            onPress={() => btn_personalInfor()}
+            onPress={() => {
+              Linking.openURL("tel:0938516899");
+            }}
           >
             <View style={styles.view_btn}>
               <View style={styles.view_icon}>
@@ -202,7 +205,7 @@ function Profile(props) {
                     color="#000000"
                   />
                 </View>
-                <Text style={styles.text_btn}>Hỗ trợ</Text>
+                <Text style={styles.text_btn}>Hotline hỗ trợ</Text>
               </View>
               <MaterialIcons
                 name="keyboard-arrow-right"
@@ -240,7 +243,9 @@ function Profile(props) {
 
           <TouchableOpacity
             style={styles.btn_profile}
-            onPress={() => btn_personalInfor()}
+            onPress={() => {
+              Linking.openURL("https://forms.gle/rMAaUGhSsD8gywSb8");
+            }}
           >
             <View style={styles.view_btn}>
               <View style={styles.view_icon}>
