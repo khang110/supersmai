@@ -260,7 +260,6 @@ const styles = StyleSheet.create({
   },
   iconStyle: {
     justifyContent: "flex-end",
-    alignItems: "center",
     marginRight: 20,
     tintColor: "#000",
   },
@@ -269,7 +268,6 @@ const styles = StyleSheet.create({
     color: "#000",
     paddingTop: "2%",
     paddingBottom: "2%",
-    paddingLeft: "5%",
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -278,7 +276,6 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: fontSize.fontsize_2,
     fontWeight: "bold",
-    paddingTop: "2%",
     paddingBottom: "2%",
     paddingLeft: "5%",
   },
@@ -287,7 +284,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#F5F5F5",
   },
 
 
