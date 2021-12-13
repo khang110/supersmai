@@ -85,7 +85,46 @@ function ModalDetailAddress(props) {
     setChange(true);
     setCommune(item);
   };
-  
+  //Khai bao ham xu ly su kien click
+  const pressFunc = () => {
+    if (
+      province == "" ||
+      district == "" ||
+      commune == "" ||
+      addressDetail.trim() == ""
+    ) {
+      if (province == "") {
+        setErrProvince(true);
+      } else {
+        setErrProvince(false);
+        if (district == "") {
+          setErrDistrict(true);
+        } else {
+          setErrDistrict(false);
+          if (commune == "") {
+            setErrCommune(true);
+          } else {
+            setErrCommune(false);
+            if (addressDetail.trim() == "") {
+              setErrDetailAddr(true);
+            }
+          }
+        }
+      }
+    } else {
+      setErrDetailAddr(false);
+      async function save(key, value) {
+        await SecureStore.setItemAsync(key, value);
+      }
+      const address = `${addressDetail.trim()}, ${commune.name}, ${
+        district.name
+      }, ${province.name}`;
+      save("detailAddress", address).then(() => {
+        dispatch({ type: "CONFIRM_ADDRESS", address: address });
+        closeModal();
+      });
+    }
+  };
   const hasErrors = () => {
     if (province != "") {
       return false;
