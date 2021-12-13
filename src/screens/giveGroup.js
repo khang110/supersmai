@@ -195,6 +195,17 @@ function GiveGroups(props) {
           <AntDesign name="caretdown" size={10} color="#BDBDBDBD" />
         </TouchableOpacity>
       </View>
+      <FilterAddress
+        modalVisible={showModalAddress}
+        closeModal={() => setShowModalAddress(false)}
+      />
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item._id}
+        ItemSeparatorComponent={ItemSeparator}
+        renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
+      />
       <FilterCategory modalVisible={modalVisible} closeModal={() => setModalVisible(false)}/>
     </View>
   );
