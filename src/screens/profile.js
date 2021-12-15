@@ -278,7 +278,6 @@ const styles = StyleSheet.create({
   },
   content_header: {
     padding: "8%",
-    marginTop: "6%",
     flexDirection: "row",
     alignItems: "center",
     paddingBottom: "5%",

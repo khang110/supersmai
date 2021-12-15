@@ -15,11 +15,11 @@ import axios from "axios";
 import color from "../config/color";
 import DropDown from "react-native-paper-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
-
-const token =
+import { connect } from "react-redux";
+const tokenn =
   "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SUQiOiI2MTFjMDY3MGE1MjU4MzAwMjIzM2I1MzUiLCJpYXQiOjE2MzU3NDAwNjB9.sATc8Ly5P7YexK1lLilNNdhehMf44feEclFYDOmiEX4";
 function Mynews(props) {
-  const { navigation } = props;
+  const { navigation, dispatch } = props;
   const [refresh, setrefresh] = useState(true);
   const [data, setData] = useState([]);
   const [dataAll, setDataAll] = useState([]);
@@ -33,11 +33,13 @@ function Mynews(props) {
   ]);
   useEffect(() => {
     getMyPost();
+    // console.log(props.auth.token)
   }, []);
   const getMyPost = async () => {
+    const token = "bearer " + props.auth.token;
     await axios({
       method: "get",
-      url: "https://api.smai.com.vn/post/getPostByAccountId",
+      url: "https://app-super-smai.herokuapp.com/post/getPostByAccountId",
       headers: {
         Authorization: token,
       },
@@ -50,6 +52,28 @@ function Mynews(props) {
       .catch((error) => {
         console.log("Error: ", error);
       }).finally(() => setrefresh(false));
+  };
+  const showPost = async (id, status) => {
+    let body = "";
+    body = { statusdiplay: !status };
+    let url = "https://app-super-smai.herokuapp.com/update-post?idpost=" + id;
+    axios({
+      method: "put",
+      url: url,
+      data: body,
+      headers: {
+        Authorization: props.auth.token,
+      },
+    })
+      .then((res) => {
+        if (res.status == 201) {
+          // alert("Xoá bài thành công.");
+          onRefresh();
+          status
+            ? Alert.alert("Thông báo", "Đã ẩn tin", [{ text: "OK" }])
+            : Alert.alert("Thông báo", "Đã hiện tin", [{ text: "OK" }]);
+        }
+      })
   };
   const onRefresh = () => {
     setData([]);
@@ -82,7 +106,7 @@ function Mynews(props) {
     navigation.navigate("DetailPost", { data: dataPost });
   };
   const renderItem = ({ item }) => {
-    return <MyNewsRow data={item} onPress={() => pressRow(item)} />;
+    return <MyNewsRow data={item} onPress={() => pressRow(item)} hideNews={() => showPost(item._id, item.isDisplay)}/>;
   };
   const ItemSeparator = () => {
     return <View style={{ height: 10 }} />;
@@ -136,7 +160,9 @@ function Mynews(props) {
           <SpeedDial.Action
             icon={{ name: "add", color: "#fff" }}
             title="Tặng cộng đồng"
-            onPress={() => navigation.navigate("Category")}
+            onPress={() => {
+              dispatch({ type: "SET_TYPE_AUTHOR", TypeAuthor: "tangcongdong" });
+              navigation.navigate("Category")}}
             color={color.main_color}
           />
           <SpeedDial.Action
@@ -172,4 +198,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#BDBDBD",
   },
 });
-export default Mynews;
+
+export default connect(function (state) {
+  return { auth: state.auth, profile: state.profile };
+})(Mynews);

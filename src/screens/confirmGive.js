@@ -44,6 +44,7 @@ function LetMessage(props) {
   const { navigation, dispatch } = props;
   let data = props.route.params.data;
   let category = props.route.params.cateSelected;
+  console.log(props.auth)
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -229,5 +230,5 @@ const styles = StyleSheet.create({
   },
 });
 export default connect(function (state) {
-  return { infoPost: state.infoPost };
+  return { infoPost: state.infoPost, auth: state.auth };
 })(LetMessage);

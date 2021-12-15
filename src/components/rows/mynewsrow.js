@@ -34,6 +34,7 @@ const News = (props) => {
 
   const showMenu = () => setVisible(true);
 
+  
   const renderImage = () => {
     if (data.urlImage.length != 0) {
       return (
@@ -43,7 +44,13 @@ const News = (props) => {
       return <Image style={styles.imageStyle} source={donate} />;
     }
   };
-
+  const renderTypeNews = () => {
+    if (data.TypeAuthor == "tangcongdong") {
+      return "Tặng cộng đồng"
+    } else {
+      return "Cần hỗ trợ"
+    }
+  }
   return (
     <View>
       <TouchableOpacity
@@ -62,9 +69,9 @@ const News = (props) => {
                 visible={visible}
                 anchor={<Entypo name="dots-three-vertical" size={20} color="#BDBDBD" onPress={showMenu}/>}
                 onRequestClose={hideMenu}>
-                <MenuItem onPress={hideMenu} >Ẩn tin</MenuItem>
+                <MenuItem onPress={props.hideNews} >Ẩn tin</MenuItem>
                 <MenuDivider />
-                <MenuItem onPress={hideMenu} >Xóa tin</MenuItem>
+                <MenuItem onPress={props.deleteNews} >Xóa tin</MenuItem>
               </Menu>
             </View>
             </View>
@@ -79,8 +86,8 @@ const News = (props) => {
           </View>
         </View>
         <View style={styles.wrapStatus}>
-          <Text style={styles.time}>Tặng cộng đồng</Text>
-          <Text style={styles.time}>Đang hiển thị</Text>
+          <Text style={styles.time}>{renderTypeNews()}</Text>
+          <Text style={styles.time}>{data.isDisplay ? "Hiển thị" : "Đã ẩn"}</Text>
           <TouchableOpacity style={{ flexDirection: "row" }}>
             <Ionicons
               name="ios-mail-outline"

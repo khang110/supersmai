@@ -28,9 +28,11 @@ import ButtonConfirm from "../components/button/buttonConfirm";
 import ListImage from "../components/pickImage/ListImage";
 import InforGive from "../components/confirm/inforGive";
 import { connect } from "react-redux";
+import ModalSuccess from '../components/Modal/ModalSuccess';
 import DetailAddress from "../components/Modal/DetailAddress";
 import { ALERT_TYPE, Dialog, Root, Toast } from 'react-native-alert-notification';
 import { HelperText } from "react-native-paper";
+import AnimatedLoader from "react-native-animated-loader";
 const Title = (props) => {
   return (
     <View style={styles.wrapTitle}>
@@ -38,8 +40,7 @@ const Title = (props) => {
     </View>
   );
 };
-const token =
-  "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SUQiOiI2MTFjMDY3MGE1MjU4MzAwMjIzM2I1MzUiLCJpYXQiOjE2MzU3NDAwNjB9.sATc8Ly5P7YexK1lLilNNdhehMf44feEclFYDOmiEX4";
+
 function Confirm(props) {
   const [textTitle, setTextTitle] = useState("");
   const [textDescrip, setTextDescrip] = useState("");
@@ -48,6 +49,8 @@ function Confirm(props) {
   const [errTitle, setErrTitle] = useState(false);
   const [errWho, setErrWho] = useState(false);
   const [errAddress, setErrAddress] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [modalsuccess, setModalsuccess] = useState(false);
   const { navigation, dispatch } = props;
   useEffect(() => {
     const getAddress = async () => {
@@ -119,11 +122,14 @@ function Confirm(props) {
     }
   };
   const submitInfoPost = async () => {
+    setLoading(true);
     //api upload infor json
-  
+    const token = "bearer " + props.auth.token;
     const data = props.infoPost;
+
+    console.log(textTitle);
     axios({
-      url: "https://api.smai.com.vn/post/CreatePost",
+      url: "https://app-super-smai.herokuapp.com/post/CreatePost",
       method: "post",
       data: {
         title: textTitle,
@@ -140,7 +146,8 @@ function Confirm(props) {
       .then((res) => {
         //sau khi upload json xong thi tien hanh upload hinh anh su dung idpost duoc tra ve
         if (props.infoPost.image[0]) {
-          let apiUrl = "https://api.smai.com.vn/post/UpdatePost";
+          const image = props.infoPost.image;
+          let apiUrl = "https://app-super-smai.herokuapp.com/post/UpdatePost";
           let formData = new FormData();
           for (let i = 0; i < image.length; i++) {
             let uri = image[i].uri;
@@ -164,15 +171,18 @@ function Confirm(props) {
             },
           };
           fetch(apiUrl, options).then((res) => {
+            setLoading(false)
             Dialog.show({
               type: ALERT_TYPE.SUCCESS,
               // closeOnOverlayTap: false,
               title: 'Đăng tin thành công',
               textBody:'Cảm ơn lòng hảo tâm của bạn',
-              button:'Xong'
+              button:'Xong',
+              onPressButton: () => navigation.navigate("Home")
             })
           });
         } else {
+          setLoading(false)
           Dialog.show({
             type: ALERT_TYPE.SUCCESS,
             // closeOnOverlayTap: false,
@@ -181,9 +191,12 @@ function Confirm(props) {
             button:'Xong',
             onPressButton: () => navigation.navigate("Home")
           })
+          
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false)
+        console.log(err)});
   };
 
   const dangtin = () => {
@@ -256,6 +269,16 @@ function Confirm(props) {
         </View>
       </View>
       </Root>
+      <AnimatedLoader
+        visible={loading}
+        overlayColor="rgba(255,255,255,0.75)"
+        source={require("../loading/loading2.json")}
+        animationStyle={styles.lottie}
+        speed={1}
+      >
+        <Text>Đang đăng tin...</Text>
+      </AnimatedLoader>
+      <ModalSuccess modalVisible={modalsuccess} onPress={() => setModalsuccess(false)}/>
       <DetailAddress
         modalVisible={showModalAddress}
         closeModal={() => setShowModalAddress(false)}
@@ -319,7 +342,11 @@ const styles = StyleSheet.create({
     marginBottom: "2%",
     backgroundColor: color.white,
   },
+  lottie: {
+    width: 100,
+    height: 100
+  }
 });
 export default connect(function (state) {
-  return { infoPost: state.infoPost };
+  return { infoPost: state.infoPost, auth: state.auth };
 })(Confirm);

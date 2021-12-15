@@ -159,7 +159,7 @@ function AppNavigator(props) {
           component={Confirm}
           options={({ navigation, route }) => ({
             headerShown: true,
-            title: "Xác nhận gửi tặng",
+            title: "Xác nhận thông tin",
             headerTintColor: color.white,
             headerStyle: {
               backgroundColor: config.main_color,

@@ -84,7 +84,7 @@ function LetMessage(props) {
       <View>
         <View style={styles.wrapInfor}>
           <Text style={{ fontSize: fontSize.fontsize_3, fontWeight: "bold" }}>
-            Nguyễn Anh Khang - 0971037601
+            {props.auth.FullName} - {props.auth.PhoneNumber}
           </Text>
           <View style={styles.wrapAddress}>
             <Text style={styles.titleAddress}>Địa chỉ: </Text>
@@ -175,5 +175,5 @@ const styles = StyleSheet.create({
   },
 });
 export default connect(function (state) {
-  return { infoPost: state.infoPost };
+  return { infoPost: state.infoPost, auth: state.auth };
 })(LetMessage);

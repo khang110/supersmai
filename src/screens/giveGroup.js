@@ -31,6 +31,7 @@ function GiveGroups(props) {
   const [showModalAddress, setShowModalAddress] = useState(false);
   const [typeAuthor, settypeAuthor] = useState(props.route.params.typeAuthor);
   const [modalVisible, setModalVisible]= useState(false);
+  console.log(props.route.params.typeAuthor)
   const addr = props.dataFilter.addressFilter;
   let categoryFilter = props.dataFilter.categoryFilter;
   useLayoutEffect(() => {
@@ -125,7 +126,7 @@ function GiveGroups(props) {
     getData();
   }, []);
   const getData = () => {
-    const apiURL = `https://api.smai.com.vn/post/getPostByTypeAuthor?typeauthor=${typeAuthor}`;
+    const apiURL = `https://app-super-smai.herokuapp.com/getPostByTypeAuthor?typeauthor=${typeAuthor}`;
     axios
       .get(apiURL)
       .then((resjson) => {
@@ -244,5 +245,6 @@ export default connect(function (state) {
   return {
     infoPost: state.infoPost,
     dataFilter: state.dataFilter,
+    auth: state.auth
   };
 })(GiveGroups);

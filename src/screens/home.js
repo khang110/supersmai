@@ -54,7 +54,7 @@ function Home(props) {
   const getData = async () => {
     await axios({
       method: "get",
-      url: "https://api.smai.com.vn/post/getNewPost",
+      url: "https://app-super-smai.herokuapp.com/post/getNewPost",
     })
       .then((resjson) => {
         setData(resjson.data);
