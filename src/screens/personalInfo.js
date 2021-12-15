@@ -168,34 +168,6 @@ function personalInfo(props) {
             )}
           />
         </View>
-        {/* <Text style={styles.label_checkbox}>Giới tính</Text>
-        <View style={styles.checkbox}>
-          <CheckBox
-            containerStyle={styles.checkbox_icon}
-            center
-            title="Nam"
-            checkedIcon="dot-circle-o"
-            uncheckedIcon="circle-o"
-            uncheckedColor={config.white}
-            style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
-          />
-          <CheckBox
-            containerStyle={styles.checkbox_icon}
-            center
-            title="Nữ"
-            checkedIcon="dot-circle-o"
-            uncheckedIcon="circle-o"
-            uncheckedColor={config.white}
-          />
-          <CheckBox
-            containerStyle={styles.checkbox_icon}
-            center
-            title="Khác"
-            checkedIcon="dot-circle-o"
-            uncheckedIcon="circle-o"
-            uncheckedColor={config.white}
-          />
-        </View> */}
       </View>
     </ScrollView>
   );
