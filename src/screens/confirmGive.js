@@ -98,7 +98,7 @@ function LetMessage(props) {
 
   const submitInfoPost = async () => {
 
-      let apiUrl = "https://api.smai.com.vn/transaction/create-transaction";
+      let apiUrl = "https://app-super-smai.herokuapp.com/transaction/create-transaction";
       let formData = new FormData();
       //sau khi upload json xong thi tien hanh upload hinh anh su dung idpost duoc tra ve
       if (props.infoPost.image[0]) {

@@ -29,6 +29,7 @@ import { connect } from "react-redux";
 import verifyOTPs from "../screens/verifyOtps";
 import forgotPassword from "../screens/forgotPassword";
 import newPassword from "../screens/newPassword";
+import ListGiveTCD from '../screens/listGiveTCD'
 import {
   StyleSheet,
   Text,
@@ -258,6 +259,23 @@ function AppNavigator(props) {
           options={({ navigation, route }) => ({
             headerShown: true,
             title: "Danh sách cần hỗ trợ",
+            headerTintColor: color.white,
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerTitleAlign: "center",
+            headerShadowVisible: false,
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
+          })}
+        />
+         <Stack.Screen
+          name="ListGiveTCD"
+          component={ListGiveTCD}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Danh sách lời nhắn",
             headerTintColor: color.white,
             headerStyle: {
               backgroundColor: config.main_color,

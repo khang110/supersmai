@@ -26,6 +26,7 @@ import config from "../config/config";
 import ButtonConfirm from "../components/button/buttonConfirm";
 import ListImage from "../components/pickImage/ListImage";
 import { connect } from "react-redux";
+import { HelperText } from "react-native-paper";
 import DetailAddress from "../components/Modal/DetailAddress";
 import * as SecureStore from "expo-secure-store";
 
@@ -34,6 +35,8 @@ function LetMessage(props) {
   const [textDescrip, setTextDescrip] = useState("");
   const [showModalAddress, setShowModalAddress] = useState(false);
   const { navigation, dispatch } = props;
+  const [errDescript, setErrDescript] = useState(false);
+  let data = props.route.params.data;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -79,6 +82,55 @@ function LetMessage(props) {
   const closeAddr = () => {
     setShowModalAddress(false);
   };
+  const pressGive = () => {
+    if (textDescrip == "") {
+      setErrDescript(true);
+    } else {
+      setErrDescript(false);
+      submitInfoPost();
+    }
+  }
+  const submitInfoPost = async () => {
+    let apiUrl = "https://app-super-smai.herokuapp.com/transaction/create-transaction";
+    let formData = new FormData();
+    //sau khi upload json xong thi tien hanh upload hinh anh su dung idpost duoc tra ve
+    if (props.infoPost.image[0]) {
+      let listImage = props.infoPost.image;
+      for (let i = 0; i < listImage.length; i++) {
+        let uri = listImage[i].uri;
+        let uriArray = uri.split(".");
+        let fileType = uriArray[uriArray.length - 1];
+        formData.append("productImage", {
+          uri: uri,
+          name: `photo.${fileType}`,
+          type: `image/${fileType}`,
+        });
+      }
+    }
+    formData.append("note", textDescrip);
+    formData.append("postID", data._id);
+    formData.append("status", "null");
+
+    formData.append("senderAddress", address);
+    let options = {
+      method: "POST",
+      body: formData,
+      mode: "cors",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+        Authorization: props.auth.token,
+      },
+    };
+    fetch(apiUrl, options)
+      .then((res) => {
+        console.log("Đã để lại lời nhắn")
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  
+};
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
       <View>
@@ -109,13 +161,20 @@ function LetMessage(props) {
             maxLength={200}
             placeholder="Viết lời nhắn"
           />
+          {errDescript ? (
+            <HelperText type="error" visible={errDescript}>
+              Nhập lời nhắn
+            </HelperText>
+          ) : (
+            <></>
+          )}
           <Text style={styles.titleAddress}>Hình ảnh (tối đa 5 hình ảnh)</Text>
           <ListImage navigation={navigation} dispatch={dispatch} />
         </View>
         <DetailAddress modalVisible={showModalAddress} closeModal={closeAddr} />
       </View>
       <View style={styles.wrapInfor}>
-        <ButtonConfirm title="Gửi" />
+        <ButtonConfirm title="Gửi" onPress={() => pressGive()}/>
       </View>
     </ScrollView>
   );

@@ -14,15 +14,16 @@ import {
 import config from "../../config/config";
 import fontSize from "../../config/fontsize";
 import color from "../../config/color";
-import calRealTime from '../../Helper/calRealTime';
-import {Menu, MenuItem, MenuDivider } from "react-native-material-menu";
+import calRealTime from "../../Helper/calRealTime";
+import { Menu, MenuItem, MenuDivider } from "react-native-material-menu";
 import {
   Feather,
   FontAwesome,
   MaterialIcons,
-  Ionicons,Entypo
+  Ionicons,
+  Entypo,
 } from "@expo/vector-icons";
-import donate from '../../../assets/donate.png';
+import donate from "../../../assets/donate.png";
 const uriImage =
   "https://cdn-icons.flaticon.com/png/512/4194/premium/4194687.png?token=exp=1636281332~hmac=1390cb356a0fb98c5472c6407cfa2d6a";
 
@@ -34,7 +35,6 @@ const News = (props) => {
 
   const showMenu = () => setVisible(true);
 
-  
   const renderImage = () => {
     if (data.urlImage.length != 0) {
       return (
@@ -46,27 +46,43 @@ const News = (props) => {
   };
   const renderTypeNews = () => {
     if (data.TypeAuthor == "tangcongdong") {
-      return "Tặng cộng đồng"
+      return "Tặng cộng đồng";
     } else {
-      return "Cần hỗ trợ"
+      return "Cần hỗ trợ";
     }
-  }
+  };
   const renderCategory = () => {
     if (data.TypeAuthor == "tangcongdong") {
       return (
         <View style={styles.wrapCate}>
-        <Text style={styles.cate}>{data.NameProduct[0].NameProduct}</Text>
-        <Text style={styles.price}>Miễn phí</Text>
-      </View>
-      )
+          <Text style={styles.cate}>{data.NameProduct[0].NameProduct}</Text>
+          <Text style={styles.price}>Miễn phí</Text>
+        </View>
+      );
     } else {
       return (
         <View style={styles.wrapCate}>
-      <Text style={styles.cate}>Danh mục nhận tặng{"      "} {data.NameProduct.length}</Text>
-    </View>
-      )
+          <Text style={styles.cate}>
+            Danh mục nhận tặng{"      "} {data.NameProduct.length}
+          </Text>
+        </View>
+      );
     }
-  }
+  };
+  const renderMessage = () => {
+    if (data.TypeAuthor == "tangcongdong") {
+      return (
+        <TouchableOpacity style={{ flexDirection: "row" }} onPress={props.pressGive}>
+          <Ionicons
+            name="ios-mail-outline"
+            size={config.screen_width * 0.05}
+            color="#00a2e8"
+          />
+          <Text style={styles.textMessage}>{"  "}Lời nhắn</Text>
+        </TouchableOpacity>
+      );
+    }
+  };
   return (
     <View>
       <TouchableOpacity
@@ -76,39 +92,47 @@ const News = (props) => {
         <View style={styles.container}>
           <View style={styles.wrapImage}>{renderImage()}</View>
           <View style={styles.wrapTitle}>
-            
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={styles.title} numberOfLines={1}>{data.title} </Text>
-            <View>
-            <Menu
-                style={{ backgroundColor: "#FFF" }}
-                visible={visible}
-                anchor={<Entypo name="dots-three-vertical" size={20} color="#BDBDBD" onPress={showMenu}/>}
-                onRequestClose={hideMenu}>
-                <MenuItem onPress={props.hideNews} >Ẩn tin</MenuItem>
-                <MenuDivider />
-                <MenuItem onPress={props.deleteNews} >Xóa tin</MenuItem>
-              </Menu>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <Text style={styles.title} numberOfLines={1}>
+                {data.title}{" "}
+              </Text>
+              <View>
+                <Menu
+                  style={{ backgroundColor: "#FFF" }}
+                  visible={visible}
+                  anchor={
+                    <Entypo
+                      name="dots-three-vertical"
+                      size={20}
+                      color="#BDBDBD"
+                      onPress={showMenu}
+                    />
+                  }
+                  onRequestClose={hideMenu}
+                >
+                  <MenuItem onPress={props.hideNews}>Ẩn tin</MenuItem>
+                  <MenuDivider />
+                  <MenuItem onPress={props.deleteNews}>Xóa tin</MenuItem>
+                </Menu>
+              </View>
             </View>
-            </View>
-           {renderCategory()}
+            {renderCategory()}
             <View style={styles.wrapAddr}>
-              <Text style={styles.time}>🕑 {calRealTime.CalRealTime(data.createdAt)}</Text>
+              <Text style={styles.time}>
+                🕑 {calRealTime.CalRealTime(data.createdAt)}
+              </Text>
               <Text style={styles.time}>Thủ Đức, Hồ Chí Minh</Text>
             </View>
           </View>
         </View>
         <View style={styles.wrapStatus}>
           <Text style={styles.time}>{renderTypeNews()}</Text>
-          <Text style={styles.time}>{data.isDisplay ? "Hiển thị" : "Đã ẩn"}</Text>
-          <TouchableOpacity style={{ flexDirection: "row" }}>
-            <Ionicons
-              name="ios-mail-outline"
-              size={config.screen_width * 0.05}
-              color="#00a2e8"
-            />
-            <Text style={styles.textMessage}>{"  "}Lời nhắn</Text>
-          </TouchableOpacity>
+          <Text style={styles.time}>
+            {data.isDisplay ? "Hiển thị" : "Đã ẩn"}
+          </Text>
+          {renderMessage()}
         </View>
       </TouchableOpacity>
     </View>
@@ -146,7 +170,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-    padding: "2%",
+    paddingTop: "2%",
+    paddingBottom: '2%',
+    paddingLeft: '4%',
+    paddingRight: '4%',
     justifyContent: "space-between",
   },
   textMessage: {

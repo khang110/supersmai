@@ -102,11 +102,16 @@ function Mynews(props) {
       }
     
   };
+  const handleGive = (id) => {
+    navigation.navigate("ListGiveTCD", {
+      postId: id,
+    }); //chuyển trang
+  }
   const pressRow = (dataPost) => {
     navigation.navigate("DetailPost", { data: dataPost });
   };
   const renderItem = ({ item }) => {
-    return <MyNewsRow data={item} onPress={() => pressRow(item)} hideNews={() => showPost(item._id, item.isDisplay)}/>;
+    return <MyNewsRow data={item} onPress={() => pressRow(item)} hideNews={() => showPost(item._id, item.isDisplay)} pressGive={() => handleGive(item._id)}/>;
   };
   const ItemSeparator = () => {
     return <View style={{ height: 10 }} />;
