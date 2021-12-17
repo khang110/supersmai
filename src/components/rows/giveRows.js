@@ -31,10 +31,11 @@ const News = (props) => {
   const renderImage = () => {
     if (data.urlImage.length != 0) {
       return (
-        <Image style={styles.imageStyle} source={{ uri: data.urlImage[0] }} />
+        <Image style={styles.imageStyle} resizeMode="center" source={{ uri: data.urlImage[0] }} />
       );
     } else {
-      return <Image style={styles.imageStyle} source={{ uri: uriImage }} />;
+      return <Image style={styles.imageStyle}
+      resizeMode="center" source={{ uri: link }} />;
     }
   };
 
@@ -54,11 +55,7 @@ const News = (props) => {
         </View>
         <Text style={{color: color.black, fontSize: fontSize.fontsize_5}} numberOfLines={2}>{data.title}</Text>
         <View style={{marginTop: '1%', marginBottom: '1%',}}>
-          <Image
-            style={styles.imageStyle}
-            source={{ uri: link }}
-            resizeMode="center"
-          />
+          {renderImage()}
         </View>
         <View style={{ flexDirection: "row", alignItems: 'center', }}>
           <MaterialIcons name="location-city" size={config.screen_width*0.06} color={color.gray} />

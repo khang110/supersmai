@@ -44,7 +44,6 @@ function LetMessage(props) {
   const { navigation, dispatch } = props;
   let data = props.route.params.data;
   let category = props.route.params.cateSelected;
-  console.log(props.auth)
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -93,7 +92,51 @@ function LetMessage(props) {
       setErrDescript(true);
     } else {
       setErrDescript(false);
+      submitInfoPost();
     }
+  };
+
+  const submitInfoPost = async () => {
+
+      let apiUrl = "https://api.smai.com.vn/transaction/create-transaction";
+      let formData = new FormData();
+      //sau khi upload json xong thi tien hanh upload hinh anh su dung idpost duoc tra ve
+      if (props.infoPost.image[0]) {
+        let listImage = props.infoPost.image;
+        for (let i = 0; i < listImage.length; i++) {
+          let uri = listImage[i].uri;
+          let uriArray = uri.split(".");
+          let fileType = uriArray[uriArray.length - 1];
+          formData.append("productImage", {
+            uri: uri,
+            name: `photo.${fileType}`,
+            type: `image/${fileType}`,
+          });
+        }
+      }
+      formData.append("note", textDescrip);
+      formData.append("postID", data._id);
+      formData.append("status", "waiting");
+
+      formData.append("senderAddress", address);
+      let options = {
+        method: "POST",
+        body: formData,
+        mode: "cors",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+          Authorization: props.auth.token,
+        },
+      };
+      fetch(apiUrl, options)
+        .then((res) => {
+          console.log("Đăng tin thành công")
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    
   };
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -101,7 +144,7 @@ function LetMessage(props) {
         <Title title="Thông tin liên hệ" />
         <View style={styles.wrapInfor}>
           <Text style={{ fontSize: fontSize.fontsize_3, fontWeight: "bold" }}>
-            Nguyễn Anh Khang - 0971037601
+            {props.auth.FullName + " - "  + props.auth.PhoneNumber }
           </Text>
           <View style={styles.wrapAddress}>
             <Text style={styles.titleAddress}>Địa chỉ: </Text>
@@ -125,7 +168,7 @@ function LetMessage(props) {
             <View style={styles.lineBetween} />
           </View>
           <Text style={{ fontSize: fontSize.fontsize_3, fontWeight: "bold" }}>
-            {data.NameAuthor} - 0971037601
+            {data.NameAuthor}
           </Text>
           <View style={styles.wrapAddress}>
             <Text style={styles.titleAddress}>Địa chỉ: </Text>

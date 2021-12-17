@@ -126,7 +126,7 @@ function ListGive(props) {
         <Text style={{ fontSize: config.fontsize_3, marginLeft: '2%' }}>
           Danh sách{" "}
           <Text style={{ fontWeight: "bold", fontStyle: "italic" }}>
-            Khang
+            {data.NameAuthor}
           </Text>{" "}
           cần hỗ trợ
         </Text>
@@ -196,5 +196,5 @@ const styles = StyleSheet.create({
   },
 });
 export default connect(function (state) {
-  return { infoPost: state.infoPost, };
+  return { infoPost: state.infoPost, auth: state.auth};
 })(ListGive);

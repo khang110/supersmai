@@ -51,6 +51,22 @@ const News = (props) => {
       return "Cần hỗ trợ"
     }
   }
+  const renderCategory = () => {
+    if (data.TypeAuthor == "tangcongdong") {
+      return (
+        <View style={styles.wrapCate}>
+        <Text style={styles.cate}>{data.NameProduct[0].NameProduct}</Text>
+        <Text style={styles.price}>Miễn phí</Text>
+      </View>
+      )
+    } else {
+      return (
+        <View style={styles.wrapCate}>
+      <Text style={styles.cate}>Danh mục nhận tặng{"      "} {data.NameProduct.length}</Text>
+    </View>
+      )
+    }
+  }
   return (
     <View>
       <TouchableOpacity
@@ -75,10 +91,7 @@ const News = (props) => {
               </Menu>
             </View>
             </View>
-            <View style={styles.wrapCate}>
-              <Text style={styles.cate}>Phương tiện</Text>
-              <Text style={styles.price}>Miễn phí</Text>
-            </View>
+           {renderCategory()}
             <View style={styles.wrapAddr}>
               <Text style={styles.time}>🕑 {calRealTime.CalRealTime(data.createdAt)}</Text>
               <Text style={styles.time}>Thủ Đức, Hồ Chí Minh</Text>

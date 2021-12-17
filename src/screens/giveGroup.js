@@ -125,8 +125,9 @@ function GiveGroups(props) {
   useEffect(() => {
     getData();
   }, []);
+  console.log(typeAuthor)
   const getData = () => {
-    const apiURL = `https://app-super-smai.herokuapp.com/getPostByTypeAuthor?typeauthor=${typeAuthor}`;
+    const apiURL = `https://app-super-smai.herokuapp.com/post/getPostByTypeAuthor?typeauthor=${typeAuthor}`;
     axios
       .get(apiURL)
       .then((resjson) => {

@@ -18,6 +18,7 @@ import fontSize from "../config/fontsize";
 import { Searchbar } from "react-native-paper";
 import Chip from "../components/Chips/chip";
 import ConnectRows from "../components/rows/connectRows";
+import { connect } from "react-redux";
 const list = [
   {
     title: "Tất cả",
@@ -55,8 +56,7 @@ const list = [
     checked: false,
   },
 ];
-const token =
-  "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SUQiOiI2MTFjMDY3MGE1MjU4MzAwMjIzM2I1MzUiLCJpYXQiOjE2MzU3NDAwNjB9.sATc8Ly5P7YexK1lLilNNdhehMf44feEclFYDOmiEX4";
+
 function Connect(props) {
   const [query, setQuery] = useState("");
   const flatlistRef = useRef(null);
@@ -81,6 +81,7 @@ function Connect(props) {
     setData([]);
     getConnectPostDS();
   }
+
   const getConnectPostDS = async () => {
     const array = [...listitem];
     array.map((value, index) => {
@@ -91,12 +92,12 @@ function Connect(props) {
       }
     });
     setListItem(array);
-
+   
     await axios({
       method: "get",
-      url: "https://api.smai.com.vn/transaction/transaction-connected",
+      url: "https://app-super-smai.herokuapp.com/transaction/transaction-connected",
       headers: {
-        Authorization: token,
+        Authorization: "bearer " + props.auth.token,
       },
     })
       .then((res) => {
@@ -305,4 +306,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-export default Connect;
+export default connect(function (state) {
+  return { auth: state.auth };
+})(Connect);
+
