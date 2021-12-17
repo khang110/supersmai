@@ -125,18 +125,18 @@ function GiveGroups(props) {
   useEffect(() => {
     getData();
   }, []);
-  console.log(postId)
-  console.log(props.auth.token)
+
   const getData = () => {
     const apiURL = `https://app-super-smai.herokuapp.com/transaction/transaction-post?postId=${postId}`
     axios({
         method: "get",
         url: `https://app-super-smai.herokuapp.com/transaction/transaction-post?postId=${postId}`,
         headers: {
-          Authorization: props.auth.token,
+          Authorization: "bearer " + props.auth.token,
         },
       })
       .then((resjson) => {
+        console.log(resjson.data)
         setData(resjson.data);
         setDataFilter(resjson.data);
         setlistAfterFilter(resjson.data);

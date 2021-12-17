@@ -107,10 +107,11 @@ function LetMessage(props) {
         });
       }
     }
+    console.log(props.auth.token)
     formData.append("note", textDescrip);
     formData.append("postID", data._id);
     formData.append("status", "null");
-
+    console.log(textDescrip + ":   " + data._id + "   ...." )
     formData.append("senderAddress", address);
     let options = {
       method: "POST",
@@ -119,12 +120,12 @@ function LetMessage(props) {
       headers: {
         Accept: "application/json",
         "Content-Type": "multipart/form-data",
-        Authorization: props.auth.token,
+        Authorization: "bearer " + props.auth.token,
       },
     };
     fetch(apiUrl, options)
       .then((res) => {
-        console.log("Đã để lại lời nhắn")
+        console.log(res.data  + ": oke chưa")
       })
       .catch((err) => {
         console.log(err.response);

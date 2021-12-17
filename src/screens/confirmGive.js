@@ -126,7 +126,7 @@ function LetMessage(props) {
         headers: {
           Accept: "application/json",
           "Content-Type": "multipart/form-data",
-          Authorization: props.auth.token,
+          Authorization: "bearer " + props.auth.token,
         },
       };
       fetch(apiUrl, options)

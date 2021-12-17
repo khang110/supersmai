@@ -9,13 +9,37 @@ import { Avatar } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import address from "../../assets/address.png";
+import { connect } from "react-redux";
+import axios from "axios";
 import Chip from "../components/Chips/chipStatus";
 import RowDetailConnect from "../components/rows/rowDetailConnect";
 const avata = "https://cdn-icons-png.flaticon.com/512/1177/1177568.png";
 function DetailConnect(props) {
   let data = props.route.params.data;
-  // console.log(data);
 
+  const giveFor = async () => {
+   console.log(data._id)
+   console.log(props.auth.token)
+  
+    let body =  { status: "done", notefinish: "text"};
+// http://localhost:5000/transaction/update-status?transactionId=616093e1c810163bf0df21f8
+    await axios({
+      method: "put",
+      url: `https://app-super-smai.herokuapp.com/transaction/update-status?transactionId=${data._id}`,
+      data: body,
+      headers: {
+        Authorization: "bearer " + props.auth.token,
+      },
+    })
+      .then((res) => {
+        console.log("Đã xong")
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      
+      })
+  
+};
   return (
     <ScrollView contentContainerStyle={styles.container}>
      <View>
@@ -62,7 +86,7 @@ function DetailConnect(props) {
         <TouchableOpacity style={{ padding: "4%" }}>
           <Text style={styles.textBad}>Hủy</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.wrapButtonMessage}>
+        <TouchableOpacity style={styles.wrapButtonMessage} onPress={() => giveFor()}>
           <Text style={styles.textGive}>Xác nhận xong</Text>
         </TouchableOpacity>
       </View>
@@ -152,4 +176,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailConnect;
+export default connect(function (state) {
+  return { infoPost: state.infoPost, auth: state.auth };
+})(DetailConnect);
