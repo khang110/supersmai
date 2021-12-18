@@ -246,11 +246,11 @@ function ModalFilterCate(props) {
           <TouchableOpacity onPress={() => props.closeModal()}>
             <AntDesign
               name="close"
-              size={config.screen_width * 0.05}
+              size={config.screen_width * 0.06}
               color="black"
             />
           </TouchableOpacity>
-          <Text style={styles.tittleText}>Chọn danh mục cần lọc</Text>
+          <Text style={styles.titleText}>Chọn danh mục cần lọc</Text>
           <TouchableOpacity
             onPress={() => {
                 dispatch({ type: "RESET_FILTER_CATEGORY" });
@@ -324,13 +324,16 @@ const styles = StyleSheet.create({
     width: "100%",
     borderColor: "#E0E0E0",
     borderWidth: 5,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
     flexDirection: "row",
     paddingLeft: "2%",
     paddingRight: "2%",
     justifyContent: "space-between",
   },
+  titleText: {
+    fontSize: fontSize.fontsize_2,
+    color: "#000",
+    fontWeight: 'bold'
+  }
 });
 export default connect(function (state) {
   return {

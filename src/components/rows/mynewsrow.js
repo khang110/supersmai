@@ -30,7 +30,7 @@ const uriImage =
 const News = (props) => {
   const { data, onPress } = props;
   const [visible, setVisible] = useState(false);
-
+ 
   const hideMenu = () => setVisible(false);
 
   const showMenu = () => setVisible(true);
@@ -112,7 +112,7 @@ const News = (props) => {
                   }
                   onRequestClose={hideMenu}
                 >
-                  <MenuItem onPress={props.hideNews}>Ẩn tin</MenuItem>
+                  <MenuItem onPress={props.hideNews}>{data.isDisplay ? "Ẩn tin" : "Hiện tin"}</MenuItem>
                   <MenuDivider />
                   <MenuItem onPress={props.deleteNews}>Xóa tin</MenuItem>
                 </Menu>

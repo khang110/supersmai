@@ -6,6 +6,7 @@ import {
   Button,
   Image,
   FlatList,
+  Alert,
   SafeAreaView, TouchableWithoutFeedback, RefreshControl
 } from "react-native";
 import MyNewsRow from "../components/rows/mynewsrow";
@@ -54,15 +55,16 @@ function Mynews(props) {
       }).finally(() => setrefresh(false));
   };
   const showPost = async (id, status) => {
+    console.log(id)
     let body = "";
     body = { statusdiplay: !status };
-    let url = "https://app-super-smai.herokuapp.com/update-post?idpost=" + id;
+    let url = "https://app-super-smai.herokuapp.com/post/update-post?idpost=" + id;
     axios({
       method: "put",
       url: url,
       data: body,
       headers: {
-        Authorization: props.auth.token,
+        Authorization: "bearer" + props.auth.token,
       },
     })
       .then((res) => {

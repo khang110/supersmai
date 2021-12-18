@@ -13,16 +13,43 @@ import { connect } from "react-redux";
 import axios from "axios";
 import Chip from "../components/Chips/chipStatus";
 import RowDetailConnect from "../components/rows/rowDetailConnect";
-const avata = "https://cdn-icons-png.flaticon.com/512/1177/1177568.png";
+import user from "../../assets/user.png";
+import DialogConfirm from '../components/Dialog/DialogInput';
+import Spinner from 'react-native-loading-spinner-overlay';
+import { Root, Popup } from 'popup-ui'
+import ModalDetailPost from '../components/Modal/ModalDetailPost';
+
 function DetailConnect(props) {
+  const {navigation} = props;
+  const [name, setName] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
+  const [modalDetail, setModalDetail] = useState(false);
   let data = props.route.params.data;
 
+  useEffect(() => {
+    if (data.PostData.NameAuthor != props.auth.FullName) {
+      setName(data.PostData.NameAuthor);
+      setAddressDetail(data.SenderAddress);
+    }
+    if (data.ReceiverUser.FullName != props.auth.FullName) {
+      setName(data.ReceiverUser[0].FullName);
+      setAddressDetail(data.PostData.address)
+    }
+    if (data.SenderUser.FullName != props.auth.FullName) {
+      setName(data.SenderUser[0].FullName);
+      setAddressDetail(data.PostData.address)
+    }
+  },[])
   const giveFor = async () => {
-   console.log(data._id)
-   console.log(props.auth.token)
-  
-    let body =  { status: "done", notefinish: "text"};
-// http://localhost:5000/transaction/update-status?transactionId=616093e1c810163bf0df21f8
+    setDialogVisible(true)
+};
+
+  const handleDelete = async (text) => {
+    setDialogVisible(false);
+    setIsLoading(true);
+    let body =  { status: "done", notefinish: text};
     await axios({
       method: "put",
       url: `https://app-super-smai.herokuapp.com/transaction/update-status?transactionId=${data._id}`,
@@ -37,10 +64,35 @@ function DetailConnect(props) {
       .catch((error) => {
         console.log("Error: ", error);
       
+      }).finally(() => {
+        setIsLoading(false);
+        Popup.show({
+          type: 'Success',
+          title: 'Xác nhận xong',
+          button: true,
+          textBody: 'Thành công',
+          buttonText: 'Xong',
+
+          callback: () => {Popup.hide(); navigation.goback()}
+        })
       })
-  
-};
+  }
+  const renderButtonBottom = () => {
+    if (data.typetransaction.includes("Chưa")) {
+      return (
+        <View style={styles.wrapButtonBottom}>
+        <TouchableOpacity style={{ padding: "4%" }}>
+          <Text style={styles.textBad}>Hủy</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.wrapButtonMessage} onPress={() => giveFor()}>
+          <Text style={styles.textGive}>Xác nhận xong</Text>
+        </TouchableOpacity>
+      </View>
+      )
+    } else return;
+  }
   return (
+    <Root>
     <ScrollView contentContainerStyle={styles.container}>
      <View>
      <View style={{ marginLeft: "4%" }}>
@@ -49,11 +101,11 @@ function DetailConnect(props) {
       <View style={styles.wrapInfor}>
         <Avatar
           size={config.screen_width * 0.1}
-          source={{ uri: avata }}
+          source={user}
           avatarStyle={{ borderRadius: 20 }}
         />
         <View style={styles.wrapName}>
-          <Text style={styles.name}>Nguyễn Tử Quảng</Text>
+          <Text style={styles.name}>{name}</Text>
           <Text style={styles.cate}>Cá nhân</Text>
         </View>
       </View>
@@ -63,7 +115,7 @@ function DetailConnect(props) {
           style={[styles.cate, { marginTop: "2%", marginLeft: "2%" }]}
           numberOfLines={2}
         >
-          Bà Rịa Vũng Tàu
+         {addressDetail}
         </Text>
       </View>
       <View style={styles.wrapInforTrans}>
@@ -71,26 +123,28 @@ function DetailConnect(props) {
         <Chip status={data.isStatus} typetransaction={data.typetransaction} />
       </View>
       <View>
-        <RowDetailConnect data={data.PostData} />
+        <RowDetailConnect data={data.PostData} onPress={() => setModalDetail(true)}/>
       </View>
       <View style={styles.wrapNote}>
         <Text style={styles.title}>Ghi chú</Text>
-        <Text style={styles.textNote}>No message</Text>
+        <Text style={styles.textNote}>{data.note}</Text>
       </View>
       <View style={styles.wrapNote}>
         <Text style={styles.title}>Theo dõi</Text>
       </View>
+      <DialogConfirm visible={dialogVisible} handleDelete={handleDelete} handleCancel={() => setDialogVisible(false)}/>
+      <Spinner
+        visible={isloading}
+        textContent={"Đang xử lý..."}
+        textStyle={styles.spinnerTextStyle}
+      />
+     
      </View>
 
-      <View style={styles.wrapButtonBottom}>
-        <TouchableOpacity style={{ padding: "4%" }}>
-          <Text style={styles.textBad}>Hủy</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.wrapButtonMessage} onPress={() => giveFor()}>
-          <Text style={styles.textGive}>Xác nhận xong</Text>
-        </TouchableOpacity>
-      </View>
+      {renderButtonBottom()}
     </ScrollView>
+    <ModalDetailPost data={data.PostData} closeModal={() => {setModalDetail(false)}} visible={modalDetail}/>
+    </Root>
   );
 }
 
@@ -100,6 +154,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "column",
     backgroundColor: '#FFF'
+  },
+  spinnerTextStyle: {
+    color: "#FFF",
   },
   title: {
     fontWeight: "bold",

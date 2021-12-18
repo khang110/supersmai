@@ -16,6 +16,7 @@ import fontSize from "../../config/fontsize";
 import color from "../../config/color";
 import calRealTime from "../../Helper/calRealTime";
 import formatTime from "../../Helper/formatTime";
+import donate from "../../../assets/donate.png";
 const uriImage =
   "https://cdn-icons.flaticon.com/png/512/4194/premium/4194687.png?token=exp=1636281332~hmac=1390cb356a0fb98c5472c6407cfa2d6a";
 const News = (props) => {
@@ -30,7 +31,7 @@ const News = (props) => {
         <Image style={styles.imageStyle} source={{ uri: data.urlImage[0] }} />
       );
     } else {
-      return <Image style={styles.imageStyle} source={{ uri: uriImage }} />;
+      return <Image style={styles.imageStyle} source={donate } />;
     }
   };
 

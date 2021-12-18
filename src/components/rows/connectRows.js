@@ -17,6 +17,7 @@ import color from "../../config/color";
 import formatTime from '../../Helper/formatTime';
 import { SimpleLineIcons } from "@expo/vector-icons";
 import solidarity from '../../../assets/solidarity.png';
+import { connect } from "react-redux";
 const uriImage =
   "https://cdn-icons.flaticon.com/png/512/4194/premium/4194687.png?token=exp=1636281332~hmac=1390cb356a0fb98c5472c6407cfa2d6a";
 
@@ -58,6 +59,19 @@ const NewsConnect = (props) => {
       );
     }
   };
+  const renderName = () => {
+    if (data.PostData.NameAuthor != props.auth.FullName) {
+        return data.PostData.NameAuthor;
+    }
+    if (data.ReceiverUser.FullName != props.auth.FullName) {
+      return data.ReceiverUser[0].FullName;
+    }
+    if (data.SenderUser.FullName != props.auth.FullName) {
+      return data.SenderUser[0].FullName;
+    }
+  }
+
+ 
   return (
     <View>
       <TouchableOpacity onPress={() => onPress()} style={styles.container}>
@@ -69,7 +83,7 @@ const NewsConnect = (props) => {
             <SimpleLineIcons name="user" size={18} color="black" />
             <Text style={styles.title} numberOfLines={1}>
               {"  "}
-              Nguyễn Duy Phú Lợn
+              {renderName()}
             </Text>
           </View>
           <Text style={styles.time} numberOfLines={1}>
@@ -135,4 +149,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewsConnect;
+
+export default connect(function (state) {
+  return { auth: state.auth };
+})(NewsConnect);

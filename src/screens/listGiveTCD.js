@@ -20,8 +20,9 @@ import { Searchbar } from "react-native-paper";
 import { MaterialCommunityIcons, Entypo, AntDesign, EvilIcons } from "@expo/vector-icons";
 import FilterAddress from "../components/Modal/FIlterAddress";
 import FilterCategory from '../components/Modal/FilterCategory';
-import GiveRows from '../components/rows/giveRows';
+import GiveRowTCD from '../components/rows/giveRowTCD';
 import ButtonCancel from '../components/button/buttonCancel';
+import AnimatedLoader from "react-native-animated-loader";
 function GiveGroups(props) {
   const { navigation, dispatch } = props;
   const [data, setData] = useState([]);
@@ -29,7 +30,6 @@ function GiveGroups(props) {
   const [listAfterFilter, setlistAfterFilter] = useState([]);
   const [query, setQuery] = useState("");
   const [showModalAddress, setShowModalAddress] = useState(false);
-  const [typeAuthor, settypeAuthor] = useState(props.route.params.typeAuthor);
   const [modalVisible, setModalVisible]= useState(false);
   let postId = props.route.params.postId;
   const addr = props.dataFilter.addressFilter;
@@ -47,15 +47,6 @@ function GiveGroups(props) {
         >
           <Entypo name="chevron-thin-left" size={25} color="#FFF" />
         </TouchableOpacity>
-      ),
-      headerRight: () => (
-        <ButtonCancel
-          onPress={() => {
-            dispatch({ type: "RESET_FILTER_ADDRESS" });
-            dispatch({ type: "RESET_FILTER_CATEGORY" });
-            navigation.navigate("Home");
-          }}
-        />
       ),
     });
   }, [navigation]);
@@ -127,7 +118,6 @@ function GiveGroups(props) {
   }, []);
 
   const getData = () => {
-    const apiURL = `https://app-super-smai.herokuapp.com/transaction/transaction-post?postId=${postId}`
     axios({
         method: "get",
         url: `https://app-super-smai.herokuapp.com/transaction/transaction-post?postId=${postId}`,
@@ -136,15 +126,34 @@ function GiveGroups(props) {
         },
       })
       .then((resjson) => {
-        console.log(resjson.data)
-        setData(resjson.data);
-        setDataFilter(resjson.data);
-        setlistAfterFilter(resjson.data);
+       
+        setData(resjson.data.data.data);
+        setDataFilter(resjson.data.data.data);
+        setlistAfterFilter(resjson.data.data.data);
       })
       .catch((error) => {
         console.log("Error: ", error);
       });
   };
+
+  const pressConfirm = async (id) => {
+    let body =  { status: "waiting", notereceiver: "text"};
+    await axios({
+      method: "put",
+      url: `https://app-super-smai.herokuapp.com/transaction/update-status?transactionId=${id}`,
+      data: body,
+      headers: {
+        Authorization: "bearer " + props.auth.token,
+      },
+    })
+      .then((res) => {
+        console.log("Đã xong")
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      
+      })
+  }
 
   const handleSearch = (text) => {
     setQuery(text);
@@ -162,11 +171,8 @@ function GiveGroups(props) {
     }
   };
 
-  const pressRow = (dataPost) => {
-    navigation.navigate("DetailPost", { data: dataPost });
-  };
   const renderItem = ({ item }) => {
-    return <GiveRows data={item} onPress={() => pressRow(item)} />;
+    return <GiveRowTCD  data={item} onPress={() => pressConfirm(item._id)}/>;
   };
   const ItemSeparator = () => {
     return <View style={{ height: 10 }} />;
@@ -175,12 +181,6 @@ function GiveGroups(props) {
     <View style={styles.container}>
      
       <View style={{ padding: "2%", flexDirection: "row" }}>
-      {/* <Searchbar
-        placeholder="Tìm kiếm"
-        onChangeText={(text) => handleSearch(text)}
-        value={query}
-        style={styles.wrapFilterButton}
-      /> */}
         <View style={styles.wrapSearch}>
             <EvilIcons name="search" size={30} color="#BDBDBD" />
             <TextInput
@@ -214,7 +214,6 @@ function GiveGroups(props) {
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
       />
-      <FilterCategory modalVisible={modalVisible} closeModal={() => setModalVisible(false)}/>
     </View>
   );
 }

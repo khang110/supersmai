@@ -236,7 +236,7 @@ function Connect(props) {
       </View>
     );
   };
-
+  
   const renderItemSection = ({ item }) => {
     return <ConnectRows data={item} onPress={() => pressRow(item)}/>;
   };
