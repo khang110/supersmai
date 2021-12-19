@@ -53,14 +53,14 @@ const News = (props) => {
     if (data.isStatus == "waiting") {
       return (
         <View style={{marginRight: '2%'}}>
-          <Text style={{fontWeight: 'bold'}}>Chờ xác nhận</Text>
+          <Text style={styles.textStatus}>Chờ xác nhận</Text>
         </View>
       )
     }
-    if (data.isStatus == "waiting") {
+    if (data.isStatus == "done") {
       return (
         <View style={{marginRight: '2%'}}>
-          <Text style={{fontWeight: 'bold'}}>Đã tặng</Text>
+          <Text style={styles.textStatus}>Đã tặng</Text>
         </View>
       )
     }
@@ -137,7 +137,8 @@ const styles = StyleSheet.create({
     width: config.screen_width * 0.9,
     height: config.screen_width * 0.4,
   },
-  btnGive: {borderColor: color.main_color, borderWidth: 1, borderRadius: 10, paddingLeft: '2%', paddingRight: '2%'}
+  btnGive: {borderColor: color.main_color, borderWidth: 1, borderRadius: 10, paddingLeft: '2%', paddingRight: '2%'},
+  textStatus: {fontWeight: 'bold', color: color.green}
 });
 
 export default News;

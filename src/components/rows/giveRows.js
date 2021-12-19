@@ -34,8 +34,7 @@ const News = (props) => {
         <Image style={styles.imageStyle} resizeMode="center" source={{ uri: data.urlImage[0] }} />
       );
     } else {
-      return <Image style={styles.imageStyle}
-      resizeMode="center" source={{ uri: link }} />;
+      return ;
     }
   };
 

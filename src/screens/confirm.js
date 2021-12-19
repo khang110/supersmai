@@ -121,13 +121,16 @@ function Confirm(props) {
       );
     }
   };
+  const closeSuccess = () => {
+    setModalsuccess(false)
+    navigation.navigate("Home")
+  }
   const submitInfoPost = async () => {
     setLoading(true);
     //api upload infor json
     const token = "bearer " + props.auth.token;
     const data = props.infoPost;
 
-    console.log(textTitle);
     axios({
       url: "https://app-super-smai.herokuapp.com/post/CreatePost",
       method: "post",
@@ -172,25 +175,11 @@ function Confirm(props) {
           };
           fetch(apiUrl, options).then((res) => {
             setLoading(false)
-            Dialog.show({
-              type: ALERT_TYPE.SUCCESS,
-              // closeOnOverlayTap: false,
-              title: 'Đăng tin thành công',
-              textBody:'Cảm ơn lòng hảo tâm của bạn',
-              button:'Xong',
-              onPressButton: () => navigation.navigate("Home")
-            })
+            setModalsuccess(true)
           });
         } else {
           setLoading(false)
-          Dialog.show({
-            type: ALERT_TYPE.SUCCESS,
-            // closeOnOverlayTap: false,
-            title: 'Đăng tin thành công',
-            textBody:'Cảm ơn lòng hảo tâm của bạn',
-            button:'Xong',
-            onPressButton: () => navigation.navigate("Home")
-          })
+          setModalsuccess(true)
           
         }
       })
@@ -267,6 +256,8 @@ function Confirm(props) {
           <Text style={styles.titleAddress}>Hình ảnh (tối đa 5 hình ảnh)</Text>
           <ListImage navigation={navigation} dispatch={dispatch} />
         </View>
+        <ModalSuccess modalVisible={modalsuccess} closeModal={closeSuccess}
+        description="Cảm ơn bạn!" title="Đăng tin thành công"/>
       </View>
       </Root>
       <AnimatedLoader
@@ -278,7 +269,7 @@ function Confirm(props) {
       >
         <Text>Đang đăng tin...</Text>
       </AnimatedLoader>
-      <ModalSuccess modalVisible={modalsuccess} onPress={() => setModalsuccess(false)}/>
+     
       <DetailAddress
         modalVisible={showModalAddress}
         closeModal={() => setShowModalAddress(false)}

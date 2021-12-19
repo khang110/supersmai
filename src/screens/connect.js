@@ -76,7 +76,7 @@ function Connect(props) {
   }, [navigation]);
   useEffect(() => {
     getConnectPostDS();
-  }, []);
+  }, [navigation]);
   const onRefresh = () => {
     setData([]);
     getConnectPostDS();

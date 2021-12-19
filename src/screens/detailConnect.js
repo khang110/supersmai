@@ -18,14 +18,16 @@ import DialogConfirm from '../components/Dialog/DialogInput';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { Root, Popup } from 'popup-ui'
 import ModalDetailPost from '../components/Modal/ModalDetailPost';
-
+import NoteMessage from '../components/DetailConnect/NoteFollow';
 function DetailConnect(props) {
   const {navigation} = props;
   const [name, setName] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
   const [dialogVisible, setDialogVisible] = useState(false);
+  const [visibleSuccess, setvisibleSuccess] = useState(false);
   const [isloading, setIsLoading] = useState(false);
   const [modalDetail, setModalDetail] = useState(false);
+  const [dialogCancel, setDialogCancel] = useState(false);
   let data = props.route.params.data;
 
   useEffect(() => {
@@ -44,7 +46,33 @@ function DetailConnect(props) {
   },[])
   const giveFor = async () => {
     setDialogVisible(true)
-};
+  };
+  const cancel = () => {
+    setDialogCancel(true)
+  }
+const handleCancel = async (text) => {
+  setDialogCancel(false);
+  setIsLoading(true);
+  let body =  { status: "cancel", notefinish: text};
+  await axios({
+    method: "put",
+    url: `https://app-super-smai.herokuapp.com/transaction/update-status?transactionId=${data._id}`,
+    data: body,
+    headers: {
+      Authorization: "bearer " + props.auth.token,
+    },
+  })
+    .then((res) => {
+      console.log("Đã xong")
+    })
+    .catch((error) => {
+      console.log("Error: ", error);
+    
+    }).finally(() => {
+      setIsLoading(false);
+      navigation.navigate("Connect")
+    })
+}
 
   const handleDelete = async (text) => {
     setDialogVisible(false);
@@ -66,22 +94,64 @@ function DetailConnect(props) {
       
       }).finally(() => {
         setIsLoading(false);
-        Popup.show({
-          type: 'Success',
-          title: 'Xác nhận xong',
-          button: true,
-          textBody: 'Thành công',
-          buttonText: 'Xong',
-
-          callback: () => {Popup.hide(); navigation.goback()}
-        })
+        navigation.navigate("Connect")
       })
   }
+  const checkAvatar = (note) => {
+    let avatar;
+    if (note != null) {
+      if (note.id == data.SenderUser[0].AccountID) {
+        avatar = data.SenderUser[0].urlIamge;
+        return avatar;
+      }
+      if (note.id == data.ReceiverUser[0].AccountID) {
+        avatar = data.ReceiverUser[0].urlIamge;
+        return avatar;
+      }
+    }
+    return avatar;
+  };
+  const renderNote = () => {
+    if (
+      data.typetransaction == "Chưa nhận" ||
+      data.typetransaction == "Chưa tặng"
+    ) {
+      if (data.NoteReceiver == null) {
+        return <Text style={{ textAlign: "center" }}>Không có</Text>;
+      } else {
+        let avatarRe = checkAvatar(data.NoteReceiver);
+        let avatarFi = checkAvatar(data.NoteFinish);
+        return (
+          <NoteMessage
+            noteReceiver={data.NoteReceiver}
+            noteFinish={data.NoteFinish}
+            avatarRece={avatarRe}
+            avatarFin={avatarFi}
+          />
+        );
+      }
+    } else {
+      if (data.NoteReceiver == null && data.NoteFinish == null) {
+        return <Text style={{ textAlign: "center" }}>Không có</Text>;
+      } else {
+        let avatarRe = checkAvatar(data.NoteReceiver);
+        let avatarFi = checkAvatar(data.NoteFinish);
+        return (
+          <NoteMessage
+            noteReceiver={data.NoteReceiver}
+            noteFinish={data.NoteFinish}
+            avatarRece={avatarRe}
+            avatarFin={avatarFi}
+          />
+        );
+      }
+    }
+  };
   const renderButtonBottom = () => {
     if (data.typetransaction.includes("Chưa")) {
       return (
         <View style={styles.wrapButtonBottom}>
-        <TouchableOpacity style={{ padding: "4%" }}>
+        <TouchableOpacity style={{ padding: "4%" }} onPress={() => cancel()}>
           <Text style={styles.textBad}>Hủy</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.wrapButtonMessage} onPress={() => giveFor()}>
@@ -92,7 +162,7 @@ function DetailConnect(props) {
     } else return;
   }
   return (
-    <Root>
+   <Root>
     <ScrollView contentContainerStyle={styles.container}>
      <View>
      <View style={{ marginLeft: "4%" }}>
@@ -131,19 +201,23 @@ function DetailConnect(props) {
       </View>
       <View style={styles.wrapNote}>
         <Text style={styles.title}>Theo dõi</Text>
+        {renderNote()}
       </View>
-      <DialogConfirm visible={dialogVisible} handleDelete={handleDelete} handleCancel={() => setDialogVisible(false)}/>
+      <DialogConfirm title="Xác nhận xong"
+       visible={dialogVisible} handleDelete={handleDelete} handleCancel={() => setDialogVisible(false)}/>
+        <DialogConfirm title="Xác nhận hủy"
+       visible={dialogCancel} handleDelete={handleCancel} handleCancel={() => setDialogCancel(false)}/>
       <Spinner
         visible={isloading}
         textContent={"Đang xử lý..."}
         textStyle={styles.spinnerTextStyle}
       />
-     
+       <ModalDetailPost data={data.PostData} closeModal={() => {setModalDetail(false)}} visible={modalDetail}/>
+    
      </View>
 
       {renderButtonBottom()}
     </ScrollView>
-    <ModalDetailPost data={data.PostData} closeModal={() => {setModalDetail(false)}} visible={modalDetail}/>
     </Root>
   );
 }

@@ -10,6 +10,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import transaction from '../../assets/Transaction.png';
 import address from '../../assets/address.png';
+import * as SecureStore from "expo-secure-store";
+import { connect } from "react-redux";
+import axios from "axios";
 const avata = "https://cdn-icons-png.flaticon.com/512/1177/1177568.png";
 const arrUri = [transaction];
 
@@ -25,6 +28,29 @@ function DetailPost(props) {
     } else {
       setArrImage(data.urlImage);
     }
+    let token = SecureStore.getItemAsync("token");
+    console.log(SecureStore.getItemAsync("token"));
+    const checkTokenLocal = async () => {
+      let token = "bearer "+ props.auth.token;
+      if (token) {
+        axios
+          .put(
+            "https://app-super-smai.herokuapp.com/user/updateHistory",
+            { IdPost: [data._id] },
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          )
+          .then((response) => {})
+          .catch((error) => {
+            alert(error.message);
+          });
+      } else {
+        return await null;
+      }
+    };
   }, []);
   const pressGive = () => {
     if (data.TypeAuthor == "tangcongdong") {
@@ -157,4 +183,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-export default DetailPost;
+
+export default connect(function (state) {
+  return { infoPost: state.infoPost, auth: state.auth };
+})(DetailPost);

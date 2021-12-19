@@ -31,7 +31,7 @@ function GiveGroups(props) {
   const [showModalAddress, setShowModalAddress] = useState(false);
   const [typeAuthor, settypeAuthor] = useState(props.route.params.typeAuthor);
   const [modalVisible, setModalVisible]= useState(false);
-  console.log(props.route.params.typeAuthor)
+
   const addr = props.dataFilter.addressFilter;
   let categoryFilter = props.dataFilter.categoryFilter;
   useLayoutEffect(() => {
@@ -134,6 +134,7 @@ function GiveGroups(props) {
         setData(resjson.data);
         setDataFilter(resjson.data);
         setlistAfterFilter(resjson.data);
+        console.log(resjson.data)
       })
       .catch((error) => {
         console.log("Error: ", error);

@@ -28,6 +28,8 @@ import { connect } from "react-redux";
 import DetailAddress from "../components/Modal/DetailAddress";
 import { HelperText } from "react-native-paper";
 import * as SecureStore from "expo-secure-store";
+import ModalSuccess from '../components/Modal/ModalSuccess';
+import Spinner from 'react-native-loading-spinner-overlay';
 const Title = (props) => {
   return (
     <View style={styles.wrapTitle}>
@@ -39,8 +41,10 @@ function LetMessage(props) {
   const [textTitle, setTextTitle] = useState("");
   const [textDescrip, setTextDescrip] = useState("");
   const [showModalAddress, setShowModalAddress] = useState(false);
+  const [visibleSuccess, setvisibleSuccess] = useState(false);
   const [address, setAddress] = useState("");
   const [errDescript, setErrDescript] = useState(false);
+  const [isloading, setIsloading] = useState(false);
   const { navigation, dispatch } = props;
   let data = props.route.params.data;
   let category = props.route.params.cateSelected;
@@ -95,9 +99,21 @@ function LetMessage(props) {
       submitInfoPost();
     }
   };
+  const closeSuccess = () => {
+    setvisibleSuccess(false)
+    if (data.TypeAuthor == "Cá nhân") {
+      navigation.navigate("GiveGroups", { typeAuthor: "canhan" });
+    }
+    if (data.TypeAuthor == "Tổ chức công ích") {
+      navigation.navigate("GiveGroups", { typeAuthor: "tochuc" });
+    }
+    if (data.TypeAuthor == "Quỹ/Nhóm từ thiện") {
+      navigation.navigate("GiveGroups", { typeAuthor: "quy" });
+    }
+  }
 
   const submitInfoPost = async () => {
-
+      setIsloading(true)
       let apiUrl = "https://app-super-smai.herokuapp.com/transaction/create-transaction";
       let formData = new FormData();
       //sau khi upload json xong thi tien hanh upload hinh anh su dung idpost duoc tra ve
@@ -131,7 +147,9 @@ function LetMessage(props) {
       };
       fetch(apiUrl, options)
         .then((res) => {
-          console.log("Đăng tin thành công")
+         
+          setIsloading(false)
+          setvisibleSuccess(true);
         })
         .catch((err) => {
           console.log(err.response);
@@ -199,6 +217,10 @@ function LetMessage(props) {
           <ListImage navigation={navigation} dispatch={dispatch} />
         </View>
         <DetailAddress modalVisible={showModalAddress} closeModal={closeAddr} />
+        <ModalSuccess modalVisible={visibleSuccess} closeModal={closeSuccess}
+        description="Vui lòng chờ xác nhận!" title="Gửi lời nhắn thành công!"/>
+        <Spinner visible={isloading}  textContent={"Đang xử lý..."} textStyle={styles.spinnerTextStyle}
+      />
       </View>
       <View style={styles.wrapInfor} >
         <ButtonConfirm title="Gửi tặng" onPress={pressGive} />
@@ -207,6 +229,9 @@ function LetMessage(props) {
   );
 }
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: "#FFF",
+  },
   contentContainer: {
     flexGrow: 1,
     justifyContent: "space-between",

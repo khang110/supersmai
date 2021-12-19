@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Button, Image, Modal } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import {
+  Alert,
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
-import config from '../../config/config';
+import config from "../../config/config";
 import fontSize from "../../config/fontsize";
 import color from "../../config/color";
 import { Avatar } from "react-native-elements";
-import { MaterialIcons,AntDesign } from "@expo/vector-icons";
+import { MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import transaction from '../../../assets/Transaction.png';
-import address from '../../../assets/address.png';
+import transaction from "../../../assets/Transaction.png";
+import address from "../../../assets/address.png";
 const avata = "https://cdn-icons-png.flaticon.com/512/1177/1177568.png";
 const arrUri = [transaction];
 
-function DetailPost(props) {
-  const { navigation, data,visible, closeModal } = props;
+const App = (props) => {
+  // const [modalVisible, setModalVisible] = useState(false);
+  const { navigation, data } = props;
  
   const [arrImage, setArrImage] = useState([]);
 
@@ -26,74 +36,138 @@ function DetailPost(props) {
       setArrImage(data.urlImage);
     }
   }, []);
+  const pressGive = () => {
+    if (data.TypeAuthor == "tangcongdong") {
+      navigation.navigate("LetMessage", { data: data });
+    } else {
+      navigation.navigate("ListGive", { data: data, name: "Xác nhận đồ bạn tặng" });
+    }
 
+  }
+  const renderTextButton = () => {
+    if (data.TypeAuthor == "tangcongdong") {
+      return " Lời nhắn"
+    } else {
+      return " Gửi tặng"
+    }
+  }
   return (
-      <Modal visible={visible}>
-      
-    <ScrollView contentContainerStyle={styles.contentContainer}>
-        
-      <View>
-      <View style={styles.top}>
-          <TouchableOpacity onPress={closeModal} style={{zIndex: 10000, overflow: 'hidden'}}>
-            <AntDesign
-              name="close"
-              size={config.screen_width * 0.06}
-              color="black"
-            />
-          </TouchableOpacity>
-          <Text style={styles.titleText}>Chi tiết tin đăng</Text>
- 
-        </View>
-        <SliderBox
-          images={arrImage}
-          resizeMethod={"resize"}
-          resizeMode={"cover"}
-          autoplay
-          ImageComponentStyle={{width: "100%"}}
-          circleLoop
-          sliderBoxHeight={config.screen_width * 0.8}
-          imageLoadingColor="#FFF"
-        />
-        <View style={styles.wrapMidle}>
-          <Text style={styles.title}>{data.title}</Text>
-          <View style={styles.wrapCate}>
-            <Text style={styles.cate}>Quần áo bé nam</Text>
-            <Text style={styles.price}>Miễn phí</Text>
-          </View>
-          <View style={styles.wrapAddress}>
-            <Image source={address} style={styles.iconAddress}/>
-            <Text style={[styles.cate, { marginTop: "2%", marginLeft: '2%' }]} numberOfLines={2}>
-              {data.address}
-            </Text>
-          </View>
-          <View style={styles.wrapInfor}>
-            <Avatar
-              size={config.screen_width * 0.1}
-              source={{ uri: avata }}
-              avatarStyle={{ borderRadius: 20 }}
-            />
-            <View style={styles.wrapName}>
-              <Text style={styles.name}>{data.NameAuthor}</Text>
-              <Text style={styles.cate}>Cá nhân</Text>
+    <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        // transparent={true}
+        visible={props.visible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.top}>
+              <TouchableOpacity onPress={() => props.closeModal()}>
+                <AntDesign
+                  name="close"
+                  size={config.screen_width * 0.05}
+                  color="black"
+                />
+              </TouchableOpacity>
+              <Text style={styles.tittleText}>Địa chỉ của bạn</Text>
             </View>
+            <ScrollView contentContainerStyle={styles.contentContainer}>
+              <View>
+                <SliderBox
+                  images={arrImage}
+                  resizeMethod={"resize"}
+                  resizeMode={"cover"}
+                  autoplay
+                  ImageComponentStyle={{ width: "100%" }}
+                  circleLoop
+                  sliderBoxHeight={config.screen_width * 0.8}
+                  imageLoadingColor="#FFF"
+                />
+                <View style={styles.wrapMidle}>
+                  <Text style={styles.title}>{data.title}</Text>
+                  <View style={styles.wrapCate}>
+                    <Text style={styles.cate}>Quần áo bé nam</Text>
+                    <Text style={styles.price}>Miễn phí</Text>
+                  </View>
+                  <View style={styles.wrapAddress}>
+                    <Image source={address} style={styles.iconAddress} />
+                    <Text
+                      style={[
+                        styles.cate,
+                        { marginTop: "2%", marginLeft: "2%" },
+                      ]}
+                      numberOfLines={2}
+                    >
+                      {data.address}
+                    </Text>
+                  </View>
+                  <View style={styles.wrapInfor}>
+                    <Avatar
+                      size={config.screen_width * 0.1}
+                      source={{ uri: avata }}
+                      avatarStyle={{ borderRadius: 20 }}
+                    />
+                    <View style={styles.wrapName}>
+                      <Text style={styles.name}>{data.NameAuthor}</Text>
+                      <Text style={styles.cate}>Cá nhân</Text>
+                    </View>
+                  </View>
+                  <Text style={styles.descript}>{data.note}</Text>
+                </View>
+              </View>
+             
+            </ScrollView>
           </View>
-          <Text style={styles.descript}>{data.note}</Text>
         </View>
-      </View>
-      <TouchableOpacity onPress={closeModal}>
-            <AntDesign
-              name="close"
-              size={config.screen_width * 0.06}
-              color="black"
-            />
-          </TouchableOpacity>
-    </ScrollView>
-    </Modal>
+      </Modal>
+    </View>
   );
-}
+};
+
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+  },
+  modalView: {
+    backgroundColor: "white",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+
   contentContainer: {
-   flex: 1,
+    flexGrow: 1,
+    justifyContent: "space-between",
+    flexDirection: "column",
     backgroundColor: '#FFF'
   },
   containter: { flex: 1, justifyContent: "center", alignItems: "center" },
@@ -153,17 +227,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#E0E0E0",
     width: "100%",
     borderColor: "#E0E0E0",
-    borderWidth: 5,
     flexDirection: "row",
     paddingLeft: "2%",
     paddingRight: "2%",
-   zIndex: 1000
+    paddingTop: '1%',
+    paddingBottom: '1%',
+    alignItems: 'center'
   },
-  titleText: {
+  tittleText: {
     fontSize: fontSize.fontsize_2,
-    color: "#000",
-    fontWeight: 'bold',
-    marginLeft: '5%'
-  }
+    marginLeft: "5%",
+    fontWeight: 'bold'
+  },
 });
-export default DetailPost;
+
+export default App;

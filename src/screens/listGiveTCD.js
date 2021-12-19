@@ -23,6 +23,8 @@ import FilterCategory from '../components/Modal/FilterCategory';
 import GiveRowTCD from '../components/rows/giveRowTCD';
 import ButtonCancel from '../components/button/buttonCancel';
 import AnimatedLoader from "react-native-animated-loader";
+import DialogConfirm from '../components/Dialog/DialogInput';
+import Spinner from 'react-native-loading-spinner-overlay';
 function GiveGroups(props) {
   const { navigation, dispatch } = props;
   const [data, setData] = useState([]);
@@ -31,6 +33,9 @@ function GiveGroups(props) {
   const [query, setQuery] = useState("");
   const [showModalAddress, setShowModalAddress] = useState(false);
   const [modalVisible, setModalVisible]= useState(false);
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [idPost, setIdPost] = useState("");
+  const [isloading, setIsloading] = useState(false);
   let postId = props.route.params.postId;
   const addr = props.dataFilter.addressFilter;
   let categoryFilter = props.dataFilter.categoryFilter;
@@ -115,7 +120,7 @@ function GiveGroups(props) {
   }, [categoryFilter, addr]);
   useEffect(() => {
     getData();
-  }, []);
+  }, [isloading]);
 
   const getData = () => {
     axios({
@@ -135,12 +140,18 @@ function GiveGroups(props) {
         console.log("Error: ", error);
       });
   };
+  const pressConfirm = (id) => {
+    setDialogVisible(true)
+    setIdPost(id);
+  }
 
-  const pressConfirm = async (id) => {
-    let body =  { status: "waiting", notereceiver: "text"};
+  const handleDelete = async (text) => {
+    setDialogVisible(false)
+    setIsloading(true);
+    let body =  { status: "waiting", notereceiver: text};
     await axios({
       method: "put",
-      url: `https://app-super-smai.herokuapp.com/transaction/update-status?transactionId=${id}`,
+      url: `https://app-super-smai.herokuapp.com/transaction/update-status?transactionId=${idPost}`,
       data: body,
       headers: {
         Authorization: "bearer " + props.auth.token,
@@ -148,6 +159,7 @@ function GiveGroups(props) {
     })
       .then((res) => {
         console.log("Đã xong")
+        setIsloading(false);
       })
       .catch((error) => {
         console.log("Error: ", error);
@@ -214,12 +226,21 @@ function GiveGroups(props) {
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
       />
+      <View>
+      <Spinner visible={isloading}  textContent={"Đang xử lý..."} textStyle={styles.spinnerTextStyle}/>
+      <DialogConfirm title="Xác nhận"
+      visible={dialogVisible} handleDelete={handleDelete} handleCancel={() => setDialogVisible(false)}/>
+      </View>
+      
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  spinnerTextStyle: {
+    color: "#FFF",
   },
   wrapSearch: {
     flexDirection: "row",
