@@ -22,10 +22,11 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF",
-        "package": "com.supersmai"
+        "backgroundColor": "#FFFFFF"
       },
-      "package": "com.khanganh37.SuperSmai"
+      "package": "com.khanganh37.SuperSmai",
+      "googleServicesFile": "./google-services.json"
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"

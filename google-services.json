@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "670108123290",
+    "project_id": "supersmai-36234",
+    "storage_bucket": "supersmai-36234.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670108123290:android:5227ba2a525699f2675f23",
+        "android_client_info": {
+          "package_name": "com.khanganh37.SuperSmai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670108123290-gokgpnn685376260hcrq7lad9rkle3fr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khanganh37.SuperSmai",
+            "certificate_hash": "cc529941effbe7a6b67526c185dfb549b8f32b41"
+          }
+        },
+        {
+          "client_id": "670108123290-nr7nenu6pit17rqsqgiv9cjro5oqqvi9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-RRVNRY4Yn4fDX_F6ZPUyQqIPHEt3zdg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670108123290-nr7nenu6pit17rqsqgiv9cjro5oqqvi9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

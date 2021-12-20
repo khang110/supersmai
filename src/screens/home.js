@@ -19,6 +19,7 @@ import SearchButton from "../components/search/buttonSearch";
 import Gift from "../components/groupButton/groupGive";
 import GroupCategory from "../components/groupButton/groupCategory";
 import NewsRow from "../components/rows/newsRow";
+import notification from '../../assets/notification.png';
 import axios from "axios";
 import { connect } from "react-redux";
 import * as SecureStore from "expo-secure-store";
@@ -69,6 +70,14 @@ function Home(props) {
     setData([]);
     getData();
   }
+
+  const renderSayHi = () => {
+    if (props.auth.isLogin == true) {
+      return "Chào " + props.auth.FullName + "!"
+    } else {
+      return "Chào bạn nhé!"
+    }
+  }
   const pressRow = (dataPost) => {
     navigation.navigate("DetailPost", { data: dataPost });
   };
@@ -79,7 +88,12 @@ function Home(props) {
     return (
       <>
         <View style={styles.backgroundTop}>
-          <Text style={styles.textSayHi}>Hi, Nguyễn Duy Phú Lợn</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',  marginLeft: config.margin_2, marginRight: config.margin_2, marginTop: config.margin_2}}>
+          <Text style={styles.textSayHi}>{renderSayHi()}</Text>
+          <TouchableOpacity>
+            <Image source={notification} style={{width: 30, height: 30}}/>
+          </TouchableOpacity>
+          </View>
           <SearchButton />
         </View>
         <Gift navigation={navigation} />
@@ -134,8 +148,8 @@ const styles = StyleSheet.create({
     color: config.white,
     fontWeight: "bold",
     fontSize: config.fontsize_3,
-    marginLeft: config.margin_2,
-    marginTop: config.margin_3,
+   
+   
   },
   discoverCategory: {
     backgroundColor: "#FFF",
@@ -168,5 +182,6 @@ export default connect(function (state) {
   return {
     auth: state.auth,
     profile: state.profile,
+    auth: state.auth
   };
 })(Home);

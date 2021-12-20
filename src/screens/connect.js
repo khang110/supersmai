@@ -19,6 +19,9 @@ import { Searchbar } from "react-native-paper";
 import Chip from "../components/Chips/chip";
 import ConnectRows from "../components/rows/connectRows";
 import { connect } from "react-redux";
+import config from "../config/config";
+import login from '../../assets/nologin.png';
+import noNews from '../../assets/login.png';
 const list = [
   {
     title: "Tất cả",
@@ -214,6 +217,14 @@ function Connect(props) {
     }
     return a1;
   };
+  const renderNotLogin = () => {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Image source={login} style={{width: config.screen_width*0.8, height: config.screen_width*0.8}}/>
+        <Text style={{fontSize: fontSize.fontsize_5}}>Chưa đăng nhập</Text>
+      </View>
+    )
+  }
   const pressRow = (dataPost) => {
     navigation.navigate("DetailConnect", { data: dataPost });
   }
@@ -268,7 +279,7 @@ function Connect(props) {
           value={query}
           style={styles.searchBar}
         />
-
+        {props.auth.isLogin ? (<>
         <SectionList
           sections={data}
           ItemSeparatorComponent={ItemSeparator}
@@ -284,12 +295,13 @@ function Connect(props) {
             />
           }
         />
+        </>) : (<>{renderNotLogin()}</>)}
       </View>
     </TouchableWithoutFeedback>
   );
 }
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 1,   backgroundColor: "#EEEE", },
   searchBar: { marginTop: "2%", marginLeft: "2%", marginRight: "2%" },
   wrapTitleSection: {
     backgroundColor: "#DDD",

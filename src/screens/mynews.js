@@ -6,21 +6,24 @@ import {
   Button,
   Image,
   FlatList,
-  Alert,
+  Alert, TextInput,
   SafeAreaView, TouchableWithoutFeedback, RefreshControl
 } from "react-native";
 import MyNewsRow from "../components/rows/mynewsrow";
 import { SpeedDial } from "react-native-elements";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, EvilIcons } from "@expo/vector-icons";
 import axios from "axios";
 import color from "../config/color";
 import DropDown from "react-native-paper-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
 import { connect } from "react-redux";
-const tokenn =
-  "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SUQiOiI2MTFjMDY3MGE1MjU4MzAwMjIzM2I1MzUiLCJpYXQiOjE2MzU3NDAwNjB9.sATc8Ly5P7YexK1lLilNNdhehMf44feEclFYDOmiEX4";
+import login from '../../assets/nologin.png';
+import noNews from '../../assets/login.png';
+import config from "../config/config";
+import fontsize from "../config/fontsize";
 function Mynews(props) {
   const { navigation, dispatch } = props;
+  const [query, setQuery] = useState("");
   const [refresh, setrefresh] = useState(true);
   const [data, setData] = useState([]);
   const [dataAll, setDataAll] = useState([]);
@@ -33,9 +36,14 @@ function Mynews(props) {
     { label: "Cần hỗ trợ", value: "3" },
   ]);
   useEffect(() => {
-    getMyPost();
+    if (props.auth.isLogin) {
+      getMyPost()
+    } else {
+      setrefresh(false)
+    }
+   ;
     // console.log(props.auth.token)
-  }, []);
+  }, [props.auth.isLogin]);
   const getMyPost = async () => {
     const token = "bearer " + props.auth.token;
     await axios({
@@ -81,6 +89,21 @@ function Mynews(props) {
     setData([]);
     getMyPost();
   }
+  const handleSearch = (text) => {
+    setQuery(text);
+    if (text == "") setData(dataAll);
+    else {
+      const data = dataAll.filter((pr) => {
+        if (
+          pr.NameAuthor.toLowerCase().indexOf(text.toLowerCase()) != -1 ||
+          pr.title.toLowerCase().indexOf(text.toLowerCase()) != -1
+        )
+          return true;
+        else return false;
+      });
+      setData(data);
+    }
+  };
   const filter = (itemvalue) => {
     let tempData = dataAll;
       if (itemvalue == 1) {
@@ -118,11 +141,32 @@ function Mynews(props) {
   const ItemSeparator = () => {
     return <View style={{ height: 10 }} />;
   };
+  const renderNotLogin = () => {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Image source={login} style={{width: config.screen_width*0.8, height: config.screen_width*0.8}}/>
+        <Text style={{fontSize: fontsize.fontsize_5}}>Chưa đăng nhập</Text>
+      </View>
+    )
+  }
   return (
+    <>
     <TouchableWithoutFeedback onPress={() => setOpenFilter(false)}>
       <View style={styles.containerStyle}>
-        <View style={{ paddingLeft: '4%', paddingRight: '4%', paddingTop: '2%', paddingBottom: '2%' }}>
-          <DropDownPicker
+        <View style={{ paddingTop: "2%", paddingLeft: '4%', paddingRight: '4%', paddingBottom: '2%', alignItems: 'center', flexDirection: "row", justifyContent: 'space-between' }}>
+        <View style={styles.wrapSearch}>
+            <EvilIcons name="search" size={30} color="#BDBDBD" />
+            <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            clearButtonMode="always"
+            value={query}
+            onChangeText={(queryText) => handleSearch(queryText)}
+            placeholder="Tìm kiếm"
+            style={styles.searchText}
+            />
+        </View>
+        <DropDownPicker
             placeholder="Tất cả"
             open={openFilter}
             value={value}
@@ -133,10 +177,10 @@ function Mynews(props) {
             onChangeValue={(value) => {
               filter(value);
             }}
-            containerStyle={{ width: '60%', }}
+            containerStyle={{ width: '40%'}}
           />
-        </View>
-
+      </View>
+        {props.auth.isLogin ? (<>
         <FlatList
           data={data}
           keyExtractor={(item) => item._id}
@@ -190,19 +234,39 @@ function Mynews(props) {
             onPress={() => console.log("Delete Something")}
             color={color.main_color}
           />
-        </SpeedDial>
+        </SpeedDial></>
+        ) : (<>{renderNotLogin()}</>)}
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableWithoutFeedback></>
   );
 }
 const styles = StyleSheet.create({
   containerStyle: {
     flex: 1,
-    backgroundColor: color.gray_4
+    backgroundColor: "#EEE",
   },
   safeContainerStyle: {
     margin: 20,
-    backgroundColor: "#BDBDBD",
+    backgroundColor: "#DDD",
+  },
+  wrapSearch: {
+    flexDirection: "row",
+    backgroundColor: "#FFF",
+    width: "55%",
+    maxWidth: "55%",
+    paddingLeft: '2%',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#BDBDBD",
+    alignItems: "center",
+    height: 48
+  },
+  searchText: {
+    backgroundColor: "#fff",
+    fontSize: config.fontsize_5,
+    maxWidth: "80%",
+    
+    width: "80%",
   },
 });
 

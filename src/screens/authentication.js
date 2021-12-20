@@ -3,6 +3,7 @@ import { View, StyleSheet, Dimensions, StatusBar, Text } from "react-native";
 import { TabView, SceneMap, TabBar, Tabs } from "react-native-tab-view";
 import Login from "../components/authentication/login";
 import SignUp from "../components/authentication/signup";
+import color from "../config/color";
 import config from "../config/config";
 
 
@@ -50,7 +51,7 @@ export default function authentication(props) {
             )}
             style={{ backgroundColor: "white", tabBarInactiveTextColor: "red" }}
             underlineColor="#000"
-            indicatorStyle={{ height: 2, backgroundColor: config.color_btn_1 }}
+            indicatorStyle={{ height: 2, backgroundColor: color.main_color }}
           />
         )}
         renderScene={renderScene}

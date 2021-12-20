@@ -18,11 +18,21 @@ function Gift(props) {
   const {navigation} =props;
 
   const pressGive = () => {
-    navigation.navigate("ServiceGive");
+    if (props.auth.isLogin) {
+      navigation.navigate("ServiceGive");
+    } else {
+      navigation.navigate("Authentication");
+    }
+    
   }
 
   const pressHelp = () => {
-    navigation.navigate("CategoryNeedHelp");
+    if (props.auth.isLogin) {
+      navigation.navigate("CategoryNeedHelp");
+    } else {
+      navigation.navigate("Authentication");
+    }
+    
   }
 
   return (
@@ -67,5 +77,6 @@ const styles = StyleSheet.create({
 export default connect(function (state) {
   return {
     infoPost: state.infoPost,
+    auth: state.auth
   };
 })(Gift);

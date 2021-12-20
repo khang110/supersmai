@@ -22,16 +22,40 @@ function DetailPost(props) {
   const [arrImage, setArrImage] = useState([]);
 
   useEffect(() => {
-    // console.log(data);
     if (data.urlImage.length == 0) {
       setArrImage(arrUri);
     } else {
       setArrImage(data.urlImage);
     }
-    let token = SecureStore.getItemAsync("token");
-    console.log(SecureStore.getItemAsync("token"));
+   
     const checkTokenLocal = async () => {
-      let token = "bearer "+ props.auth.token;
+      console.log(data._id)
+      let url = "https://app-super-smai.herokuapp.com/user/updateHistory?idPost="+data._id;
+      if (token) {
+       
+          axios({
+            method: "put",
+            url: url,
+            headers: {
+              Authorization: "bearer" + props.auth.token,
+            },
+          })
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+      } else {
+        console.log("no token");
+      }
+      checkTokenLocal()
+    };
+  }, []);
+  useEffect(() => {
+    //kiem tra dang nhap tren thiet bi
+    const checkTokenLocal = async () => {
+      let token = await 'bearer ' + props.auth.token;
       if (token) {
         axios
           .put(
@@ -51,12 +75,35 @@ function DetailPost(props) {
         return await null;
       }
     };
+    checkTokenLocal();
+    //Lay ra so dien thoai nguoi dang bai
+    const getPhone = async (AuthorID) => {
+      try {
+        await axios({
+          method: "get",
+          url:
+            "https://api.smai.com.vn/user/getInfoAuthor?AuthorID=" + AuthorID,
+        }).then(async (data) => {
+          setPhoneNumber(data.data.PhoneNumber);
+          setAvatar(data.data.ImgAuthor);
+          setLoading(false);
+        });
+      } catch (e) {
+        alert(e);
+      }
+    };
+    // getPhone(data.AuthorID);
+    //Lay ra avatar
   }, []);
   const pressGive = () => {
-    if (data.TypeAuthor == "tangcongdong") {
-      navigation.navigate("LetMessage", { data: data });
+    if (props.auth.isLogin == true) {
+      if (data.TypeAuthor == "tangcongdong") {
+        navigation.navigate("LetMessage", { data: data });
+      } else {
+        navigation.navigate("ListGive", { data: data, name: "Xác nhận đồ bạn tặng" });
+      }
     } else {
-      navigation.navigate("ListGive", { data: data, name: "Xác nhận đồ bạn tặng" });
+      navigation.navigate("Authentication");
     }
 
   }
@@ -65,6 +112,26 @@ function DetailPost(props) {
       return " Lời nhắn"
     } else {
       return " Gửi tặng"
+    }
+  }
+  const renderButtonBottom = () => {
+    if (data.NameAuthor == props.auth.FullName) return;
+    else {
+      return (
+        <View style={styles.wrapButtonBottom}>
+          <TouchableOpacity style={{ padding: "4%" }}>
+            <Text style={styles.textBad}>Báo xấu</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.wrapButtonMessage} onPress={pressGive}>
+            <Ionicons
+              name="chatbubble-ellipses-outline"
+              size={config.screen_width * 0.06}
+              color="#FFF"
+            />
+            <Text style={styles.textGive}>{renderTextButton()}</Text>
+          </TouchableOpacity>
+        </View>
+      )
     }
   }
   return (
@@ -106,19 +173,7 @@ function DetailPost(props) {
           <Text style={styles.descript}>{data.note}</Text>
         </View>
       </View>
-      <View style={styles.wrapButtonBottom}>
-        <TouchableOpacity style={{ padding: "4%" }}>
-          <Text style={styles.textBad}>Báo xấu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.wrapButtonMessage} onPress={pressGive}>
-          <Ionicons
-            name="chatbubble-ellipses-outline"
-            size={config.screen_width * 0.06}
-            color="#FFF"
-          />
-          <Text style={styles.textGive}>{renderTextButton()}</Text>
-        </TouchableOpacity>
-      </View>
+      {renderButtonBottom()}
     </ScrollView>
   );
 }

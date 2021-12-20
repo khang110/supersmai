@@ -17,12 +17,15 @@ import { Checkbox, TextInput } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
 import { ScrollView } from "react-native-gesture-handler";
 import userApi from "../../api/userApi";
+import color from "../../config/color";
+import Spinner from 'react-native-loading-spinner-overlay';
 async function save(key, value) {
   await SecureStore.setItemAsync(key, value);
 }
 function login(props) {
   const { dispatch } = props;
   const [showPass, showPassWord] = useState(true);
+  const [isloading, setIsLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -32,7 +35,7 @@ function login(props) {
 
   // đăng nhập
   const onSubmit = async (data) => {
-    //  console.log(data)
+    setIsLoading(true)
     userApi.login(data).then(async(response) => {
       if (response.status == 201) {
         save("token", response.data.accessToken);
@@ -54,6 +57,7 @@ function login(props) {
            });
           dispatch({ type: "GET_AVATAR", avatar: urlIamge });
         });
+        setIsLoading(false)
         props.onPress();
       }else{
          alert("Số điện thoại hoặc mật khẩu không chính xác");
@@ -73,11 +77,18 @@ function login(props) {
             render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
                 style={styles.text_input}
+                mode='outlined'
                 onBlur={onBlur}
                 onChangeText={(value) => onChange(value)}
                 value={value}
                 label="Số điện thoại"
+                selectionColor={color.main_color}
                 keyboardType="numeric"
+                theme={{
+                  colors: {
+                    primary: color.main_color,
+                  },
+                }}
                 underlineColor="transparent"
               />
             )}
@@ -107,6 +118,12 @@ function login(props) {
                 onChangeText={(value) => onChange(value)}
                 value={value}
                 label="Mật khẩu"
+                mode='outlined'
+                theme={{
+                  colors: {
+                    primary: color.main_color,
+                  },
+                }}
                 passwordRules="true"
                 secureTextEntry={showPass}
                 underlineColor="transparent"
@@ -142,6 +159,11 @@ function login(props) {
           <Text style={styles.text_btn_layout}>Đăng nhập</Text>
         </TouchableOpacity>
       </View>
+      <Spinner
+        visible={isloading}
+        textContent={"Đang đăng nhập..."}
+        textStyle={{ color: "#FFF",}}
+      />
     </View>
     // </ScrollView>
   );
@@ -172,7 +194,7 @@ const styles = StyleSheet.create({
   },
   text_input: {
     fontSize: 18,
-    backgroundColor: config.active_color,
+    backgroundColor: '#FFF',
     // backgroundColor: config.active_color,
     fontSize: config.fontsize_3,
     marginTop: config.margin_4,
