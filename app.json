@@ -24,7 +24,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF",
         "package": "com.supersmai"
-      }
+      },
+      "package": "com.khanganh37.SuperSmai"
     },
     "web": {
       "favicon": "./assets/favicon.png"
