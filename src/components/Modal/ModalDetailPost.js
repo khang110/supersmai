@@ -27,7 +27,7 @@ const App = (props) => {
   const { navigation, data } = props;
  
   const [arrImage, setArrImage] = useState([]);
-
+  console.log(data)
   useEffect(() => {
     // console.log(data);
     if (data.urlImage.length == 0) {
@@ -44,11 +44,21 @@ const App = (props) => {
     }
 
   }
-  const renderTextButton = () => {
-    if (data.TypeAuthor == "tangcongdong") {
-      return " Lời nhắn"
+  const renderCategory = () => {
+    if (data.NameProduct.length != 1) {
+      return (
+        <View style={styles.wrapCate}>
+        <Text style={styles.cate}>Danh mục nhận tặng:{"   "}{data.NameProduct.length}</Text>
+        <Text style={styles.price}>Chi tiết</Text>
+      </View>
+      )
     } else {
-      return " Gửi tặng"
+      return(
+        <View style={styles.wrapCate}>
+        <Text style={styles.cate}>{data.NameProduct[0].NameProduct}</Text>
+        <Text style={styles.price}>Miễn phí</Text>
+      </View>
+      )
     }
   }
   return (
@@ -72,7 +82,7 @@ const App = (props) => {
                   color="black"
                 />
               </TouchableOpacity>
-              <Text style={styles.tittleText}>Địa chỉ của bạn</Text>
+              <Text style={styles.tittleText}>Chi tiết tin đăng</Text>
             </View>
             <ScrollView contentContainerStyle={styles.contentContainer}>
               <View>
@@ -88,10 +98,7 @@ const App = (props) => {
                 />
                 <View style={styles.wrapMidle}>
                   <Text style={styles.title}>{data.title}</Text>
-                  <View style={styles.wrapCate}>
-                    <Text style={styles.cate}>Quần áo bé nam</Text>
-                    <Text style={styles.price}>Miễn phí</Text>
-                  </View>
+                 {renderCategory()}
                   <View style={styles.wrapAddress}>
                     <Image source={address} style={styles.iconAddress} />
                     <Text

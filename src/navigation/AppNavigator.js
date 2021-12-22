@@ -30,6 +30,9 @@ import verifyOTPs from "../screens/verifyOtps";
 import forgotPassword from "../screens/forgotPassword";
 import newPassword from "../screens/newPassword";
 import ListGiveTCD from '../screens/listGiveTCD'
+import Doctor from '../screens/doctor'
+import Search from '../screens/search';
+import Anounce from '../screens/anounce';
 import {
   StyleSheet,
   Text,
@@ -122,11 +125,62 @@ function AppNavigator(props) {
           })}
         />
         <Stack.Screen
+          name="Anounce"
+          component={Anounce}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Thông báo",
+            headerTintColor: color.white,
+            headerTitleAlign: "center",
+     
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Search"
+          component={Search}
+          options={({ navigation, route }) => ({
+            headerShown: false,
+            title: "Chi tiết tin đăng",
+            headerTintColor: color.white,
+            headerTitleAlign: "center",
+     
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
+          })}
+        />
+        <Stack.Screen
           name="DetailConnect"
           component={DetailConnect}
           options={({ navigation, route }) => ({
             headerShown: true,
             title: "Chi tiết kết nối",
+            headerTintColor: color.white,
+            headerTitleAlign: "center",
+     
+            headerStyle: {
+              backgroundColor: config.main_color,
+            },
+            headerBackImage: () => (
+              <Entypo name="chevron-thin-left" size={25} color="#FFF" />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="Doctor"
+          component={Doctor}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Danh sách bác sĩ hỗ trợ",
             headerTintColor: color.white,
             headerTitleAlign: "center",
      

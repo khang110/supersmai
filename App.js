@@ -7,7 +7,7 @@ import AppNavigator from "./src/navigation/AppNavigator";
 import store from './Redux.js';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
-
+import color from './src/config/color';
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -23,6 +23,8 @@ export default function App(props) {
   return (
     <Provider store={store}>
       <View style={{flex: 1}}>
+      <StatusBar barStyle='default'
+        backgroundColor={color.main_color}/>
       <AppNavigator />
       </View>
     

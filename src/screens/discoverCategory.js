@@ -20,7 +20,7 @@ import NewsRow from "../components/rows/newsRow";
 import { Searchbar } from "react-native-paper";
 import { MaterialCommunityIcons, Entypo, AntDesign } from "@expo/vector-icons";
 import FilterAddress from "../components/Modal/FIlterAddress";
-const apiURL = `https://api.smai.com.vn/post/getPostByTypeAuthor?typeauthor=tangcongdong`;
+const apiURL = `https://https://app-super-smai.herokuapp.com/post/getPostByTypeAuthor?typeauthor=tangcongdong`;
 function DiscoverCategory(props) {
   const { navigation, dispatch } = props;
   const [data, setData] = useState([]);

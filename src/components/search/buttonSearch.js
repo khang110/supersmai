@@ -2,12 +2,16 @@ import React, { useEffect } from "react";
 import { StyleSheet, Text, View, Button, Image, TouchableOpacity, SafeAreaView, StatusBar } from "react-native";
 import { EvilIcons } from '@expo/vector-icons';
 import config from '../../config/config';
-function SearchButton() {
 
+function SearchButton(props) {
+  const {navigation} = props;
+  const press = () => {
+    navigation.navigate("Search")
+  }
 
   return (
     <>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => press()}>
           <View style={{flexDirection: 'row', 
           backgroundColor: config.white, 
           marginLeft: config.margin_2,

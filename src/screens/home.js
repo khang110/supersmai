@@ -90,11 +90,11 @@ function Home(props) {
         <View style={styles.backgroundTop}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',  marginLeft: config.margin_2, marginRight: config.margin_2, marginTop: config.margin_2}}>
           <Text style={styles.textSayHi}>{renderSayHi()}</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Anounce")}>
             <Image source={notification} style={{width: 30, height: 30}}/>
           </TouchableOpacity>
           </View>
-          <SearchButton />
+          <SearchButton navigation={navigation}/>
         </View>
         <Gift navigation={navigation} />
         <Text style={styles.textDisCate}>Khám phá tin đăng tặng</Text>

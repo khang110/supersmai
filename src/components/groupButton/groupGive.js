@@ -32,7 +32,11 @@ function Gift(props) {
     } else {
       navigation.navigate("Authentication");
     }
-    
+  }
+
+  const pressDoctor = () => {
+    navigation.navigate("Doctor");
+
   }
 
   return (
@@ -50,8 +54,8 @@ function Gift(props) {
             <Text>Cần hỗ trợ</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.wrapButton}>
+        <TouchableOpacity onPress={() => pressDoctor()}>
+          <View style={styles.wrapButton} >
             <Image source={Medical} style={styles.wrapIcon} />
             <Text>Tư vấn y tế</Text>
           </View>

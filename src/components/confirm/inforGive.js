@@ -106,7 +106,7 @@ function InforGive(props) {
   };
   return (
     <View>
-      <Text style={styles.nameAuthor}>Nguyễn Anh Khang</Text>
+      <Text style={styles.nameAuthor}>{props.auth.FullName}</Text>
       <View style={styles.wrapAddress}>
         <Text style={styles.titleAddress}>Địa chỉ: </Text>
         <Text style={styles.address} numberOfLines={2}>
@@ -154,5 +154,6 @@ export default connect(function (state) {
   return {
     infoPost: state.infoPost,
     typeUpPost: state.typeUpPost,
+    auth: state.auth
   };
 })(InforGive);
